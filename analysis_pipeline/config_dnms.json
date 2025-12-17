@@ -1,0 +1,28 @@
+{
+    "paths": {
+      "file_dir": "prescreening/data",
+      "analysis_dir": "analysis",
+      "pkl_file": "*neurons*.pkl",
+      "rank_dir": "prescreening/data/single_pairs_analysis"
+    },
+    "processing": {
+      "sample_rate": 1,
+      "min_spikes": 100,
+      "bin_size": 20,
+      "max_lag": 250,
+      "n_top": 200,
+      "recompute_cc": true
+    },
+    "plotting": {
+      "plot_all": true,
+      "raster_bin_size": 100
+    },
+    "cc_configs": [
+      [80, 1000, "Broad"],
+      [40, 500, "Medium"],
+      [20, 250, "Fine"],
+      [10, 100, "semiFine"],
+      [2, 50, "Ultra-fine"]
+    ]
+}
+
