@@ -52,7 +52,7 @@ Example (`analysis_pipeline/config_dnms.json`):
 
 - **paths.file_dir**:   where to look for `.pkl` files  
 - **paths.analysis_dir**:  output folder for results  
-- **paths.pkl_file**: wildcard for filenames (e.g., `"*200s.pkl"`)
+- **paths.pkl_file**: wildcard for filenames (e.g., `"*200s.pkl"`). Use wildcard like `*200s.pkl` to do a short test set. run full lenghth set by using `*.pkl` is goning to take hours.
 - **processing.sample_rate**: in Hz  
 - **processing.min_spikes**: neurons with fewer are excluded  
 - **processing.n_top**: number of top/bottom pairs to analyze per label  
@@ -104,9 +104,9 @@ python glm_fit_cv_one_neuron.py \
     --neuron_pairs "n005_L_CA3_wire_2_cell_1:n025_L_CA3_wire_7_cell_1" \
     --f_SISO True \
     --save_dir "data/selected_neurons1150b034" \
-    --alpha_k 0.81 \
-    --alpha_h 0.88 \
-    --L 4 \
+    --alpha_k 0.7 \
+    --alpha_h 0.7 \
+    --L 5 \
     --chunk_size 1000 \
     --max_tau 200 \
     --num_folds 1
