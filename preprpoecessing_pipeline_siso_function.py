@@ -8,7 +8,7 @@ import os
 import glob 
 import pandas as pd
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from plot_all_plots_for_siso_cc import (
+from utils import (
     plot_all_neurons_silent_periods,
     plot_spike_raster,
     plot_neuron_correlation_matrices,
