@@ -29,8 +29,8 @@ Example (`analysis_pipeline/config_dnms.json`):
 ```json
 {
   "paths": {
-    "file_dir": "DNMS_data/",
-    "analysis_dir": "DNMS_data/analysis",
+    "file_dir": "data/",
+    "analysis_dir": "data/analysis",
     "pkl_file": "*200s.pkl"
   },
   "processing": {
