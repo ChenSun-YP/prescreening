@@ -1,9 +1,9 @@
 {
     "paths": {
-      "file_dir": "prescreening/data",
+      "file_dir": "data",
       "analysis_dir": "analysis",
-      "pkl_file": "*neurons*.pkl",
-      "rank_dir": "prescreening/data/single_pairs_analysis"
+      "pkl_file": "*.pkl",
+      "rank_dir": "data/single_pairs_analysis"
     },
     "processing": {
       "sample_rate": 1,
