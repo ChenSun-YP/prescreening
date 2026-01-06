@@ -1,4 +1,7 @@
 #!/bin/bash
+## this is a job submission script for the stationary fit pipeline in case thereare too many sessions to run on your local
+## do run the stage 2 on local simply run : python glm_fit_cv_one_neuron.py --data_file <data_file> --ranking_file <ranking_file> --save_dir <save_dir> --rank_range <rank_range> --alpha_k <alpha_k> --alpha_h <alpha_h> --num_folds <num_folds> --L <L> --max_tau <max_tau>
+## the data_file and ranking_file are the output of the stage 1, the save_dir is the directory to save the results, the rank_range is the range of ranks to fit, the alpha_k and alpha_h are the regularization parameters, the num_folds is the number of folds for cross-validation, the L is the length of the time series, the max_tau is the maximum lag for the correlogram
 
 # put the dir under dsong945/project2/your_name/
 

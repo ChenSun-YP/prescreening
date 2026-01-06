@@ -1,4 +1,10 @@
-matplotlib
 numpy
-pandas
 scipy
+pandas
+matplotlib
+torch
+statsmodels
+scikit-learn
+psutil
+tqdm
+control
