@@ -1,0 +1,15 @@
+__pycache__/utils.cpython-310.pyc
+*.pkl
+*.png
+*.pdf
+*.svg
+*.eps
+*.tiff
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.webp
+*.ico
+*.heic
+*.heif
