@@ -2,7 +2,7 @@
     "paths": {
       "file_dir": "data",
       "analysis_dir": "analysis",
-      "pkl_file": "*.pkl",
+      "pkl_file": "*200s.pkl", 
       "rank_dir": "data/single_pairs_analysis"
     },
     "processing": {

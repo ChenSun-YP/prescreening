@@ -20,21 +20,18 @@ def create_dataset(x_data, y_data, tmax=None):
     x_data = x_data.clone().detach().float().squeeze()
     y_data = y_data.clone().detach().float().squeeze()
 
-
     if tmax is None:
         tmax = x_data.size(0)
- 
-    y_history = torch.cat((torch.zeros(1), y_data[:-1]))     # y_t-1 shift  to the left by 1
-    y_target = y_data       # y_t
+
+    y_history = torch.cat(
+        (torch.zeros(1), y_data[:-1])
+    )  # y_t-1 shift  to the left by 1
+    y_target = y_data  # y_t
 
     # Stack x_t and y_{t-1} as input channels
-    inputs = torch.stack((x_data, y_history), dim=0).unsqueeze(0) 
-    labels = y_target.unsqueeze(0)                                  
+    inputs = torch.stack((x_data, y_history), dim=0).unsqueeze(0)
+    labels = y_target.unsqueeze(0)
 
     indices = torch.tensor([[0, tmax]])
 
-
-    return TensorDataset(inputs, labels, indices), 0, x_data,y_target
-
-
-
+    return TensorDataset(inputs, labels, indices), 0, x_data, y_target
