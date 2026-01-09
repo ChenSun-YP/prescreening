@@ -16,6 +16,12 @@ from utils import (
     compute_correlogram_normalized,
 )
 
+"""
+Pipeline to preprocess spike train data from .pkl files
+Actually does the ranking here
+"""
+
+
 def load_config(config_input):
     """
     Load configuration from either a file path or a dictionary.
@@ -116,6 +122,8 @@ def compute_all_crosscorrs(neurons, bin_size, max_lag, sample_rate):
             }
     return crosscorrs, firing_rate
 
+# runs the full pipeline: 
+# 1. load config; 2. load .pkl; 3. filter neurons; 4. compute cross-correlations; 5. rank pairs; 6. save results
 def run_preprocessing_pipeline(config_input, verbose=True):
     """
     Run the preprocessing pipeline with given configuration.

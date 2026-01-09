@@ -2,13 +2,18 @@ import torch
 from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
 
+"""
+
+Creates a dataset for training/testing with input spikes and output spikes
+"""
+
 
 def create_dataset(x_data, y_data, tmax=None):
     """
     Creates a TensorDataset with x_t and y_{t-1} as inputs, y_t as targets, for the full time series.
     Args:
-        x_data (Tensor): Input spike data [1, 1, tmax].
-        y_data (Tensor): Output spike data [1, 1, tmax].
+        x_data (Tensor): Input spike data [1, 1, tmax].             from CA3
+        y_data (Tensor): Output spike data [1, 1, tmax].            from CA1
         ff_kernel (Tensor): Feedforward kernel tensor.
         fb_kernel (Tensor): Feedback kernel tensor.
         axy_kernel (Tensor): STDP axy kernel tensor.

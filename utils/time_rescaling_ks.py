@@ -1,5 +1,11 @@
 import numpy as np
 
+'''
+
+Performs Kolmogorov-Smirnov test 
+'''
+
+
 def time_rescaling_ks(Pb, y):
     """
     Applies time rescaling transformation and performs the KS test.

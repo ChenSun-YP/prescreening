@@ -186,7 +186,7 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
     '''
     logger = logging.getLogger('glm_fitting')
     print(f"\n{'='*60}")
-    print(f"Starting GLM fit: {input_neuron} -> {output_neuron} (Rank {rank})")
+    print(f"Starting GLM fit: {input_neuron} -> {output_neuron} (Rank {rank:03d})")
     print(f"{'='*60}")
     print_memory_status("Initial ")
     
@@ -263,7 +263,7 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
             T_val = val_x.shape[-1]
             num_basis = ff_basis_batched.shape[0]
             padding = ff_basis_batched.shape[-1] - 1
-            temp_prefix = f"{input_neuron}_{output_neuron}_rank{rank}"
+            temp_prefix = f"{input_neuron}_{output_neuron}_rank{rank:03d}"
             
             if sigma is not None:
                 X_file = os.path.join(save_dir, f'X_temp_{temp_prefix}_fold{fold_idx}.npy')
@@ -469,7 +469,7 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
             del ff_coeffs_list, fb_coeffs_list, k0_list
             torch.cuda.empty_cache()
             gc.collect()
-            print(f"✓ GLM fit complete: {input_neuron} -> {output_neuron} (Rank {rank})")
+            print(f"✓ GLM fit complete: {input_neuron} -> {output_neuron} (Rank {rank:03d})")
             print(f"  No cross-validation (folds=1), Final memory: {get_memory_usage_mb():.1f} MB")
             print(f"{'='*60}\n")
             return model_full, conf_int, all_metrics_with_ks, avg_ff_coeffs, avg_fb_coeffs, k0_avg, ff_basis, fb_basis
@@ -581,7 +581,7 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
         del ff_coeffs_list, fb_coeffs_list, k0_list
         torch.cuda.empty_cache()
         gc.collect()
-        print(f"✓ GLM fit complete: {input_neuron} -> {output_neuron} (Rank {rank})")
+        print(f"✓ GLM fit complete: {input_neuron} -> {output_neuron} (Rank {rank:03d})")
         print(f"  Valid folds: {valid_folds}/{folds}, Final memory: {get_memory_usage_mb():.1f} MB")
         print(f"{'='*60}\n")
         return model_full, conf_int, all_metrics_with_ks, avg_ff_coeffs, avg_fb_coeffs, k0_avg, ff_basis, fb_basis
@@ -732,7 +732,7 @@ def plot_fit_and_save_kernels(all_metrics, model_full, ff_basis, fb_basis, c_ff,
         'k0': k0,
         'all_metrics': all_metrics  # Add all fold metrics, including matrices
     }
-    kernel_file = os.path.join(SAVE_DIR, f'kernels_{input_neuron}_{output_neuron}_rank{rank}.pkl')
+    kernel_file = os.path.join(SAVE_DIR, f'kernels_{input_neuron}_{output_neuron}_rank{rank:03d}.pkl')
     with open(kernel_file, 'wb') as f:
         pickle.dump(kernel_data, f)
     print(f'Saved kernels at {kernel_file}')
@@ -740,12 +740,12 @@ def plot_fit_and_save_kernels(all_metrics, model_full, ff_basis, fb_basis, c_ff,
     # Generate individual fit plot
     fig = plt.figure(figsize=(18, 18))
     plt.suptitle(f'Fit for L={L} - Input: {input_neuron}, Output: {output_neuron}, '
-                 f'alpha_k={alpha_k:.4f}, alpha_h={alpha_h:.4f}, k0={k0:.3f}, Rank={rank}')
+                 f'alpha_k={alpha_k:.4f}, alpha_h={alpha_h:.4f}, k0={k0:.3f}, Rank={rank:03d}')
     
     T_full = x_full.shape[-1]
     ff_basis_batched = ff_basis.unsqueeze(0).permute(2, 0, 1).flip(dims=[-1])
     fb_basis_batched = fb_basis.unsqueeze(0).permute(2, 0, 1).flip(dims=[-1])
-    X_full_file = os.path.join(SAVE_DIR, f'X_full_temp_plot_rank{rank}.npy')
+    X_full_file = os.path.join(SAVE_DIR, f'X_full_temp_plot_rank{rank:03d}.npy')
     X_full = np.memmap(X_full_file, dtype='float32', mode='w+', shape=(T_full, 2 * L + 1))
     X_full[:, 0] = 1
     
@@ -934,7 +934,7 @@ def plot_fit_and_save_kernels(all_metrics, model_full, ff_basis, fb_basis, c_ff,
 
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
-    filename = os.path.join(SAVE_DIR, f'fit_L{L}_input{input_neuron}_output{output_neuron}_ak{alpha_k:.4f}_ah{alpha_h:.4f}_rank{rank}.png')
+    filename = os.path.join(SAVE_DIR, f'fit_L{L}_input{input_neuron}_output{output_neuron}_ak{alpha_k:.4f}_ah{alpha_h:.4f}_rank{rank:03d}.png')
     plt.savefig(filename)
     plt.close()
 
@@ -1046,10 +1046,10 @@ def plot_fit(data, model_full, x_full, y_full, model_fsiso=None, save_dir=''):
     fig = plt.figure(figsize=(6 * n_cols, 18))
     if has_fsiso:
         plt.suptitle(f'Fit for L={L} - Input: {input_neuron}, Output: {output_neuron}, '
-                     f'alpha_k={alpha_k:.4f}, alpha_h={alpha_h:.4f}, k0={k0_siso:.3f}/{k0_fsiso:.3f}, Rank={rank}')
+                     f'alpha_k={alpha_k:.4f}, alpha_h={alpha_h:.4f}, k0={k0_siso:.3f}/{k0_fsiso:.3f}, Rank={rank:03d}')
     else:
         plt.suptitle(f'Fit for L={L} - Input: {input_neuron}, Output: {output_neuron}, '
-                     f'alpha_k={alpha_k:.4f}, alpha_h={alpha_h:.4f}, k0={k0_siso:.3f}, Rank={rank}')
+                     f'alpha_k={alpha_k:.4f}, alpha_h={alpha_h:.4f}, k0={k0_siso:.3f}, Rank={rank:03d}')
 
     # Define grid spec: 4 rows, last row spans all columns
     gs = fig.add_gridspec(4, n_cols, height_ratios=[1, 1, 1, 0.5], hspace=0.4, wspace=0.4)
@@ -1249,7 +1249,7 @@ def plot_fit(data, model_full, x_full, y_full, model_fsiso=None, save_dir=''):
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     
-    filename = os.path.join(save_dir, f'fit_L{L}_input{input_neuron}_output{output_neuron}_ak{alpha_k:.4f}_ah{alpha_h:.4f}_rank{rank}.png')
+    filename = os.path.join(save_dir, f'fit_L{L}_input{input_neuron}_output{output_neuron}_ak{alpha_k:.4f}_ah{alpha_h:.4f}_rank{rank:03d}.png')
     plt.savefig(filename)
     plt.close()
 
@@ -1357,8 +1357,8 @@ def run_glm_fitting():
     print_memory_status("Initial ")
     
     for pair_idx, (input_neuron, output_neuron, bump_score, rank) in enumerate(tqdm(neuron_pairs, desc="Neuron Pairs", total=len(neuron_pairs)), 1):
-        print(f"\n[{pair_idx}/{len(neuron_pairs)}] Processing pair: {input_neuron} -> {output_neuron} (Rank {rank})")
-        logger.info(f"Processing pair: {input_neuron} -> {output_neuron}, Rank: {rank}, BumpScore: {bump_score}")
+        print(f"\n[{pair_idx}/{len(neuron_pairs)}] Processing pair: {input_neuron} -> {output_neuron} (Rank {rank:03d})")
+        logger.info(f"Processing pair: {input_neuron} -> {output_neuron}, Rank: {rank:03d}, BumpScore: {bump_score}")
         
         try:
             pair_data = preprocess_neuron_data(input_neuron, output_neuron, neurons, sample_rate)
@@ -1366,7 +1366,7 @@ def run_glm_fitting():
                 pair_data[0], pair_data[1], L, alpha_k, alpha_h,input_neuron, output_neuron,rank,max_tau=max_tau, folds=NUMBER_OF_FOLDS)
             # Print object sizes for memory usage tracking
             if f_SISO:
-                print(f"\n[{pair_idx}/{len(neuron_pairs)}] Processing reverse direction: {output_neuron} -> {input_neuron} (Rank {rank})")
+                print(f"\n[{pair_idx}/{len(neuron_pairs)}] Processing reverse direction: {output_neuron} -> {input_neuron} (Rank {rank:03d})")
                 print_memory_status("Before reverse fit ")
                 pair_data_reverse = preprocess_neuron_data(output_neuron, input_neuron, neurons, sample_rate)
                 model_full_reverse, conf_int_reverse, all_metrics_reverse, avg_ff_coeffs_reverse, avg_fb_coeffs_reverse,k0_reverse, ff_basis_reverse, fb_basis_reverse = fit_glm_to_stdp(
@@ -1378,7 +1378,7 @@ def run_glm_fitting():
                 continue
             
             # Save metrics to CSV
-            pair_metrics_file = os.path.join(SAVE_DIR, f'pair_metrics_{input_neuron}_{output_neuron}_rank{rank}.csv')
+            pair_metrics_file = os.path.join(SAVE_DIR, f'pair_metrics_{input_neuron}_{output_neuron}_rank{rank:03d}.csv')
             if  os.path.exists(pair_metrics_file):
                 os.remove(pair_metrics_file)
             with open(pair_metrics_file, 'a', newline='') as csvfile:
@@ -1554,7 +1554,7 @@ def run_glm_fitting():
                 data = {'SISO':siso_data}
                 plot_fit(data, model_full, pair_data[2], pair_data[3], save_dir=SAVE_DIR)
 
-            kernel_file = os.path.join(SAVE_DIR, f'kernels_{input_neuron}_{output_neuron}_rank{rank}.pkl')
+            kernel_file = os.path.join(SAVE_DIR, f'kernels_{input_neuron}_{output_neuron}_rank{rank:03d}.pkl')
             with open(kernel_file, 'wb') as f:
                 pickle.dump(data, f)
             print(f'Saved kernels at {kernel_file}')

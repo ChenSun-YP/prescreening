@@ -7,7 +7,11 @@ import scipy.signal
 from scipy.stats import norm
 import textwrap
 
+'''
+Utility functions to plot various analyses for single-input single-output
+'''
 
+# Helper function to determine color intensity based on z-score
 def get_color_intensity(value, mean, std):
     if std == 0:
         return 'red'

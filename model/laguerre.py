@@ -7,6 +7,9 @@ import math
 import os
 from control import tf2ss, series, impulse_response, StateSpace
 
+'''
+laguerre polynomial calculator
+'''
 
 # def comb(n, k):
 #     if n < 0 or k < 0 or n < k:
