@@ -1,3 +1,4 @@
+import math
 import os
 import pickle
 import numpy as np
@@ -9,7 +10,11 @@ import glob
 import pandas as pd
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from utils import (
+from utils.filters import (
+    check_correlation_filled_bins,
+    filter_pairs_using_correlation_filled_bins,
+)
+from utils.plot_all_plots_for_siso_cc import (
     plot_all_neurons_silent_periods,
     plot_spike_raster,
     plot_neuron_correlation_matrices,
@@ -122,7 +127,8 @@ def compute_all_crosscorrs(neurons, bin_size, max_lag, sample_rate):
             }
     return crosscorrs, firing_rate
 
-# runs the full pipeline: 
+
+# runs the full pipeline:
 # 1. load config; 2. load .pkl; 3. filter neurons; 4. compute cross-correlations; 5. rank pairs; 6. save results
 def run_preprocessing_pipeline(config_input, verbose=True):
     """
@@ -146,7 +152,9 @@ def run_preprocessing_pipeline(config_input, verbose=True):
     ]  # Now a wildcard pattern, e.g., "*.pkl"
     SAMPLE_RATE = float(config["processing"]["sample_rate"])
     MIN_SPIKES = int(config["processing"]["min_spikes"])
-    N_TOP = int(config["processing"]["n_top"])
+    N_TOP = int(
+        config["processing"]["n_top"]
+    )  # <-- make n_top include everything unless otherwise specified
     PLOT_ALL = config["plotting"]["plot_all"]  # JSON handles boolean directly
     RASTER_BIN_SIZE = int(config["plotting"]["raster_bin_size"])
     CONFIGS = config["cc_configs"]  # Load configs from JSON
@@ -186,7 +194,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         neurons = load_neurons(pkl_path)
         n_before = len(neurons)
 
-        # **Stage 2: Filter neurons**
+        # **Stage 2: Filter neurons for spike count**
         filtered_neurons = filter_neurons(neurons, MIN_SPIKES)
         n_after = len(filtered_neurons)
 
@@ -258,15 +266,35 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 for post in neuron_ids[i + 1 :]
             ]
 
+
+            # **Stage 4: Filter out the obviously bad pairs using "histogram base-filled"; bump score thresholds; unimodality test
+
+            check_correlation_filled_bins(
+                pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+                out_dir="selected_neurons_first_200s",
+                harshness=0.10,  # at most 10% of bins can be empty
+                power_threshold=-10,  # bins with value < e^-10 are considered empty
+            )
+
+            # filter pairs using correlation filled bins
+            filtered_pairs = filter_pairs_using_correlation_filled_bins(
+                pairs,
+                bad_pairs_path="selected_neurons_first_200s\\bad_pairs.txt",
+            )
+            # print("filtered_pairs", filtered_pairs)
+
             top_bump = sorted(
-                [(pair, np.max(crosscorrs[pair][5])) for pair in pairs],
+                [(pair, np.max(crosscorrs[pair][5])) for pair in filtered_pairs],
                 key=lambda x: x[1],
                 reverse=True,
             )[:N_TOP]
             bottom_bump = sorted(
-                [(pair, np.min(crosscorrs[pair][5])) for pair in pairs],
+                [(pair, np.min(crosscorrs[pair][5])) for pair in filtered_pairs],
                 key=lambda x: x[1],
             )[:N_TOP]
+
+            # print("correlation_filled_bins filtered top_bump", top_bump)
+            # print("correlation_filled_bins filtered bottom_bump", bottom_bump)
 
             # **Stage 5: Generate cross-correlation plot for top N and bottom N pairs**
             plots_per_row = 10

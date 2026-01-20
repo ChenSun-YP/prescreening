@@ -125,6 +125,14 @@ chmod +x stage2_stationary_fit_exp_data.sh
 - `#SBATCH --partition`: choose from `main,debug,gpu,epyc-64`
 
 
+<!--
+add filters here at very end
+
+access csv or pkl files to do so
+
+>
+
+
 <!-- ### Output Structure
 
 For each `.pkl` file processed, outputs are saved in `analysis_dir/<pkl_stem>/`:
