@@ -499,12 +499,6 @@ print(data)
        
        
        
-       
-       ('n117_R_CA3_wire_6_cell_1', 'n017_L_CA3_wire_5_cell_1'), ('n017_L_CA3_wire_5_cell_1', 'n013_L_CA3_wire_4_cell_1'), ('n117_R_CA3_wire_6_cell_1', 'n069_R_CA1_wire_2_cell_1'), ('n117_R_CA3_wire_6_cell_1', 'n013_L_CA3_wire_4_cell_1'), ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'), ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'), ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'), ('n069_R_CA1_wire_2_cell_1', 'n017_L_CA3_wire_5_cell_1'), ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'), ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1')
-       
-       ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'), ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1')
-       
-       
-       ([('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'), ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1')], np.float64(3.72670807453416)), ([('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'), ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1')], np.float64(1.7910802623001123)), ([('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'), ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1')], np.float64(1.629849220546895)), ([('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'), ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1')], np.float64(1.310353139689044)), ([('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'), ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'), ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1')], np.float64(1.0169942546114306))
+
 
 """

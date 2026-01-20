@@ -12,7 +12,9 @@ import pandas as pd
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.filters import (
     check_correlation_filled_bins,
+    check_correlations_unimodal,
     filter_pairs_using_correlation_filled_bins,
+    check_histogram_unimodal,
 )
 from utils.plot_all_plots_for_siso_cc import (
     plot_all_neurons_silent_periods,
@@ -266,7 +268,6 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 for post in neuron_ids[i + 1 :]
             ]
 
-
             # **Stage 4: Filter out the obviously bad pairs using "histogram base-filled"; bump score thresholds; unimodality test
 
             check_correlation_filled_bins(
@@ -282,6 +283,21 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 bad_pairs_path="selected_neurons_first_200s\\bad_pairs.txt",
             )
             # print("filtered_pairs", filtered_pairs)
+
+            # filter pairs using unimodality test
+            unimodal_filtered_pairs = check_correlations_unimodal(
+                pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+                out_dir="unimodal_selected_neurons_first_200s",  # for debugging purposes
+                bin_centers=None,
+                smoothing_sigma=1.0,
+                prominence_fraction=0.05,
+                min_distance_bins=1,
+            )
+            
+            filtered_pairs = filter_pairs_using_correlation_filled_bins(
+                pairs,
+                bad_pairs_path="selected_neurons_first_200s\\bad_pairs.txt",
+            )
 
             top_bump = sorted(
                 [(pair, np.max(crosscorrs[pair][5])) for pair in filtered_pairs],
