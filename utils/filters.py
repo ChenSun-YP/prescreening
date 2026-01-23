@@ -10,6 +10,8 @@ import glob
 import pandas as pd
 
 import numpy as np
+import diptest
+from diptest import diptest
 from scipy.signal import find_peaks
 from scipy.ndimage import gaussian_filter1d
 
@@ -124,56 +126,49 @@ def filter_pairs_using_correlation_filled_bins(
 
 
 def check_histogram_unimodal(
-    counts,
-    bin_centers=None,
-    smoothing_sigma=1.0,
-    prominence_fraction=0.05,
-    min_distance_bins=1,
+    preNeuron=0,
+    postNeuron=0,
+    alpha=0.05,
 ):
     """
-    Test whether a histogram is unimodal.
+    Hartigan's Dip Test for Unimodality
 
-    Parameters
-    ----------
-    counts : array-like
-        Histogram counts (y-values)
-    bin_centers : array-like or None
-        Bin centers (optional, not required)
-    smoothing_sigma : float
-        Gaussian smoothing applied before peak detection
-    prominence_fraction : float
-        Minimum peak prominence as a fraction of max(counts)
-    min_distance_bins : int
-        Minimum distance between peaks (in bins)
+    Must use continuous data.
 
-    Returns
-    -------
-    is_unimodal : bool
-        True if histogram is unimodal, False otherwise
-    peaks : ndarray
-        Indices of detected peaks
     """
 
-    counts = np.asarray(counts)
+    # print(f"Checking unimodality for pair: {preNeuron}, {postNeuron}")
 
-    if counts.ndim != 1 or len(counts) < 3:
-        # Too small to assess modality
-        return True, np.array([])
+    filename = f"corr_trimmed_{preNeuron}_{postNeuron}.txt"
 
-    # Smooth histogram to suppress noise
-    smoothed = gaussian_filter1d(counts, sigma=smoothing_sigma)
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f"Correlogram file not found: {filename}")
 
-    # Peak detection threshold
-    prominence = prominence_fraction * np.max(smoothed)
+    # Load per-ms coincidence counts
+    corr_ms = np.loadtxt(filename)
 
-    peaks, properties = find_peaks(
-        smoothed, prominence=prominence, distance=min_distance_bins
-    )
+    # Construct lag axis
+    n = len(corr_ms)
 
-    # Unimodal if <= 1 peak
-    is_unimodal = len(peaks) <= 1
+    if n == 0:
+        return True
 
-    return is_unimodal, peaks
+    # Infer lag axis from length
+    # Example: n=17 → lags = [-8, ..., 0, ..., +8]
+    half = n // 2
+    lags_ms = np.arange(-half, half + 1)
+
+    if len(lags_ms) != n:
+        raise ValueError("Correlogram length must be odd and centered at zero lag")
+
+    # Reconstruct raw lag samples
+    samples = np.repeat(lags_ms, corr_ms.astype(int))
+
+    _, p_value = diptest(samples)
+
+    # print(f"Unimodality p-value: {p_value}")
+
+    return p_value >= alpha
 
 
 def check_correlations_unimodal(
@@ -208,30 +203,28 @@ def check_correlations_unimodal(
             continue
 
         unimodality = check_histogram_unimodal(
-            counts,
-            bin_centers,
-            smoothing_sigma,
-            prominence_fraction,
-            min_distance_bins,
+            preNeuron=pre,
+            postNeuron=post,
+            alpha=prominence_fraction,
         )
 
-        if unimodality[0]:
+        if unimodality is True:
             # print(
             #     f"{pre}, {post} — " f"{num_small} of bins |corr| < e^{power_threshold}"
             # )
-            bad_pairs.append((pre, post, unimodality[1]))
+            bad_pairs.append((pre, post))
         else:
-            good_pairs.append((pre, post, unimodality[1]))
+            good_pairs.append((pre, post))
 
         # Write bad pairs
     with open(bad_pairs_path, "w") as f:
-        for pre, post, peaks in bad_pairs:
-            f.write(f"{pre}\t{post}\t{peaks}\n")
+        for pre, post in bad_pairs:
+            f.write(f"{pre}\t{post}\n")
 
     # Write good pairs
     with open(good_pairs_path, "w") as f:
-        for pre, post, peaks in good_pairs:
-            f.write(f"{pre}\t{post}\t{peaks}\n")
+        for pre, post in good_pairs:
+            f.write(f"{pre}\t{post}\n")
 
 
 # can be combined with other filter methods

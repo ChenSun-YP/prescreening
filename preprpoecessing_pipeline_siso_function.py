@@ -15,6 +15,7 @@ from utils.filters import (
     check_correlations_unimodal,
     filter_pairs_using_correlation_filled_bins,
     check_histogram_unimodal,
+    filter_pairs_using_unimodality,
 )
 from utils.plot_all_plots_for_siso_cc import (
     plot_all_neurons_silent_periods,
@@ -78,56 +79,56 @@ def filter_neurons(neurons, min_spikes):
     return {k: v for k, v in neurons.items() if len(v) >= min_spikes}
 
 
-# Function to compute cross-correlations for all neuron pairs
-def compute_all_crosscorrs(neurons, bin_size, max_lag, sample_rate):
-    """Compute normalized cross-correlograms and z-scores for all neuron pairs."""
-    neuron_spike_trains, global_max_time, firing_rate = {}, 0, {}
-    for neuron_id, spike_times in neurons.items():
-        # Convert spike times to milliseconds
-        spike_times = np.array(spike_times) / sample_rate * 1000
-        spike_indices = np.round(spike_times).astype(int)
-        global_max_time = max(
-            global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0
-        )
-        num_bins = int(np.ceil(global_max_time / bin_size)) + 1
-        neuron_spike_trains[neuron_id] = (
-            np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0]
-            > 0
-        )
-        firing_rate[neuron_id] = (
-            np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000)
-            if global_max_time > 0
-            else 0
-        )
+# # Function to compute cross-correlations for all neuron pairs
+# def compute_all_crosscorrs(neurons, bin_size, max_lag, sample_rate):
+#     """Compute normalized cross-correlograms and z-scores for all neuron pairs."""
+#     neuron_spike_trains, global_max_time, firing_rate = {}, 0, {}
+#     for neuron_id, spike_times in neurons.items():
+#         # Convert spike times to milliseconds
+#         spike_times = np.array(spike_times) / sample_rate * 1000
+#         spike_indices = np.round(spike_times).astype(int)
+#         global_max_time = max(
+#             global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0
+#         )
+#         num_bins = int(np.ceil(global_max_time / bin_size)) + 1
+#         neuron_spike_trains[neuron_id] = (
+#             np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0]
+#             > 0
+#         )
+#         firing_rate[neuron_id] = (
+#             np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000)
+#             if global_max_time > 0
+#             else 0
+#         )
 
-    crosscorrs = {}
-    neuron_ids = list(neurons.keys())
-    for i, pre in enumerate(neuron_ids):
-        for post in neuron_ids[i + 1 :]:
-            (
-                lags,
-                corr_normalized,
-                mean_normalized,
-                std_normalized,
-                z_scores,
-                total_bump_score,
-            ) = compute_correlogram_normalized(
-                neuron_spike_trains[pre].astype(float),
-                neuron_spike_trains[post].astype(float),
-                max_lag,
-                bin_size,
-                "cross",
-                firing_rate[pre],
-                firing_rate[post],
-                global_max_time,
-            )
-            crosscorrs[(pre, post)] = {
-                "lags": lags,
-                "corr_normalized": corr_normalized,
-                "z_scores": z_scores,
-                "total_bump_score": total_bump_score,
-            }
-    return crosscorrs, firing_rate
+#     crosscorrs = {}
+#     neuron_ids = list(neurons.keys())
+#     for i, pre in enumerate(neuron_ids):
+#         for post in neuron_ids[i + 1 :]:
+#             (
+#                 lags,
+#                 corr_normalized,
+#                 mean_normalized,
+#                 std_normalized,
+#                 z_scores,
+#                 total_bump_score,
+#             ) = compute_correlogram_normalized(
+#                 neuron_spike_trains[pre].astype(float),
+#                 neuron_spike_trains[post].astype(float),
+#                 max_lag,
+#                 bin_size,
+#                 "cross",
+#                 firing_rate[pre],
+#                 firing_rate[post],
+#                 global_max_time,
+#             )
+#             crosscorrs[(pre, post)] = {
+#                 "lags": lags,
+#                 "corr_normalized": corr_normalized,
+#                 "z_scores": z_scores,
+#                 "total_bump_score": total_bump_score,
+#             }
+#     return crosscorrs, firing_rate
 
 
 # runs the full pipeline:
@@ -278,25 +279,25 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             )
 
             # filter pairs using correlation filled bins
-            filtered_pairs = filter_pairs_using_correlation_filled_bins(
+            filtered_pairs_binfill = filter_pairs_using_correlation_filled_bins(
                 pairs,
                 bad_pairs_path="selected_neurons_first_200s\\bad_pairs.txt",
             )
             # print("filtered_pairs", filtered_pairs)
 
             # filter pairs using unimodality test
-            unimodal_filtered_pairs = check_correlations_unimodal(
+            check_correlations_unimodal(
                 pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
                 out_dir="unimodal_selected_neurons_first_200s",  # for debugging purposes
                 bin_centers=None,
                 smoothing_sigma=1.0,
-                prominence_fraction=0.05,
+                prominence_fraction=0.25,
                 min_distance_bins=1,
             )
-            
-            filtered_pairs = filter_pairs_using_correlation_filled_bins(
-                pairs,
-                bad_pairs_path="selected_neurons_first_200s\\bad_pairs.txt",
+
+            filtered_pairs = filter_pairs_using_unimodality(
+                filtered_pairs_binfill,
+                bad_pairs_path="unimodal_selected_neurons_first_200s\\unimodal_bad_pairs.txt",
             )
 
             top_bump = sorted(
