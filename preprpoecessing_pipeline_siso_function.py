@@ -55,65 +55,18 @@ def load_config(config_input):
 
 # Function to load neurons from a .pkl file
 def load_neurons(pkl_path, length_of_spiketrain=None):
-    """Load spike train data from a .pkl file.
-
-    Handles two formats:
-    1. Simple: dict mapping neuron_id -> array of spike times (or binary spike train).
-    2. Nested: dict with metadata and a 'neurons' key containing a list of dicts
-       with 'name' and 'timestamps' (e.g. from NeuroSuite/neuroscope-style exports).
-
-    Returns:
-        neurons: dict of neuron_id -> spike times (full duration; caller applies cutoff if needed).
-        rec_info: dict with 'tend' (total recording duration) and 'last_trial_end' (last TRIAL end time)
-                  for nested format; both None for simple format.
-    """
+    """Load spike train data from a .pkl file and handle potential binary spike train format."""
     with open(pkl_path, "rb") as f:
-        data = pickle.load(f)
+        neurons = pickle.load(f)
+    # Check if data is a binary spike train (many zeros) and convert to spike indices
+    first_key = next(iter(neurons.keys()))
+    if np.sum(np.array(neurons[first_key]) == 0) > 100:
+        neurons = {k: np.where(v)[0] for k, v in neurons.items()}
 
-    rec_info = {"tend": None, "last_trial_end": None}
-
-    # Nested format: {'neurons': [{'name': ..., 'timestamps': [...]}, ...], 'tend': ..., 'intervals': ...}
-    if isinstance(data, dict) and "neurons" in data:
-        neurons_list = data["neurons"]
-        if not isinstance(neurons_list, (list, tuple)):
-            raise ValueError(
-                "Expected 'neurons' to be a list of dicts with 'name' and 'timestamps'"
-            )
-        neurons = {}
-        for item in neurons_list:
-            if isinstance(item, dict) and "name" in item and "timestamps" in item:
-                name = item["name"]
-                ts = np.asarray(item["timestamps"], dtype=float)
-                neurons[name] = ts
-            else:
-                raise ValueError(
-                    f"Each entry in 'neurons' must have 'name' and 'timestamps'; got keys: {item.keys() if isinstance(item, dict) else type(item)}"
-                )
-        if "tend" in data:
-            rec_info["tend"] = float(data["tend"])
-        if "events" in data:
-            trials = (
-                data["events"][-1] if data["events"][-1]["name"] == "TRIAL" else None
-            )
-            if trials is not None:
-                rec_info["last_trial_end"] = trials["timestamps"][-1]
-
-    else:
-        # Simple format: dict of neuron_id -> spike array
-        neurons = {k: np.asarray(v, dtype=float) for k, v in data.items()}
-
-    # Detect binary spike train (many zeros) and convert to spike indices
-    if neurons:
-        first_key = next(iter(neurons.keys()))
-        arr = np.asarray(neurons[first_key])
-        if arr.size > 100 and np.sum(arr == 0) > 100:
-            neurons = {k: np.where(np.asarray(v))[0] for k, v in neurons.items()}
-
-    # Optional caller-provided cutoff (e.g. for simple format); do not apply rec_info cutoff here
     if length_of_spiketrain is not None:
         neurons = {k: v[v < length_of_spiketrain] for k, v in neurons.items()}
 
-    return neurons, rec_info
+    return neurons
 
 
 # Function to filter neurons based on minimum spike count
@@ -266,39 +219,23 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
             # **Stage 4: Filter out the obviously bad pairs using "histogram base-filled"; bump score thresholds; unimodality test
 
-            print("pkl_path", pkl_path)
-            # Normalize separators first
-            pkl_path = pkl_path.replace("\\", "/")
-
-            # Extract dataset name
-            dataset = os.path.splitext(os.path.basename(pkl_path))[0]
-
-            # Build new path
-            abbr_pkl_path = os.path.join(
-                "data",
-                "analysis",
-                dataset,
-                "crosscorrs_edge_mean_True_ultra-fine.pkl",
-            )
-            out_dir = os.path.splitext(os.path.basename(pkl_path))[0]
             check_correlation_filled_bins(
-                pkl_path=abbr_pkl_path,  # find a way to automatically get this path
-                out_dir=out_dir,
+                pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+                out_dir="selected_neurons_first_200s",
                 harshness=0.10,  # at most 10% of bins can be empty
                 power_threshold=-10,  # bins with value < e^-10 are considered empty
             )
 
-            bad_pairs_path = os.path.join(out_dir, "bad_pairs.txt")
             # filter pairs using correlation filled bins
             filtered_pairs_binfill = filter_pairs_using_correlation_filled_bins(
                 pairs,
-                bad_pairs_path=bad_pairs_path,
+                bad_pairs_path="selected_neurons_first_200s\\bad_pairs.txt",
             )
             # print("filtered_pairs", filtered_pairs)
 
             # filter pairs using unimodality test
             check_correlations_unimodal(
-                pkl_path=abbr_pkl_path,  # find a way to automatically get this path
+                pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
                 out_dir="unimodal_selected_neurons_first_200s",  # for debugging purposes
                 bin_centers=None,
                 smoothing_sigma=1.0,
@@ -308,7 +245,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
             filtered_pairs = filter_pairs_using_unimodality(
                 filtered_pairs_binfill,
-                bad_pairs_path="unimodal_selected_neurons_first_200s/unimodal_bad_pairs.txt",
+                bad_pairs_path="unimodal_selected_neurons_first_200s\\unimodal_bad_pairs.txt",
             )
 
             top_bump = sorted(

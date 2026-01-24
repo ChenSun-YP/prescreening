@@ -9,6 +9,7 @@
 #SBATCH --time=36:00:00
 #SBATCH --partition=main
 ##SBATCH --gres=gpu:1  # Uncomment if GPU is needed
+#SBATCH --account=dsong_945
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=csun8109@usc.edu # change to your own email
 #SBATCH --output=log/log_%x-%j.out

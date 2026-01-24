@@ -49,7 +49,6 @@ def check_correlation_filled_bins(
 
     bad_pairs = []
     good_pairs = []
-    # print(f"Max small bins allowed: {max_small}")
 
     for (pre, post), value in crosscorrs.items():
         # value is a tuple:
@@ -63,13 +62,15 @@ def check_correlation_filled_bins(
             continue
 
         max_small = len(corr) * harshness
+        # print(f"Max small bins allowed: {max_small}")
+
         num_small = np.sum(np.abs(corr) < threshold)
         # print(f"Number of small bins: {num_small}")
 
         if num_small >= max_small:
-            print(
-                f"{pre}, {post} — " f"{num_small} of bins |corr| < e^{power_threshold}"
-            )
+            # print(
+            #     f"{pre}, {post} — " f"{num_small} of bins |corr| < e^{power_threshold}"
+            # )
             bad_pairs.append((pre, post))
         else:
             good_pairs.append((pre, post))
@@ -88,7 +89,7 @@ def check_correlation_filled_bins(
 # can be combined with other filter methods
 def filter_pairs_using_correlation_filled_bins(
     pairs,
-    bad_pairs_path="selected_neurons_first_200s/bad_pairs.txt",
+    bad_pairs_path="selected_neurons_first_200s\\bad_pairs.txt",
 ):
     """
     Remove any pair that appears in bad_pairs.txt
@@ -138,7 +139,7 @@ def check_histogram_unimodal(
 
     # print(f"Checking unimodality for pair: {preNeuron}, {postNeuron}")
 
-    filename = f"corr_trimmed_folder/corr_trimmed_{preNeuron}_{postNeuron}.txt"
+    filename = f"corr_trimmed_{preNeuron}_{postNeuron}.txt"
 
     if not os.path.exists(filename):
         raise FileNotFoundError(f"Correlogram file not found: {filename}")
@@ -148,6 +149,9 @@ def check_histogram_unimodal(
 
     # Construct lag axis
     n = len(corr_ms)
+
+    if n == 0:
+        return True
 
     # Infer lag axis from length
     # Example: n=17 → lags = [-8, ..., 0, ..., +8]
@@ -159,9 +163,6 @@ def check_histogram_unimodal(
 
     # Reconstruct raw lag samples
     samples = np.repeat(lags_ms, corr_ms.astype(int))
-
-    if len(samples) <= 3:  # too few data to run test; exclude
-        return False
 
     _, p_value = diptest(samples)
 
@@ -229,7 +230,7 @@ def check_correlations_unimodal(
 # can be combined with other filter methods
 def filter_pairs_using_unimodality(
     pairs,
-    bad_pairs_path="selected_neurons_first_200s/unimodal_bad_pairs.txt",
+    bad_pairs_path="selected_neurons_first_200s\\unimodal_bad_pairs.txt",
 ):
     """
     Remove any pair that appears in bad_pairs.txt

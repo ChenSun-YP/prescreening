@@ -158,3 +158,2435 @@ Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=
 Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
 Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
 --------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.02
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=1.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=1.63
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=1.79
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.32
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=3.61
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.73
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.91
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=4.02
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=4.24
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.00
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.45
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=2.66
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=3.03
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.26
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.40
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.45
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=6.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=6.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.36
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=3.47
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=3.81
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=4.85
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.19
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=6.38
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=9.39
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=1.46
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=2.35
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=4.44
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=5.35
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=5.71
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=5.89
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.33
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=8.34
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=8.99
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=9.43
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: selected_neurons_first_200s.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 5
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Bottom pairs by total bump score:
+Pair ('n014_L_CA3_wire_4_cell_2', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=7.74
+Pair ('n014_L_CA3_wire_4_cell_2', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=8.31
+Pair ('n014_L_CA3_wire_4_cell_2', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=11.50
+Pair ('n013_L_CA3_wire_4_cell_1', 'n014_L_CA3_wire_4_cell_2'): total_bump_score=15.07
+Pair ('n013_L_CA3_wire_4_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=22.58
+Pair ('n017_L_CA3_wire_5_cell_1', 'n069_R_CA1_wire_2_cell_1'): total_bump_score=31.26
+Pair ('n069_R_CA1_wire_2_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=36.96
+Pair ('n013_L_CA3_wire_4_cell_1', 'n017_L_CA3_wire_5_cell_1'): total_bump_score=40.00
+Pair ('n017_L_CA3_wire_5_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Pair ('n013_L_CA3_wire_4_cell_1', 'n117_R_CA3_wire_6_cell_1'): total_bump_score=54.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data\analysis\selected_neurons_first_200s
+Pair rankings saved in: data\analysis\selected_neurons_first_200s\pair_rankings_ultra-fine.csv
+--------------------------------------------------
