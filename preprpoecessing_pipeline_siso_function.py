@@ -79,58 +79,6 @@ def filter_neurons(neurons, min_spikes):
     return {k: v for k, v in neurons.items() if len(v) >= min_spikes}
 
 
-# # Function to compute cross-correlations for all neuron pairs
-# def compute_all_crosscorrs(neurons, bin_size, max_lag, sample_rate):
-#     """Compute normalized cross-correlograms and z-scores for all neuron pairs."""
-#     neuron_spike_trains, global_max_time, firing_rate = {}, 0, {}
-#     for neuron_id, spike_times in neurons.items():
-#         # Convert spike times to milliseconds
-#         spike_times = np.array(spike_times) / sample_rate * 1000
-#         spike_indices = np.round(spike_times).astype(int)
-#         global_max_time = max(
-#             global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0
-#         )
-#         num_bins = int(np.ceil(global_max_time / bin_size)) + 1
-#         neuron_spike_trains[neuron_id] = (
-#             np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0]
-#             > 0
-#         )
-#         firing_rate[neuron_id] = (
-#             np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000)
-#             if global_max_time > 0
-#             else 0
-#         )
-
-#     crosscorrs = {}
-#     neuron_ids = list(neurons.keys())
-#     for i, pre in enumerate(neuron_ids):
-#         for post in neuron_ids[i + 1 :]:
-#             (
-#                 lags,
-#                 corr_normalized,
-#                 mean_normalized,
-#                 std_normalized,
-#                 z_scores,
-#                 total_bump_score,
-#             ) = compute_correlogram_normalized(
-#                 neuron_spike_trains[pre].astype(float),
-#                 neuron_spike_trains[post].astype(float),
-#                 max_lag,
-#                 bin_size,
-#                 "cross",
-#                 firing_rate[pre],
-#                 firing_rate[post],
-#                 global_max_time,
-#             )
-#             crosscorrs[(pre, post)] = {
-#                 "lags": lags,
-#                 "corr_normalized": corr_normalized,
-#                 "z_scores": z_scores,
-#                 "total_bump_score": total_bump_score,
-#             }
-#     return crosscorrs, firing_rate
-
-
 # runs the full pipeline:
 # 1. load config; 2. load .pkl; 3. filter neurons; 4. compute cross-correlations; 5. rank pairs; 6. save results
 def run_preprocessing_pipeline(config_input, verbose=True):
