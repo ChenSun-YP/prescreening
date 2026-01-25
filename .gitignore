@@ -1,5 +1,6 @@
 __pycache__/utils.cpython-310.pyc
 corr_trimmed_folder/
+preprocess_test_logs/
 *.pkl
 *.png
 *.pdf
