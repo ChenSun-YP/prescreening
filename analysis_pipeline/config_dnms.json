@@ -1,8 +1,4 @@
-
-nano stage1_run_inital_analysis.sh
-
-nano utils/filters.py
-
+{
     "paths": {
       "file_dir": "data",
       "analysis_dir": "analysis",
