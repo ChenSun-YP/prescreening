@@ -49,6 +49,8 @@ def check_correlation_filled_bins(
 
     bad_pairs = []
     good_pairs = []
+    max_small = len(corr) * harshness
+    # print(f"Max small bins allowed: {max_small}")
 
     for (pre, post), value in crosscorrs.items():
         # value is a tuple:
@@ -61,16 +63,13 @@ def check_correlation_filled_bins(
         if corr is None or len(corr) == 0:
             continue
 
-        max_small = len(corr) * harshness
-        # print(f"Max small bins allowed: {max_small}")
-
         num_small = np.sum(np.abs(corr) < threshold)
         # print(f"Number of small bins: {num_small}")
 
         if num_small >= max_small:
-            # print(
-            #     f"{pre}, {post} — " f"{num_small} of bins |corr| < e^{power_threshold}"
-            # )
+            print(
+                f"{pre}, {post} — " f"{num_small} of bins |corr| < e^{power_threshold}"
+            )
             bad_pairs.append((pre, post))
         else:
             good_pairs.append((pre, post))

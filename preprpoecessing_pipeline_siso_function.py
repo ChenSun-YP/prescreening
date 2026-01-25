@@ -241,16 +241,17 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 power_threshold=-10,  # bins with value < e^-10 are considered empty
             )
 
+            bad_pairs_path = os.path.join(out_dir, "bad_pairs.txt")
             # filter pairs using correlation filled bins
             filtered_pairs_binfill = filter_pairs_using_correlation_filled_bins(
                 pairs,
-                bad_pairs_path="selected_neurons_first_200s/bad_pairs.txt",
+                bad_pairs_path=bad_pairs_path,
             )
             # print("filtered_pairs", filtered_pairs)
 
             # filter pairs using unimodality test
             check_correlations_unimodal(
-                pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+                pkl_path=abbr_pkl_path,  # find a way to automatically get this path
                 out_dir="unimodal_selected_neurons_first_200s",  # for debugging purposes
                 bin_centers=None,
                 smoothing_sigma=1.0,
