@@ -220,7 +220,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             # **Stage 4: Filter out the obviously bad pairs using "histogram base-filled"; bump score thresholds; unimodality test
 
             check_correlation_filled_bins(
-                pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+                pkl_path=pkl_path,  # find a way to automatically get this path
                 out_dir="selected_neurons_first_200s",
                 harshness=0.10,  # at most 10% of bins can be empty
                 power_threshold=-10,  # bins with value < e^-10 are considered empty
@@ -229,7 +229,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             # filter pairs using correlation filled bins
             filtered_pairs_binfill = filter_pairs_using_correlation_filled_bins(
                 pairs,
-                bad_pairs_path="selected_neurons_first_200s\\bad_pairs.txt",
+                bad_pairs_path="selected_neurons_first_200s/bad_pairs.txt",
             )
             # print("filtered_pairs", filtered_pairs)
 
@@ -245,7 +245,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
             filtered_pairs = filter_pairs_using_unimodality(
                 filtered_pairs_binfill,
-                bad_pairs_path="unimodal_selected_neurons_first_200s\\unimodal_bad_pairs.txt",
+                bad_pairs_path="unimodal_selected_neurons_first_200s/unimodal_bad_pairs.txt",
             )
 
             top_bump = sorted(

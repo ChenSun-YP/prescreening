@@ -1,10 +1,10 @@
 import pickle
 
-file_path = "data\\selected_neurons1150b034.pkl"
+file_path = "data/selected_neurons1150b034.pkl"
 
 # "data/analysis/selected_neurons_first_200s/autocorrs_edge_mean_True_ultra-fine.pkl"
 # "data/selected_neurons_first_200s.pkl"
-# "data\\selected_neurons1150b034.pkl"
+# "data/selected_neurons1150b034.pkl"
 
 # Open the file in binary mode ('rb' for read binary) and load the data
 with open(file_path, "rb") as file:
@@ -503,7 +503,7 @@ print(data)
 """
 
 
-# snippet of "data\\selected_neurons1150b034.pkl"
+# snippet of "data/selected_neurons1150b034.pkl"
 """
 
 {'n005_L_CA3_wire_2_cell_1': array([6.16500000e-02, 6.86750000e-02, 8.86500000e-02, ...,

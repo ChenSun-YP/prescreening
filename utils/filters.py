@@ -89,7 +89,7 @@ def check_correlation_filled_bins(
 # can be combined with other filter methods
 def filter_pairs_using_correlation_filled_bins(
     pairs,
-    bad_pairs_path="selected_neurons_first_200s\\bad_pairs.txt",
+    bad_pairs_path="selected_neurons_first_200s/bad_pairs.txt",
 ):
     """
     Remove any pair that appears in bad_pairs.txt
@@ -139,7 +139,7 @@ def check_histogram_unimodal(
 
     # print(f"Checking unimodality for pair: {preNeuron}, {postNeuron}")
 
-    filename = f"corr_trimmed_{preNeuron}_{postNeuron}.txt"
+    filename = f"corr_trimmed_folder/corr_trimmed_{preNeuron}_{postNeuron}.txt"
 
     if not os.path.exists(filename):
         raise FileNotFoundError(f"Correlogram file not found: {filename}")
@@ -230,7 +230,7 @@ def check_correlations_unimodal(
 # can be combined with other filter methods
 def filter_pairs_using_unimodality(
     pairs,
-    bad_pairs_path="selected_neurons_first_200s\\unimodal_bad_pairs.txt",
+    bad_pairs_path="selected_neurons_first_200s/unimodal_bad_pairs.txt",
 ):
     """
     Remove any pair that appears in bad_pairs.txt
