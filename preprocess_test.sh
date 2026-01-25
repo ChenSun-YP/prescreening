@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --job-name=preprocess_test
+#SBATCH --output=preprocess_test_%j.out
+#SBATCH --error=preprocess_test_%j.err
+#SBATCH --time=02:00:00
+#SBATCH --mem=8G
+#SBATCH --cpus-per-task=1
+
+module purge
+module load conda
+# Ensure Conda is initialized
+source /apps/conda/miniforge3/24.11.3/etc/profile.d/conda.sh
+
+conda activate plasticityvenv     # make sure you create an Anaconda env first
+
+python preprpoecessing_pipeline_siso_function.py
+
+
+conda deactivate
