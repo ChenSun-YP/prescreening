@@ -149,8 +149,8 @@ def check_histogram_unimodal(
     # Construct lag axis
     n = len(corr_ms)
 
-    if n == 0:
-        return True
+    if n <= 3:  # too few data to run test; exclude
+        return False
 
     # Infer lag axis from length
     # Example: n=17 → lags = [-8, ..., 0, ..., +8]
