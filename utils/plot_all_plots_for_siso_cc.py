@@ -236,6 +236,7 @@ def compute_correlogram_normalized_cc_first(
     corr_trimmed = corr[start_idx:end_idx]
 
     filename = f"corr_trimmed_folder/corr_trimmed_{preNeuron}_{postNeuron}.txt"
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
     np.savetxt(filename, corr_trimmed)
 
     # Zero out the center bin for autocorrelation

@@ -219,9 +219,24 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
             # **Stage 4: Filter out the obviously bad pairs using "histogram base-filled"; bump score thresholds; unimodality test
 
+            print("pkl_path", pkl_path)
+            # Normalize separators first
+            pkl_path = pkl_path.replace("\\", "/")
+
+            # Extract dataset name
+            dataset = os.path.splitext(os.path.basename(pkl_path))[0]
+
+            # Build new path
+            abbr_pkl_path = os.path.join(
+                "data",
+                "analysis",
+                dataset,
+                "crosscorrs_edge_mean_True_ultra-fine.pkl",
+            )
+            out_dir = os.path.splitext(os.path.basename(pkl_path))[0]
             check_correlation_filled_bins(
-                pkl_path=pkl_path,  # find a way to automatically get this path
-                out_dir="selected_neurons_first_200s",
+                pkl_path=abbr_pkl_path,  # find a way to automatically get this path
+                out_dir=out_dir,
                 harshness=0.10,  # at most 10% of bins can be empty
                 power_threshold=-10,  # bins with value < e^-10 are considered empty
             )

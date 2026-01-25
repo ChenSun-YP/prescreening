@@ -1,4 +1,5 @@
 __pycache__/utils.cpython-310.pyc
+corr_trimmed_folder/
 *.pkl
 *.png
 *.pdf
