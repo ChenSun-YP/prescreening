@@ -16,3 +16,9 @@ corr_trimmed_folder/
 *.heif
 *__pycache__/
 *.pyc
+*.out
+*.err
+corr_trimmed_*.txt
+raw_corr/
+log/
+data/**/*.pkl
