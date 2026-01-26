@@ -160,7 +160,7 @@ def check_histogram_unimodal(
     # Reconstruct raw lag samples
     samples = np.repeat(lags_ms, corr_ms.astype(int))
 
-    if samples <= 3:  # too few data to run test; exclude
+    if len(samples) <= 3:  # too few data to run test; exclude
         return False
 
     _, p_value = diptest(samples)
