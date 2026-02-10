@@ -8,6 +8,8 @@ from scipy.stats import norm
 import textwrap
 from scipy.signal import find_peaks
 from diptest import diptest
+from scipy.signal import peak_widths
+import scipy.signal as signal
 
 
 def get_color_intensity(value, mean, std):
@@ -376,15 +378,53 @@ def compute_correlogram_normalized_cc_first(
     def pct_empty(cc):
         return np.mean(cc < 1e-3)
 
-    def bump_score(cc, baseline):
-        dev = np.abs(cc - baseline)
-        p, props = find_peaks(dev, prominence=0.01 * baseline, distance=2)
-        if len(p) == 0:
+    # def bump_score(cc, baseline):
+    #     dev = np.abs(cc - baseline)
+    #     p, props = find_peaks(dev, prominence=0.01 * baseline, distance=2)
+    #     if len(p) == 0:
+    #         return 0.0, np.zeros_like(cc)
+    #     scores = np.zeros_like(cc)
+    #     scores[p] = props['prominences'] / baseline
+    #     total = scores.sum() + cc[p].sum() * (1 - pct_empty(cc))
+    #     return total, scores
+
+
+
+
+    def bump_score(cc, baseline, max_lag):
+        # max_lag is in milliseconds for one direction, so we need to double it for the full window width
+        dev = np.maximum(cc - baseline, 0)           # 1. remove below baseline
+        if dev.max() <= 0:
             return 0.0, np.zeros_like(cc)
-        scores = np.zeros_like(cc)
-        scores[p] = props['prominences'] / baseline
-        total = scores.sum() + cc[p].sum() * (1 - pct_empty(cc))
+
+        l0 = np.argmax(dev)                           # 2. center = biggest bin
+
+        W = max_lag/2                               # full window width
+        if W == 0:
+            return dev[l0], np.zeros_like(cc)
+
+        # 3. sigmoid curves (tanh stretched to go -1→1 over W/2 on each side)
+        left_center  = l0 - W/2
+        right_center = l0 + W/2
+
+        l = np.arange(len(cc))
+        s = np.full_like(cc, -1.0, dtype=float)
+
+        left_mask  = (l >= l0 - W) & (l <= l0)
+        right_mask = (l >  l0)     & (l <= l0 + W)
+
+        s[left_mask]  = np.tanh(7 * (l[left_mask]  - left_center)  / W)
+        s[right_mask] = np.tanh(7 * (right_center - l[right_mask]) / W)
+
+        # 4. score = sum( dev(l) * s(l) )
+        total = np.sum(dev * s) * (1 - pct_empty(cc))**2
+
+        scores = dev * s   # optional: per-bin contribution
+        # print(scores)
         return total, scores
+
+
+
 
     def multi_score(lags, cc):
         if len(cc) < 8:
@@ -421,10 +461,9 @@ def compute_correlogram_normalized_cc_first(
     std_cc  = cc_norm.std()
 
     z = (cc_norm - mean_cc) / mean_cc if mean_cc > 0 else np.zeros_like(cc_norm)
+    bs, bump_arr = bump_score(cc_norm, mean_cc, max_lag_ms)
 
-    bs, bump_arr = bump_score(cc_norm, mean_cc)
     ms = multi_score(lags, cc_norm)
-    max_cc = np.max(cc_norm) / mean_cc
 
     above = np.maximum(cc_norm - mean_cc, 0)
     # signal to noise ratio excess area
@@ -435,14 +474,14 @@ def compute_correlogram_normalized_cc_first(
 
 
     total = ms * (1 - pe)**2 * (1 + bs)
+    # bs = bs * (1 - pe)**2
 
-    score_type = 'snr_excess_area'
     if score_type == 'bump':
         return lags, cc_norm, mean_cc, std_cc, bump_arr, bs
     elif score_type == 'z_score':
         return lags, cc_norm, mean_cc, std_cc, z, total
     elif score_type == 'snr_excess_area':
-        return lags, cc_norm, mean_cc, std_cc, snr_excess_area,snr_excess_area_with_penalty
+        return lags, cc_norm, mean_cc, std_cc, snr_excess_area_with_penalty,snr_excess_area_with_penalty
 
 
 
