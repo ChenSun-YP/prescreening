@@ -8,7 +8,7 @@ import os
 import glob 
 import pandas as pd
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from utils import (
+from utils.plot_all_plots_for_siso_cc import (
     plot_all_neurons_silent_periods,
     plot_spike_raster,
     plot_neuron_correlation_matrices,
@@ -38,19 +38,62 @@ def load_config(config_input):
     return config
 
 # Function to load neurons from a .pkl file
-def load_neurons(pkl_path,length_of_spiketrain=None):
-    """Load spike train data from a .pkl file and handle potential binary spike train format."""
-    with open(pkl_path, 'rb') as f:
-        neurons = pickle.load(f)
-    # Check if data is a binary spike train (many zeros) and convert to spike indices
-    first_key = next(iter(neurons.keys()))
-    if np.sum(np.array(neurons[first_key]) == 0) > 100:
-        neurons = {k: np.where(v)[0] for k, v in neurons.items()}
+def load_neurons(pkl_path, length_of_spiketrain=None):
+    """Load spike train data from a .pkl file.
 
+    Handles two formats:
+    1. Simple: dict mapping neuron_id -> array of spike times (or binary spike train).
+    2. Nested: dict with metadata and a 'neurons' key containing a list of dicts
+       with 'name' and 'timestamps' (e.g. from NeuroSuite/neuroscope-style exports).
+
+    Returns:
+        neurons: dict of neuron_id -> spike times (full duration; caller applies cutoff if needed).
+        rec_info: dict with 'tend' (total recording duration) and 'last_trial_end' (last TRIAL end time)
+                  for nested format; both None for simple format.
+    """
+    with open(pkl_path, 'rb') as f:
+        data = pickle.load(f)
+
+    rec_info = {'tend': None, 'last_trial_end': None}
+
+    # Nested format: {'neurons': [{'name': ..., 'timestamps': [...]}, ...], 'tend': ..., 'intervals': ...}
+    if isinstance(data, dict) and 'neurons' in data:
+        neurons_list = data['neurons']
+        if not isinstance(neurons_list, (list, tuple)):
+            raise ValueError("Expected 'neurons' to be a list of dicts with 'name' and 'timestamps'")
+        neurons = {}
+        for item in neurons_list:
+            if isinstance(item, dict) and 'name' in item and 'timestamps' in item:
+                name = item['name']
+                ts = np.asarray(item['timestamps'], dtype=float)
+                neurons[name] = ts
+            else:
+                raise ValueError(f"Each entry in 'neurons' must have 'name' and 'timestamps'; got keys: {item.keys() if isinstance(item, dict) else type(item)}")
+        if 'tend' in data:
+            rec_info['tend'] = float(data['tend'])
+        if 'events' in data:
+            trials = data['events'][-1] if  data['events'][-1]['name'] == 'TRIAL' else None
+            if trials is not None:
+                rec_info['last_trial_end'] = trials['timestamps'][-1]
+                rec_info['last_trial_end']  = 20
+
+    else:
+        # Simple format: dict of neuron_id -> spike array
+        neurons = {k: np.asarray(v, dtype=float) for k, v in data.items()}
+
+    # Detect binary spike train (many zeros) and convert to spike indices
+    if neurons:
+        first_key = next(iter(neurons.keys()))
+        arr = np.asarray(neurons[first_key])
+        if arr.size > 100 and np.sum(arr == 0) > 100:
+            neurons = {k: np.where(np.asarray(v))[0] for k, v in neurons.items()}
+
+    # Optional caller-provided cutoff (e.g. for simple format); do not apply rec_info cutoff here
     if length_of_spiketrain is not None:
         neurons = {k: v[v < length_of_spiketrain] for k, v in neurons.items()}
 
-    return neurons
+    return neurons, rec_info
+
 
 # Function to filter neurons based on minimum spike count
 def filter_neurons(neurons, min_spikes):
@@ -62,39 +105,39 @@ def filter_neurons(neurons, min_spikes):
     return {k: v for k, v in neurons.items() if len(v) >= min_spikes}
 
 # Function to compute cross-correlations for all neuron pairs
-def compute_all_crosscorrs(neurons, bin_size, max_lag, sample_rate):
-    """Compute normalized cross-correlograms and z-scores for all neuron pairs."""
-    neuron_spike_trains, global_max_time, firing_rate = {}, 0, {}
-    for neuron_id, spike_times in neurons.items():
-        # Convert spike times to milliseconds
-        spike_times = np.array(spike_times) / sample_rate * 1000
-        spike_indices = np.round(spike_times).astype(int)
-        global_max_time = max(global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0)
-        num_bins = int(np.ceil(global_max_time / bin_size)) + 1
-        neuron_spike_trains[neuron_id] = np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0] > 0
-        firing_rate[neuron_id] = np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000) if global_max_time > 0 else 0
+# def compute_all_crosscorrs(neurons, bin_size, max_lag, sample_rate):
+#     """Compute normalized cross-correlograms and z-scores for all neuron pairs."""
+#     neuron_spike_trains, global_max_time, firing_rate = {}, 0, {}
+#     for neuron_id, spike_times in neurons.items():
+#         # Convert spike times to milliseconds
+#         spike_times = np.array(spike_times) / sample_rate * 1000
+#         spike_indices = np.round(spike_times).astype(int)
+#         global_max_time = max(global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0)
+#         num_bins = int(np.ceil(global_max_time / bin_size)) + 1
+#         neuron_spike_trains[neuron_id] = np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0] > 0
+#         firing_rate[neuron_id] = np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000) if global_max_time > 0 else 0
     
-    crosscorrs = {}
-    neuron_ids = list(neurons.keys())
-    for i, pre in enumerate(neuron_ids):
-        for post in neuron_ids[i+1:]:
-            lags, corr_normalized, mean_normalized, std_normalized, z_scores, total_bump_score = compute_correlogram_normalized(
-                neuron_spike_trains[pre].astype(float),
-                neuron_spike_trains[post].astype(float),
-                max_lag,
-                bin_size,
-                'cross',
-                firing_rate[pre],
-                firing_rate[post],
-                global_max_time
-            )
-            crosscorrs[(pre, post)] = {
-                'lags': lags,
-                'corr_normalized': corr_normalized,
-                'z_scores': z_scores,
-                'total_bump_score': total_bump_score
-            }
-    return crosscorrs, firing_rate
+#     crosscorrs = {}
+#     neuron_ids = list(neurons.keys())
+#     for i, pre in enumerate(neuron_ids):
+#         for post in neuron_ids[i+1:]:
+#             lags, corr_normalized, mean_normalized, std_normalized, z_scores, total_bump_score = compute_correlogram_normalized(
+#                 neuron_spike_trains[pre].astype(float),
+#                 neuron_spike_trains[post].astype(float),
+#                 max_lag,
+#                 bin_size,
+#                 'cross',
+#                 firing_rate[pre],
+#                 firing_rate[post],
+#                 global_max_time
+#             )
+#             crosscorrs[(pre, post)] = {
+#                 'lags': lags,
+#                 'corr_normalized': corr_normalized,
+#                 'z_scores': z_scores,
+#                 'total_bump_score': total_bump_score
+#             }
+#     return crosscorrs, firing_rate
 
 def run_preprocessing_pipeline(config_input, verbose=True):
     """
@@ -112,7 +155,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
     
     # Extract parameters
     FILE_DIR = config['paths']['file_dir']
-    ANALYSIS_DIR = os.path.join(FILE_DIR, config['paths']['analysis_dir'])
+    ANALYSIS_DIR = os.path.join(config['paths']['analysis_dir'], FILE_DIR)  # save under analysis_dir/file_dir
     PKL_FILE_PATTERN = config['paths']['pkl_file']  # Now a wildcard pattern, e.g., "*.pkl"
     SAMPLE_RATE = float(config['processing']['sample_rate'])
     MIN_SPIKES = int(config['processing']['min_spikes'])
@@ -131,7 +174,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         'statistics': {}
     }
 
-    # Set up directories
+    # Set up directories (analysis_dir/file_dir for outputs)
     os.makedirs(ANALYSIS_DIR, exist_ok=True)
     pkl_files = glob.glob(os.path.join(FILE_DIR, PKL_FILE_PATTERN))
     
@@ -147,12 +190,35 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         if verbose:
             print(f"Processing {os.path.basename(pkl_path)}...")
 
-        save_dir = os.path.join(ANALYSIS_DIR, os.path.splitext(os.path.basename(pkl_path))[0])
+        # Path: analysis_dir/file_dir/[session_stem/]pkl_file_stem (session = pkl's parent rel to file_dir)
+        pkl_dir = os.path.dirname(pkl_path)
+        pkl_stem = os.path.splitext(os.path.basename(pkl_path))[0]
+        try:
+            session_part = os.path.relpath(pkl_dir, FILE_DIR)
+        except ValueError:
+            session_part = ""
+        if session_part in (".", ""):
+            save_dir = os.path.join(ANALYSIS_DIR, pkl_stem)
+        else:
+            save_dir = os.path.join(ANALYSIS_DIR, session_part, pkl_stem)
         os.makedirs(save_dir, exist_ok=True)
 
         # **Stage 1: Load the spiketrain data from the .pkl file**
-        neurons = load_neurons(pkl_path)
-        n_before = len(neurons)
+        neurons_full, rec_info = load_neurons(pkl_path)
+        n_before = len(neurons_full)
+
+        # Cutoff for CC, AC, and silence: use last TRIAL end, else recording tend
+        cutoff = rec_info.get('last_trial_end') or rec_info.get('tend')
+        if cutoff is not None:
+            neurons = {k: v[v < cutoff] for k, v in neurons_full.items()}
+        else:
+            neurons = neurons_full
+
+        if verbose:
+            print(f"  Total recording duration (tend): {rec_info['tend']}")
+            print(f"  Last TRIAL end (cutoff for CC/AC/silence): {rec_info['last_trial_end']}")
+            if cutoff is not None:
+                print(f"  Using spikes with t < {cutoff} for cross-correlation, autocorrelation, and silence-period analysis.")
 
         # **Stage 2: Filter neurons**
         filtered_neurons = filter_neurons(neurons, MIN_SPIKES)
@@ -161,15 +227,27 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         # **Stage 3: (Optional) Generate various figures**
         if PLOT_ALL:
             plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
-            plot_spike_raster(filtered_neurons, save_dir, SAMPLE_RATE, bin_size=RASTER_BIN_SIZE)
+            # Raster: same cut data as all other analysis; dashed line at last trial end
+            plot_spike_raster(filtered_neurons, save_dir, SAMPLE_RATE, bin_size=RASTER_BIN_SIZE, cutoff_time=rec_info.get('last_trial_end'))
             plot_neuron_correlation_matrices(filtered_neurons, save_dir, SAMPLE_RATE,edge_mean=edge_mean,configs=CONFIGS)
 
         file_results = {
             'file': pkl_path,
-            'n_neurons_before': n_before,  
+            'n_neurons_before': n_before,
             'n_neurons_after': n_after,
             'configurations': []
         }
+
+        # Write recording/trial info to summary once
+        summary_path = os.path.join(save_dir, 'summary.txt')
+        with open(summary_path, 'w') as f:
+            f.write(f'Dataset: {os.path.basename(pkl_path)}\n')
+            f.write(f'Total recording duration (tend): {rec_info["tend"]}\n')
+            f.write(f'Last TRIAL end: {rec_info["last_trial_end"]}\n')
+            if rec_info['last_trial_end'] is not None or rec_info['tend'] is not None:
+                f.write('All analysis (CC, AC, silence-period, raster) use only spikes with t < last TRIAL end (cutoff).\n')
+                f.write('Spike raster plot shows data up to cutoff with a dashed vertical line at last TRIAL end.\n')
+            f.write('-' * 50 + '\n')
 
         for item in CONFIGS:
             bin_size = item[0]
@@ -306,8 +384,6 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             plt.close()
 
             # **Stage 6: Save data, plots, and summary**
-            summary_path = os.path.join(save_dir, 'summary.txt')
-            
             # Identify top and bottom pairs based on total bump score
             bump_score_pairs = [(pair, crosscorrs[pair][5]) for pair in pairs]
             top_bump_pairs = sorted(bump_score_pairs, key=lambda x: x[1], reverse=True)[:N_TOP]
@@ -326,10 +402,8 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             csv_path = os.path.join(save_dir, f'pair_rankings_{resolution.lower()}.csv')
             df_ranks.to_csv(csv_path, index=False)
             
-            # Write summary text file
-            mode = 'a' if os.path.exists(summary_path) else 'w'
-            with open(summary_path, mode) as f:
-                f.write(f'Dataset: {os.path.basename(pkl_path)}\n')
+            # Append per-resolution summary
+            with open(summary_path, 'a') as f:
                 f.write(f'Bin size: {bin_size}ms\n')
                 f.write(f'Max lag: {max_lag}ms\n')
                 f.write(f'Resolution: {resolution}\n')
@@ -377,6 +451,9 @@ def main():
     Uses default config file paths for backward compatibility.
     """
     
+    default_configs = [
+        'analysis_pipeline/Jan_learning.json'
+    ]
     default_configs = [
         'analysis_pipeline/config_dnms.json'
     ]
