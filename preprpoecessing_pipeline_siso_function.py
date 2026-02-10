@@ -4,9 +4,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 import sys
-import os
-import glob 
+import argparse
+import glob
 import pandas as pd
+
+# Basic: line-buffered stdout/stderr so SLURM log shows output while running
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+    sys.stderr.reconfigure(line_buffering=True)
+except AttributeError:
+    pass
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.plot_all_plots_for_siso_cc import (
     plot_all_neurons_silent_periods,
@@ -75,7 +83,6 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
             trials = data['events'][-1] if  data['events'][-1]['name'] == 'TRIAL' else None
             if trials is not None:
                 rec_info['last_trial_end'] = trials['timestamps'][-1]
-                rec_info['last_trial_end']  = 20
 
     else:
         # Simple format: dict of neuron_id -> spike array
@@ -154,8 +161,10 @@ def run_preprocessing_pipeline(config_input, verbose=True):
     config = load_config(config_input)
     
     # Extract parameters
-    FILE_DIR = config['paths']['file_dir']
-    ANALYSIS_DIR = os.path.join(config['paths']['analysis_dir'], FILE_DIR)  # save under analysis_dir/file_dir
+    FILE_DIR = config['paths']['file_dir'].rstrip("/")
+    # Use basename of file_dir so each job (e.g. .../1150_5_sec) writes to analysis_dir/1150_5_sec
+    _output_subdir = os.path.basename(FILE_DIR)
+    ANALYSIS_DIR = os.path.join(config['paths']['analysis_dir'], _output_subdir)
     PKL_FILE_PATTERN = config['paths']['pkl_file']  # Now a wildcard pattern, e.g., "*.pkl"
     SAMPLE_RATE = float(config['processing']['sample_rate'])
     MIN_SPIKES = int(config['processing']['min_spikes'])
@@ -448,30 +457,50 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 def main():
     """
     Main function for standalone script execution.
-    Uses default config file paths for backward compatibility.
+    Accepts one or more config JSON paths via --config; runs the pipeline for each.
     """
-    
-    default_configs = [
-        'analysis_pipeline/Jan_learning.json'
-    ]
-    default_configs = [
-        'analysis_pipeline/config_dnms.json'
-    ]
-    
-    # Try to find an existing config file
-    config_path = None
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    print(base_dir)
-    for config_file in default_configs:
-        full_path = os.path.join(base_dir, config_file)
-        if os.path.exists(full_path):
-            config_path = full_path
-            break
+    parser = argparse.ArgumentParser(
+        description="Run preprocessing pipeline with one or more config files."
+    )
+    parser.add_argument(
+        "--config",
+        nargs="+",
+        default=None,
+        help="One or more config JSON paths.",
+    )
+    args = parser.parse_args()
 
-    
-    print(f"Using config file: {config_path}")
-    results = run_preprocessing_pipeline(config_path)
-    print(f"Processing complete. Processed {len(results['processed_files'])} files.")
+    config_paths = list(args.config) if args.config else []
+
+    if not config_paths:
+        # Backward compatibility: default config
+        default = os.path.join(base_dir, "analysis_pipeline", "config_dnms.json")
+        if os.path.exists(default):
+            config_paths = [default]
+        else:
+            parser.error("No config provided and default config_dnms.json not found. Use --config.")
+        print(f"Using default config file: {config_paths[0]}")
+    else:
+        # Resolve relative paths
+        resolved = []
+        for p in config_paths:
+            if not os.path.isabs(p):
+                p = os.path.join(os.getcwd(), p) if not p.startswith("analysis_pipeline") else os.path.join(base_dir, p)
+            if not os.path.exists(p):
+                p_alt = os.path.join(base_dir, p)
+                p = p_alt if os.path.exists(p_alt) else p
+            resolved.append(p)
+        config_paths = resolved
+
+    for i, config_path in enumerate(config_paths):
+        if len(config_paths) > 1:
+            print(f"[{i+1}/{len(config_paths)}] Using config: {config_path}")
+        else:
+            print(f"Using config file: {config_path}")
+        results = run_preprocessing_pipeline(config_path)
+        print(f"Config done. Processed {len(results['processed_files'])} files.")
+    print("All configs complete.")
 
 if __name__ == "__main__":
     main()
