@@ -1,5 +1,5 @@
-
-import os
+import sys,os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import csv
 import logging
 import traceback
@@ -21,7 +21,7 @@ import gc
 import scipy.signal
 import psutil
 
-
+# Try to import tqdm for progress bars, fallback to simple progress if not available
 try:
     from tqdm import tqdm
     HAS_TQDM = True
@@ -73,6 +73,7 @@ plt.rcParams.update({
 
 
 
+# Command-line argument parsing
 def parse_arguments():
     parser = argparse.ArgumentParser(description='GLM fitting for neuron pairs from a ranking CSV with kernel overlay')
     parser.add_argument('--data_file', type=str, default='DNMS_data/selected_neurons.pkl',
@@ -101,6 +102,9 @@ def parse_arguments():
                         help='do the glm fit using output neuron as input neuron too')
     parser.add_argument('--chunk_size', type=int, default=10000,  # Lowered default from 50000
                         help='Chunk size for design matrix processing (lower to reduce memory usage)')
+    parser.add_argument('--only_use_trial_data', action='store_true',
+                        default=False,
+                        help='Only use trial data for the neurons')
     return parser.parse_args()
 
 # Global variables that will be set in __main__ or by external scripts
@@ -1112,9 +1116,9 @@ def plot_fit(data, model_full, x_full, y_full, model_fsiso=None, save_dir=''):
     ax_ks_siso.legend()
     ax_ks_siso.set_box_aspect(1)
 
-    # Plot F_SISO kernels and KS if present (column 1)
+    # Plot F_SISO kernels and KS if present (column 1); share y-axis with SISO for FF and FB
     if has_fsiso:
-        ax_ff_fsiso = fig.add_subplot(gs[0, 1])
+        ax_ff_fsiso = fig.add_subplot(gs[0, 1], sharey=ax_ff_siso)
         ax_ff_fsiso.plot(t, ff_mean_fsiso, label=f'k0={k0_fsiso:.3f}', color='purple')
         ax_ff_fsiso.fill_between(t, ff_mean_fsiso - ff_ci_fsiso, ff_mean_fsiso + ff_ci_fsiso, color='purple', alpha=0.2, label='95% CI')
         ax_ff_fsiso.set_title('Feedforward Kernel (F_SISO)')
@@ -1123,8 +1127,9 @@ def plot_fit(data, model_full, x_full, y_full, model_fsiso=None, save_dir=''):
         ax_ff_fsiso.legend(loc='upper right')
         ax_ff_fsiso.set_xlim(0, global_max_nonzero_idx)
         ax_ff_fsiso.set_box_aspect(1)
+        plt.setp(ax_ff_fsiso.get_yticklabels(), visible=True)  # show y labels on shared axis
 
-        ax_fb_fsiso = fig.add_subplot(gs[1, 1])
+        ax_fb_fsiso = fig.add_subplot(gs[1, 1], sharey=ax_fb_siso)
         ax_fb_fsiso.plot(t, fb_mean_fsiso, color='purple')
         ax_fb_fsiso.fill_between(t, fb_mean_fsiso - fb_ci_fsiso, fb_mean_fsiso + fb_ci_fsiso, color='purple', alpha=0.2, label='95% CI')
         ax_fb_fsiso.set_title('Feedback Kernel (F_SISO)')
@@ -1133,6 +1138,7 @@ def plot_fit(data, model_full, x_full, y_full, model_fsiso=None, save_dir=''):
         ax_fb_fsiso.legend(loc='upper right')
         ax_fb_fsiso.set_xlim(0, global_max_nonzero_idx)
         ax_fb_fsiso.set_box_aspect(1)
+        plt.setp(ax_fb_fsiso.get_yticklabels(), visible=True)  # show y labels on shared axis
 
         ax_ks_fsiso = fig.add_subplot(gs[2, 1])
         if ks_full_fsiso:
@@ -1679,9 +1685,31 @@ if __name__ == "__main__":
 
     # Load neurons data
     with open(cmd_args.data_file, 'rb') as f:
-        neurons = pickle.load(f)
-    print(list(neurons.keys()))  # List all neuron names
-    print(len(list(neurons.keys())))
+        data = pickle.load(f)
+
+        if 'neurons' in data.keys():
+            neurons = data['neurons'] # this will be a list of dicts each item is {'name': 'n005_L_CA3_wire_2_cell_1', 'varVersion': 101, 'wireNumber': 0, 'unitNumber': 0, 'xPos': 0.0, 'yPos': 1.0, 'timestamps':
+            # we clean it so neurons is a dict with keys like 'n001_X', 'n001_Y', 'n002_X', 'n002_Y', etc.
+            neurons = {neuron['name']: neuron['timestamps'] for neuron in neurons}
+            if 'tend' in data.keys() and 'events' in data.keys() and cmd_args.only_use_trial_data:
+                # Find the first event with name 'TRIAL' and set cutoff_time to its 'tend' field
+                cutoff_time = None
+                for event in data['events']:
+                    if event.get('name', '') == 'TRIAL':
+                        cutoff_time = event['timestamps'][-1]
+                        break
+                print(f'Cutoff time: {cutoff_time}, recording len', data['tend'])
+                if cutoff_time is not None:
+                    # Trim each neuron's timestamps to <= cutoff_time
+                    neurons = {name: np.array([t for t in ts if t <= cutoff_time]) for name, ts in neurons.items()}
+                    print(f'Trimmed all neurons to t <= {cutoff_time}')
+                else:
+                    print('No TRIAL event found; using full recording.')
+
+        else:
+            neurons = data
+        print(f'Using all data for {len(neurons)} neurons')
+
 
     # Read neuron pairs
     neuron_pairs = []
@@ -1772,7 +1800,7 @@ python glm_fit_cv_one_neuron.py \
     --num_folds
 
 
-python glm_fit_cv_one_neuron.py \
+python utils/glm_fit_cv_one_neuron.py \
     --data_file "DNMS_data/selected_neurons1150b032.pkl" \
     --neuron_pairs "n017_L_CA3_wire_5_cell_1:n117_R_CA3_wire_6_cell_1" \
     --f_SISO True \
@@ -1783,4 +1811,16 @@ python glm_fit_cv_one_neuron.py \
     --chunk_size 1000 \
     --max_tau 200 \
     --num_folds 1
+
+
+python utils/glm_fit_cv_one_neuron.py \
+    --data_file "data/Jan2010-Nonstationarity_Learning/1150_10_sec/1150b032merge-clean_cutoff_5.pkl" \
+    --ranking_file "data/Jan2010-Nonstationarity_Learning/analysis/1150_10_sec/1150b032merge-clean_cutoff_5/pair_rankings_semifine.csv" \
+    --save_dir "data/Jan2010-Nonstationarity_Learning/single_pair_analysis/1150_10_sec/1150b032merge-clean_cutoff_5_100_L5_k0_7_h0_7" \
+    --rank_range "1-2" \
+    --alpha_k 0.7 \
+    --alpha_h 0.7 \
+    --num_folds 5 \
+    --L 5 \
+    --max_tau 100 --only_use_trial_data
 '''
