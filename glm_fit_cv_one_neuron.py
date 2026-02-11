@@ -1366,6 +1366,12 @@ def run_glm_fitting():
         print(f"\n[{pair_idx}/{len(neuron_pairs)}] Processing pair: {input_neuron} -> {output_neuron} (Rank {rank})")
         logger.info(f"Processing pair: {input_neuron} -> {output_neuron}, Rank: {rank}, BumpScore: {bump_score}")
         
+        pair_metrics_file = os.path.join(SAVE_DIR, f'pair_metrics_{input_neuron}_{output_neuron}_rank{rank}.csv')
+        if os.path.exists(pair_metrics_file):
+            print(f"  Skipping (already exists): {pair_metrics_file}")
+            logger.info(f"Skipping pair (result exists): {input_neuron} -> {output_neuron} rank {rank}")
+            continue
+        
         try:
             pair_data = preprocess_neuron_data(input_neuron, output_neuron, neurons, sample_rate)
             model_full, conf_int, all_metrics, avg_ff_coeffs, avg_fb_coeffs,k0, ff_basis, fb_basis = fit_glm_to_stdp(
@@ -1384,9 +1390,6 @@ def run_glm_fitting():
                 continue
             
             # Save metrics to CSV
-            pair_metrics_file = os.path.join(SAVE_DIR, f'pair_metrics_{input_neuron}_{output_neuron}_rank{rank}.csv')
-            if  os.path.exists(pair_metrics_file):
-                os.remove(pair_metrics_file)
             with open(pair_metrics_file, 'a', newline='') as csvfile:
                 fieldnames = ['input_neuron', 'output_neuron', 'rank', 'bump_score', 'fold', 'L', 'alpha_k', 'alpha_h', 'norm_ce_val', 'rmse_train',
                             'k0', 'deviance_reduction', 'log_likelihood', 'null_log_likelihood', 'aic', 'bic',
