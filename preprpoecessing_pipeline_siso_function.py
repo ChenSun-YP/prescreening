@@ -72,6 +72,19 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
 
     rec_info = {"tend": None, "last_trial_end": None}
 
+    print("top-level type:", type(data))
+    if isinstance(data, dict):
+        for k, v in data.items():
+            print("KEY:", repr(k), "   type:", type(v))
+            # If it's list/tuple, print len and types of first few entries
+            if isinstance(v, (list, tuple)):
+                print("  list length:", len(v))
+                for i, elt in enumerate(v[:5]):
+                    print("   >", i, type(elt), getattr(elt, "shape", None), end="\n")
+            # If it's a dict, print its keys
+            if isinstance(v, dict):
+                print("  dict keys:", list(v.keys()))
+
     # Nested format: {'neurons': [{'name': ..., 'timestamps': [...]}, ...], 'tend': ..., 'intervals': ...}
     if isinstance(data, dict) and "neurons" in data:
         neurons_list = data["neurons"]
@@ -97,6 +110,20 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
             )
             if trials is not None:
                 rec_info["last_trial_end"] = trials["timestamps"][-1]
+    elif isinstance(data, dict) and all(isinstance(v, tuple) for v in data.values()):
+        neurons = {}
+        for k, v in data.items():
+            # extract largest 1D numeric array inside tuple
+            candidates = [
+                np.asarray(elt)
+                for elt in v
+                if isinstance(elt, (list, np.ndarray)) and np.asarray(elt).ndim == 1
+            ]
+            if candidates:
+                chosen = max(candidates, key=lambda x: x.size)
+                neurons[k] = chosen.astype(float)
+            else:
+                raise ValueError(f"No 1D numeric array found in tuple for key {k}")
 
     else:
         # Simple format: dict of neuron_id -> spike array
@@ -188,7 +215,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         os.makedirs(save_dir, exist_ok=True)
 
         # **Stage 1: Load the spiketrain data from the .pkl file**
-        neurons = load_neurons(pkl_path)
+        neurons, rec_info = load_neurons(pkl_path)
         n_before = len(neurons)
 
         # **Stage 2: Filter neurons for spike count**
