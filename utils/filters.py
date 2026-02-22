@@ -86,6 +86,87 @@ def check_correlation_filled_bins(
             f.write(f"{pre}\t{post}\n")
 
 
+def check_firing_rate(
+    pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+    out_dir="selected_neurons_first_200s",  # for debugging purposes
+    min_rate=0.1,  # in Hz
+    max_rate=5.0,  # in Hz
+):
+    os.makedirs(out_dir, exist_ok=True)
+
+    bad_pairs_path = os.path.join(out_dir, "firing_rate_bad_pairs.txt")
+    good_pairs_path = os.path.join(out_dir, "firing_rate_good_pairs.txt")
+
+    with open(pkl_path, "rb") as f:
+        crosscorrs = pickle.load(f)
+
+    bad_pairs = []
+    good_pairs = []
+
+    for (pre, post), value in crosscorrs.items():
+        # value is a tuple:
+        # (lags, corr, mean, std, scores, total_score)
+
+        # print(f"Checking firing rate for pair: {pre}, {post}")
+
+        mean_rate = value[2]  # mean firing rate of pre neuron
+
+        if mean_rate < min_rate or mean_rate > max_rate:
+            print(
+                f"{pre}, {post} — Mean firing rate {mean_rate:.2f} Hz outside range [{min_rate}, {max_rate}]"
+            )
+            bad_pairs.append((pre, post))
+        else:
+            good_pairs.append((pre, post))
+
+    # Write bad pairs
+    with open(bad_pairs_path, "w") as f:
+        for pre, post in bad_pairs:
+            f.write(f"{pre}\t{post}\n")
+
+    # Write good pairs
+    with open(good_pairs_path, "w") as f:
+        for pre, post in good_pairs:
+            f.write(f"{pre}\t{post}\n")
+
+def filter_pairs_using_firing_rate(
+    pairs,
+    bad_pairs_path="selected_neurons_first_200s\\firing_rate_bad_pairs.txt",
+):
+    """
+    Remove any pair that appears in bad_pairs.txt
+    from the provided list of pairs.
+
+    Parameters
+    ----------
+    pairs : list of tuple
+        Original list of (pre, post) pairs
+    good_pairs_path : str
+    bad_pairs_path : str
+
+    Returns
+    -------
+    filtered_pairs : list of tuple
+    """
+
+    def load_pairs(path):
+        loaded = set()
+        with open(path, "r") as f:
+            for line in f:
+                if not line.strip():
+                    continue
+                pre, post = line.strip().split()
+                loaded.add((pre, post))
+        return loaded
+
+    bad_pairs = load_pairs(bad_pairs_path)
+    # print("bad_pairs", bad_pairs)
+
+    filtered_pairs = [pair for pair in pairs if pair not in bad_pairs]
+
+    return filtered_pairs
+
+
 # can be combined with other filter methods
 def filter_pairs_using_correlation_filled_bins(
     pairs,
