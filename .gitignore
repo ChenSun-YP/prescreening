@@ -1,4 +1,6 @@
 __pycache__/utils.cpython-310.pyc
+corr_trimmed_folder/
+preprocess_test_logs/
 *.pkl
 *.png
 *.pdf
@@ -15,3 +17,9 @@ __pycache__/utils.cpython-310.pyc
 *.heif
 *__pycache__/
 *.pyc
+*.out
+*.err
+corr_trimmed_*.txt
+raw_corr/
+log/
+data/**/*.pkl
