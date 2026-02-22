@@ -202,6 +202,7 @@ def filter_pairs_using_correlation_filled_bins(
         return loaded
 
     bad_pairs = load_pairs(bad_pairs_path)
+    print(f"Loaded {len(bad_pairs)} bad pairs from {bad_pairs_path}")
     # print("bad_pairs", bad_pairs)
 
     filtered_pairs = [pair for pair in pairs if pair not in bad_pairs]
@@ -294,10 +295,8 @@ def check_correlations_unimodal(
             alpha=prominence_fraction,
         )
 
-        if unimodality is True:
-            # print(
-            #     f"{pre}, {post} — " f"{num_small} of bins |corr| < e^{power_threshold}"
-            # )
+        if unimodality is False:
+            print(f"{pre}, {post} — Correlogram is not unimodal")
             bad_pairs.append((pre, post))
         else:
             good_pairs.append((pre, post))
