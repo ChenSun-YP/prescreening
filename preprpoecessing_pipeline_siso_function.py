@@ -330,7 +330,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             # filter pairs using unimodality test
             check_correlations_unimodal(
                 pkl_path=abbr_pkl_path,  # find a way to automatically get this path,
-                out_dir="unimodal_selected_neurons_first_200s",  # for debugging purposes
+                out_dir=out_dir,  # for debugging purposes
                 bin_centers=None,
                 smoothing_sigma=1.0,
                 prominence_fraction=0.25,
@@ -339,7 +339,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
             filtered_pairs = filter_pairs_using_unimodality(
                 filtered_pairs_binfill,
-                bad_pairs_path="unimodal_selected_neurons_first_200s\\unimodal_bad_pairs.txt",
+                bad_pairs_path=bad_pairs_path,
             )
 
             top_bump = sorted(
