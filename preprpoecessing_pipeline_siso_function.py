@@ -87,6 +87,7 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
 
     # Nested format: {'neurons': [{'name': ..., 'timestamps': [...]}, ...], 'tend': ..., 'intervals': ...}
     if isinstance(data, dict) and "neurons" in data:
+        print("if moment")
         neurons_list = data["neurons"]
         if not isinstance(neurons_list, (list, tuple)):
             raise ValueError(
@@ -111,6 +112,7 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
             if trials is not None:
                 rec_info["last_trial_end"] = trials["timestamps"][-1]
     elif isinstance(data, dict) and all(isinstance(v, tuple) for v in data.values()):
+        print("elif moment")
         neurons = {}
         for k, v in data.items():
             # extract largest 1D numeric array inside tuple
@@ -126,6 +128,7 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
                 raise ValueError(f"No 1D numeric array found in tuple for key {k}")
 
     else:
+        print("else moment")
         # Simple format: dict of neuron_id -> spike array
         neurons = {k: np.asarray(v, dtype=float) for k, v in data.items()}
 
