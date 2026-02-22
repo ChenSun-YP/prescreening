@@ -464,11 +464,25 @@ def check_pairs_using_mode_stdev(
 
         lags = np.asarray(value[0], dtype=float)
         corr = np.asarray(value[1], dtype=float)
-        print(lags.size, corr.size)
+        print(f"Raw sizes for {pre}->{post}: lags={lags.size}, corr={corr.size}")
+
+        # handle the special case: lags is one element longer than corr
+        if lags.size == corr.size + 1:
+            # treat lags as bin edges and convert to bin centers
+            lags = 0.5 * (lags[:-1] + lags[1:])
+            print(
+                f"Adjusted lags (edges->centers). New sizes: lags={lags.size}, corr={corr.size}"
+            )
+        elif corr.size == lags.size + 1:
+            # symmetric case: corr has one extra value (rare), convert corr edges -> centers
+            corr = 0.5 * (corr[:-1] + corr[1:])
+            print(
+                f"Adjusted corr (edges->centers). New sizes: lags={lags.size}, corr={corr.size}"
+            )
 
         # skip empty or mismatched arrays
         if lags.size == 0 or corr.size == 0 or lags.size != corr.size:
-            print(f"Skipping {pre},{post}: empty or mismatched lags/corr")
+            print(f"Skipping {pre},{post}: empty or mismatched after adjustment")
             print(f"lags: {lags}, corr: {corr}")
             continue
 
