@@ -68,9 +68,9 @@ def check_correlation_filled_bins(
         # print(f"Number of small bins: {num_small}")
 
         if num_small >= max_small:
-            # print(
-            #     f"{pre}, {post} — " f"{num_small} of bins |corr| < e^{power_threshold}"
-            # )
+            print(
+                f"{pre}, {post} — " f"{num_small} of bins |corr| < e^{power_threshold}"
+            )
             bad_pairs.append((pre, post))
         else:
             good_pairs.append((pre, post))
@@ -139,8 +139,7 @@ def check_histogram_unimodal(
 
     # print(f"Checking unimodality for pair: {preNeuron}, {postNeuron}")
 
-    filename = f"corr_trimmed_{preNeuron}_{postNeuron}.txt"
-
+    filename = f"corr_trimmed_folder/corr_trimmed_{preNeuron}_{postNeuron}.txt"
     if not os.path.exists(filename):
         raise FileNotFoundError(f"Correlogram file not found: {filename}")
 
@@ -163,6 +162,9 @@ def check_histogram_unimodal(
 
     # Reconstruct raw lag samples
     samples = np.repeat(lags_ms, corr_ms.astype(int))
+
+    if len(samples) <= 3:  # too few data to run test; exclude
+        return False
 
     _, p_value = diptest(samples)
 
