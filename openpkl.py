@@ -1,6 +1,8 @@
 import pickle
 
-file_path = "data/selected_neurons1150b034.pkl"
+file_path = (
+    "data\\analysis\\autocorrs_edge_mean_True_semifine.pkl"
+)
 
 # "data/analysis/selected_neurons_first_200s/autocorrs_edge_mean_True_ultra-fine.pkl"
 # "data/selected_neurons_first_200s.pkl"
