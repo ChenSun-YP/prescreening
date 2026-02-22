@@ -124,7 +124,9 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
             if candidates:
                 chosen = max(candidates, key=lambda x: x.size)
                 neurons[k] = chosen.astype(float)
-                print(f"Extracted neuron {k} with {chosen.size} spikes from tuple of length {len(v)}")
+                print(
+                    f"Extracted neuron {k} with {chosen.size} spikes from tuple of length {len(v)}"
+                )
             else:
                 raise ValueError(f"No 1D numeric array found in tuple for key {k}")
 
@@ -132,6 +134,7 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
         print("else moment")
         # Simple format: dict of neuron_id -> spike array
         neurons = {k: np.asarray(v, dtype=float) for k, v in data.items()}
+        print("Loaded neurons in simple format with keys:", list(neurons.keys())[:5])
 
     # Detect binary spike train (many zeros) and convert to spike indices
     if neurons:
@@ -556,6 +559,8 @@ def main():
     Main function for standalone script execution.
     Uses default config file paths for backward compatibility.
     """
+
+    print("Starting preprocessing pipeline...")
 
     default_configs = ["analysis_pipeline/config_dnms.json"]
 
