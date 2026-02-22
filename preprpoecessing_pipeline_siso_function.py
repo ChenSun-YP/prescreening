@@ -124,6 +124,7 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
             if candidates:
                 chosen = max(candidates, key=lambda x: x.size)
                 neurons[k] = chosen.astype(float)
+                print(f"Extracted neuron {k} with {chosen.size} spikes from tuple of length {len(v)}")
             else:
                 raise ValueError(f"No 1D numeric array found in tuple for key {k}")
 
