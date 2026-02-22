@@ -330,7 +330,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             # print("filtered_pairs", filtered_pairs)
 
             check_firing_rate(
-                pkl_path=pkl_path,  # find a way to automatically get this path
+                pkl_path=abbr_pkl_path,  # find a way to automatically get this path
                 out_dir=out_dir,  # for debugging purposes
                 min_rate=0.1,  # minimum firing rate in Hz
                 max_rate=5.0,  # maximum firing rate in Hz
