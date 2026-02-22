@@ -468,6 +468,7 @@ def check_pairs_using_mode_stdev(
         # skip empty or mismatched arrays
         if lags.size == 0 or corr.size == 0 or lags.size != corr.size:
             print(f"Skipping {pre},{post}: empty or mismatched lags/corr")
+            print(f"lags: {lags}, corr: {corr}")
             continue
 
         # Try weighted KDE mode, fallback to argmax
