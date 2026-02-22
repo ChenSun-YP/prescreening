@@ -401,8 +401,10 @@ def check_pairs_using_mode_stdev(
             continue
 
         mode = calculate_mode_kde(counts)
+        print(f"Mode for pair {pre}, {post}: {mode:.2f} ms")
 
         stdev = np.sqrt(np.mean((counts - mode) ** 2))
+        print(f"Stdev around mode for pair {pre}, {post}: {stdev:.2f} ms")
 
         if stdev > stdev_threshold:
             print(
