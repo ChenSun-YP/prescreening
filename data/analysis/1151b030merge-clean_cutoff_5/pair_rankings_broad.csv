@@ -1,0 +1,11 @@
+Neuron1,Neuron2,BumpScore,Rank
+n001_L_CA3_wire_1_cell_1,n061_L_CA1_wire_8_cell_1,31.464946236559143,1
+n061_L_CA1_wire_8_cell_1,n074_R_CA1_wire_3_cell_2,29.763888888888886,2
+n005_L_CA3_wire_2_cell_1,n061_L_CA1_wire_8_cell_1,28.925920125293658,3
+n001_L_CA3_wire_1_cell_1,n074_R_CA1_wire_3_cell_2,24.665188470066518,4
+n061_L_CA1_wire_8_cell_1,n105_R_CA3_wire_3_cell_1,21.58279009126466,5
+n001_L_CA3_wire_1_cell_1,n005_L_CA3_wire_2_cell_1,20.27946979662046,6
+n001_L_CA3_wire_1_cell_1,n105_R_CA3_wire_3_cell_1,4.1966426858513195,7
+n005_L_CA3_wire_2_cell_1,n074_R_CA1_wire_3_cell_2,2.4938253400670916,8
+n074_R_CA1_wire_3_cell_2,n105_R_CA3_wire_3_cell_1,1.3886215680724594,9
+n005_L_CA3_wire_2_cell_1,n105_R_CA3_wire_3_cell_1,0.5581270663926368,10
