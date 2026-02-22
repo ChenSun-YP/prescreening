@@ -403,7 +403,7 @@ def check_stdev_around_mode(
         mode = calc_mode_using_kde(lags, corr)
         print(f"{pre}, {post} — Mode of correlogram: {mode:.2f} ms")
 
-        stdev = np.sqrt(np.sum((lags - mode) ** 2) / len(lags))
+        stdev = np.sqrt(np.sum(corr * (lags - mode) ** 2) / np.sum(corr))
         print(f"{pre}, {post} — Stdev around mode: {stdev:.2f} ms")
 
         if stdev > stdev_threshold:
