@@ -1,0 +1,52 @@
+Dataset: 1151b030merge-clean_cutoff_5.pkl
+Total recording duration (tend): 3493.09425
+Last TRIAL end: 2349.438525
+All analysis (CC, AC, silence-period, raster) use only spikes with t < last TRIAL end (cutoff).
+Spike raster plot shows data up to cutoff with a dashed vertical line at last TRIAL end.
+--------------------------------------------------
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 8
+Number of neurons after filtering: 4
+Number of pairs: 6
+Top pairs by total bump score:
+Pair ('n001_L_CA3_wire_1_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=11.32
+Pair ('n001_L_CA3_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=9.79
+Pair ('n001_L_CA3_wire_1_cell_1', 'n005_L_CA3_wire_2_cell_1'): total_bump_score=3.39
+Pair ('n074_R_CA1_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.12
+Pair ('n005_L_CA3_wire_2_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=1.06
+Pair ('n005_L_CA3_wire_2_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=0.45
+Bottom pairs by total bump score:
+Pair ('n005_L_CA3_wire_2_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=0.45
+Pair ('n005_L_CA3_wire_2_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=1.06
+Pair ('n074_R_CA1_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.12
+Pair ('n001_L_CA3_wire_1_cell_1', 'n005_L_CA3_wire_2_cell_1'): total_bump_score=3.39
+Pair ('n001_L_CA3_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=9.79
+Pair ('n001_L_CA3_wire_1_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=11.32
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: ../spiking-neuron-model-tutorial/data/Jan2010-Nonstationarity_Learning/analysis/1151_1_sec/1151b030merge-clean_cutoff_5
+Pair rankings saved in: ../spiking-neuron-model-tutorial/data/Jan2010-Nonstationarity_Learning/analysis/1151_1_sec/1151b030merge-clean_cutoff_5/pair_rankings_semifine.csv
+--------------------------------------------------
+Bin size: 5ms
+Max lag: 100ms
+Resolution: semiFine2
+Number of neurons before filtering: 8
+Number of neurons after filtering: 4
+Number of pairs: 6
+Top pairs by total bump score:
+Pair ('n001_L_CA3_wire_1_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=17.91
+Pair ('n001_L_CA3_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=17.02
+Pair ('n001_L_CA3_wire_1_cell_1', 'n005_L_CA3_wire_2_cell_1'): total_bump_score=7.61
+Pair ('n074_R_CA1_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.90
+Pair ('n005_L_CA3_wire_2_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=2.61
+Pair ('n005_L_CA3_wire_2_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=0.85
+Bottom pairs by total bump score:
+Pair ('n005_L_CA3_wire_2_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=0.85
+Pair ('n005_L_CA3_wire_2_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=2.61
+Pair ('n074_R_CA1_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.90
+Pair ('n001_L_CA3_wire_1_cell_1', 'n005_L_CA3_wire_2_cell_1'): total_bump_score=7.61
+Pair ('n001_L_CA3_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=17.02
+Pair ('n001_L_CA3_wire_1_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=17.91
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: ../spiking-neuron-model-tutorial/data/Jan2010-Nonstationarity_Learning/analysis/1151_1_sec/1151b030merge-clean_cutoff_5
+Pair rankings saved in: ../spiking-neuron-model-tutorial/data/Jan2010-Nonstationarity_Learning/analysis/1151_1_sec/1151b030merge-clean_cutoff_5/pair_rankings_semifine2.csv
+--------------------------------------------------
