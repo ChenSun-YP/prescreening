@@ -495,3 +495,41 @@ def check_pairs_using_mode_stdev(
     with open(good_pairs_path, "w") as f:
         for pre, post in good_pairs:
             f.write(f"{pre}\t{post}\n")
+
+
+def filter_pairs_using_mode_stdev(
+    pairs,
+    bad_pairs_path="selected_neurons_first_200s\\mode_stdev_bad_pairs.txt",
+):
+    """
+    Remove any pair that appears in bad_pairs.txt
+    from the provided list of pairs.
+
+    Parameters
+    ----------
+    pairs : list of tuple
+        Original list of (pre, post) pairs
+    good_pairs_path : str
+    bad_pairs_path : str
+
+    Returns
+    -------
+    filtered_pairs : list of tuple
+    """
+
+    def load_pairs(path):
+        loaded = set()
+        with open(path, "r") as f:
+            for line in f:
+                if not line.strip():
+                    continue
+                pre, post = line.strip().split()
+                loaded.add((pre, post))
+        return loaded
+
+    bad_pairs = load_pairs(bad_pairs_path)
+    # print("bad_pairs", bad_pairs)
+
+    filtered_pairs = [pair for pair in pairs if pair not in bad_pairs]
+
+    return filtered_pairs
