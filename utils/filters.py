@@ -352,101 +352,29 @@ def filter_pairs_using_unimodality(
     return filtered_pairs
 
 
-def calculate_mode_weighted_kde(lags, corr):
-    """
-    Estimate the mode lag using KDE weighted by corr values.
-
-    Parameters
-    ----------
-    lags : 1D array-like (numeric)
-        Lag values (e.g., ms).
-    corr : 1D array-like (numeric)
-        Corresponding correlation strengths (can be negative).
-
-    Returns
-    -------
-    mode_lag : float
-        Estimated mode (lag with highest weighted density).
-    density_x : np.ndarray
-        grid of x values used for KDE
-    density_vals : np.ndarray
-        KDE values on grid
-    """
-    lags = np.asarray(lags, dtype=float)
-    corr = np.asarray(corr, dtype=float)
-
-    if lags.size == 0 or corr.size == 0 or lags.size != corr.size:
-        raise ValueError("lags and corr must be non-empty arrays of same length")
-
-    # Convert corr into nonnegative weights for KDE:
-    # shift by min and add small eps to avoid zeros
-    min_corr = np.min(corr)
-    weights = corr - min_corr
-    eps = 1e-8
-    weights = weights + eps
-
-    # If weights are effectively zero (flat corr), fallback to argmax
-    if np.allclose(weights, 0):
-        mode_lag = float(lags[np.argmax(corr)])
-        return mode_lag, np.array([mode_lag]), np.array([1.0])
-
-    # Use scipy gaussian_kde with weights (available on modern scipy)
-    try:
-        kde = gaussian_kde(lags, weights=weights)
-        xs = np.linspace(np.min(lags), np.max(lags))
-        dens = kde(xs)
-        mode_lag = float(xs[np.argmax(dens)])
-        return mode_lag, xs, dens
-    except TypeError:
-        # Older scipy may not support weights in gaussian_kde.
-        # Fallback: approximate weighted KDE by repeating values proportional to normalized weights.
-        # To avoid huge arrays, scale weights to a manageable integer multiplier.
-        scaled = weights - np.min(weights)
-        scaled = scaled / np.max(scaled)
-        repeats = (scaled * 100).astype(int) + 1  # at least 1 repetition
-        expanded = np.repeat(lags, repeats)
-        # compute KDE on expanded samples (unweighted)
-        kde = gaussian_kde(expanded)
-        xs = np.linspace(np.min(lags), np.max(lags))
-        dens = kde(xs)
-        mode_lag = float(xs[np.argmax(dens)])
-        return mode_lag, xs, dens
-
-
-def weighted_std_around_mode(lags, corr, mode_lag):
-    """
-    Compute weighted RMS deviation of lags around mode_lag using corr-derived weights.
-
-    Uses nonnegative weights derived from corr by shifting to make min == 0
-    (so stronger positive correlations contribute more).
-
-    Returns standard deviation in same units as lags.
-    """
-    lags = np.asarray(lags, dtype=float)
-    corr = np.asarray(corr, dtype=float)
-
-    if lags.size == 0 or corr.size == 0 or lags.size != corr.size:
-        raise ValueError("lags and corr must be non-empty arrays of same length")
-
-    # weights: shift so min is zero, then clip to non-negative
-    weights = corr - np.min(corr)
-    # tiny epsilon to avoid all-zero weights if corr is constant
-    if np.allclose(weights, 0):
-        # fallback: unweighted stdev of lags around mode
-        return float(np.sqrt(np.mean((lags - mode_lag) ** 2)))
-    # compute weighted variance
-    w = weights.astype(float)
-    wsum = np.sum(w)
-    var = np.sum(w * (lags - mode_lag) ** 2) / wsum
-    return float(np.sqrt(var))
-
-
-def check_pairs_using_mode_stdev(
-    pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",
-    out_dir="selected_neurons_first_200s",
-    stdev_threshold=15.0,  # units same as lags array (ms)
+# find mode using kde
+def calc_mode_using_kde(
+    lags,
+    corr,
+    grid_size=1000,
 ):
+
+    kde = gaussian_kde(dataset=lags, weights=corr, bw_method=None)
+    grid = np.linspace(lags.min(), lags.max(), grid_size)
+    density = kde(grid)
+    mode = grid[np.argmax(density)]
+    return float(mode)
+
+
+# find mode of correlogram & stdev of correlogram
+def check_stdev_around_mode(
+    pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+    out_dir="selected_neurons_first_200s",  # for debugging purposes
+    stdev_threshold=15.0,  # in ms
+):
+
     os.makedirs(out_dir, exist_ok=True)
+
     bad_pairs_path = os.path.join(out_dir, "mode_stdev_bad_pairs.txt")
     good_pairs_path = os.path.join(out_dir, "mode_stdev_good_pairs.txt")
 
@@ -457,57 +385,40 @@ def check_pairs_using_mode_stdev(
     good_pairs = []
 
     for (pre, post), value in crosscorrs.items():
-        # value expected: (lags, corr, mean, std, scores, total_score)
-        if not isinstance(value, (list, tuple)) or len(value) < 2:
-            print(f"Skipping {pre},{post}: unexpected value format")
+        # value is a tuple:
+        # (lags, corr, mean, std, scores, total_score)
+
+        # print(f"Filtering pair: {pre}, {post}")
+
+        lags = value[0]
+        corr = value[1]
+
+        if corr is None or len(corr) == 0:
             continue
 
-        lags = np.asarray(value[0], dtype=float)
-        corr = np.asarray(value[1], dtype=float)
-        print(f"Raw sizes for {pre}->{post}: lags={lags.size}, corr={corr.size}")
-
-        # handle the special case: lags is one element longer than corr
-        if lags.size == corr.size + 1:
-            # treat lags as bin edges and convert to bin centers
+        # adjust lag if need be
+        if len(lags) > len(corr):
             lags = 0.5 * (lags[:-1] + lags[1:])
-            print(
-                f"Adjusted lags (edges->centers). New sizes: lags={lags.size}, corr={corr.size}"
-            )
-        elif corr.size == lags.size + 1:
-            # symmetric case: corr has one extra value (rare), convert corr edges -> centers
-            corr = 0.5 * (corr[:-1] + corr[1:])
-            print(
-                f"Adjusted corr (edges->centers). New sizes: lags={lags.size}, corr={corr.size}"
-            )
 
-        # skip empty or mismatched arrays
-        if lags.size == 0 or corr.size == 0 or lags.size != corr.size:
-            print(f"Skipping {pre},{post}: empty or mismatched after adjustment")
-            print(f"lags: {lags}, corr: {corr}")
-            continue
+        mode = calc_mode_using_kde(lags, corr)
+        print(f"{pre}, {post} — Mode of correlogram: {mode:.2f} ms")
 
-        # Try weighted KDE mode, fallback to argmax
-        try:
-            mode_lag, _, _ = calculate_mode_weighted_kde(lags, corr)
-        except Exception:
-            # fallback: pick lag with maximum corr
-            mode_lag = float(lags[np.argmax(corr)])
-
-        # compute weighted stdev around mode (in same units as lags)
-        stdev = weighted_std_around_mode(lags, corr, mode_lag)
-
-        print(f"Pair {pre} -> {post}: mode_lag = {mode_lag:.3f}, stdev = {stdev:.3f}")
+        stdev = np.sqrt(np.sum((lags - mode) ** 2) / len(lags))
+        print(f"{pre}, {post} — Stdev around mode: {stdev:.2f} ms")
 
         if stdev > stdev_threshold:
+            print(
+                f"{pre}, {post} — Stdev around mode {stdev:.2f} ms exceeds threshold {stdev_threshold} ms"
+            )
             bad_pairs.append((pre, post))
         else:
             good_pairs.append((pre, post))
 
-    # write files
+    # Write bad pairs
     with open(bad_pairs_path, "w") as f:
         for pre, post in bad_pairs:
             f.write(f"{pre}\t{post}\n")
-
+    # Write good pairs
     with open(good_pairs_path, "w") as f:
         for pre, post in good_pairs:
             f.write(f"{pre}\t{post}\n")

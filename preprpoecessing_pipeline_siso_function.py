@@ -18,9 +18,8 @@ from utils.filters import (
     filter_pairs_using_correlation_filled_bins,
     check_histogram_unimodal,
     filter_pairs_using_unimodality,
-    check_pairs_using_mode_stdev,
-    calculate_mode_weighted_kde,
-    weighted_std_around_mode,
+    calc_mode_using_kde,
+    check_stdev_around_mode,
     filter_pairs_using_mode_stdev,
 )
 from utils.plot_all_plots_for_siso_cc import (
@@ -364,7 +363,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             )
 
             # filter pairs using stdev around the mode
-            check_pairs_using_mode_stdev(
+            check_stdev_around_mode(
                 pkl_path=abbr_pkl_path,  # find a way to automatically get this path,
                 out_dir=out_dir,  # for debugging purposes
                 stdev_threshold=15,  # milliseconds
