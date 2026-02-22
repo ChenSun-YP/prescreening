@@ -41,8 +41,8 @@ def check_correlation_filled_bins(
 
     os.makedirs(out_dir, exist_ok=True)
 
-    bad_pairs_path = os.path.join(out_dir, "bad_pairs.txt")
-    good_pairs_path = os.path.join(out_dir, "good_pairs.txt")
+    bad_pairs_path = os.path.join(out_dir, "fill_bin_bad_pairs.txt")
+    good_pairs_path = os.path.join(out_dir, "fill_bin_good_pairs.txt")
 
     threshold = math.exp(power_threshold)
 

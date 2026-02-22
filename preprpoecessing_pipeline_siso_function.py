@@ -324,7 +324,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 harshness=0.10,  # at most 10% of bins can be empty
                 power_threshold=-10,  # bins with value < e^-10 are considered empty
             )
-            bad_pairs_path = os.path.join(out_dir, "bad_pairs.txt")
+            bad_pairs_path = os.path.join(out_dir, "fill_bin_bad_pairs.txt")
             # filter pairs using correlation filled bins
             filtered_pairs = filter_pairs_using_correlation_filled_bins(
                 pairs,
@@ -356,10 +356,11 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 prominence_fraction=0.25,
                 min_distance_bins=1,
             )
+            bad_unimodal_pairs_path = os.path.join(out_dir, "unimodal_bad_pairs.txt")
 
             filtered_pairs = filter_pairs_using_unimodality(
                 filtered_pairs,
-                bad_pairs_path=bad_pairs_path,
+                bad_pairs_path=bad_unimodal_pairs_path,
             )
 
             # filter pairs using stdev around the mode
