@@ -15,6 +15,8 @@ from diptest import diptest
 from scipy.signal import find_peaks
 from scipy.ndimage import gaussian_filter1d
 
+from scipy.stats import gaussian_kde
+
 
 # check all intervals on base of the histogram is full
 def check_correlation_filled_bins(
@@ -128,6 +130,7 @@ def check_firing_rate(
     with open(good_pairs_path, "w") as f:
         for pre, post in good_pairs:
             f.write(f"{pre}\t{post}\n")
+
 
 def filter_pairs_using_firing_rate(
     pairs,
@@ -314,6 +317,116 @@ def check_correlations_unimodal(
 def filter_pairs_using_unimodality(
     pairs,
     bad_pairs_path="selected_neurons_first_200s\\unimodal_bad_pairs.txt",
+):
+    """
+    Remove any pair that appears in bad_pairs.txt
+    from the provided list of pairs.
+
+    Parameters
+    ----------
+    pairs : list of tuple
+        Original list of (pre, post) pairs
+    good_pairs_path : str
+    bad_pairs_path : str
+
+    Returns
+    -------
+    filtered_pairs : list of tuple
+    """
+
+    def load_pairs(path):
+        loaded = set()
+        with open(path, "r") as f:
+            for line in f:
+                if not line.strip():
+                    continue
+                pre, post = line.strip().split()
+                loaded.add((pre, post))
+        return loaded
+
+    bad_pairs = load_pairs(bad_pairs_path)
+    # print("bad_pairs", bad_pairs)
+
+    filtered_pairs = [pair for pair in pairs if pair not in bad_pairs]
+
+    return filtered_pairs
+
+
+# use KDE to find mode
+def calculate_mode_kde(
+    data,
+):
+    kde = gaussian_kde(data)
+    xs = np.linspace(min(data), max(data))
+    density = kde(xs)
+
+    mode_estimate = xs[np.argmax(density)]
+
+    print("Estimated mode:", mode_estimate)
+    return mode_estimate
+
+
+# filter pairs using stdev around mode
+def check_pairs_using_mode_stdev(
+    pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+    out_dir="selected_neurons_first_200s",  # for debugging purposes
+    stdev_threshold=15.0,  # in ms
+):
+
+    os.makedirs(out_dir, exist_ok=True)
+
+    bad_pairs_path = os.path.join(out_dir, "mode_stdev_bad_pairs.txt")
+    good_pairs_path = os.path.join(out_dir, "mode_stdev_good_pairs.txt")
+
+    with open(pkl_path, "rb") as f:
+        crosscorrs = pickle.load(f)
+
+    bad_pairs = []
+    good_pairs = []
+
+    for (pre, post), value in crosscorrs.items():
+        # value is a tuple:
+        # (lags, corr, mean, std, scores, total_score)
+
+        # print(f"Filtering pair: {pre}, {post}")
+
+        corr = value[1]
+
+        if corr is None or len(corr) == 0:
+            continue
+
+        counts = value[1]
+
+        if counts is None or len(counts) == 0:
+            continue
+
+        mode = calculate_mode_kde(counts)
+
+        stdev = np.sqrt(np.mean((counts - mode) ** 2))
+
+        if stdev > stdev_threshold:
+            print(
+                f"{pre}, {post} — "
+                f"Stdev around mode {stdev:.2f} ms above threshold {stdev_threshold} ms"
+            )
+            bad_pairs.append((pre, post))
+        else:
+            good_pairs.append((pre, post))
+
+        # Write bad pairs
+    with open(bad_pairs_path, "w") as f:
+        for pre, post in bad_pairs:
+            f.write(f"{pre}\t{post}\n")
+
+    # Write good pairs
+    with open(good_pairs_path, "w") as f:
+        for pre, post in good_pairs:
+            f.write(f"{pre}\t{post}\n")
+
+
+def filter_pairs_using_mode_stdev(
+    pairs,
+    bad_pairs_path="selected_neurons_first_200s\\mode_stdev_bad_pairs.txt",
 ):
     """
     Remove any pair that appears in bad_pairs.txt

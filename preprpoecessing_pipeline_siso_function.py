@@ -18,6 +18,8 @@ from utils.filters import (
     filter_pairs_using_correlation_filled_bins,
     check_histogram_unimodal,
     filter_pairs_using_unimodality,
+    check_pairs_using_mode_stdev,
+    filter_pairs_using_mode_stdev,
 )
 from utils.plot_all_plots_for_siso_cc import (
     plot_all_neurons_silent_periods,
@@ -360,6 +362,18 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             )
 
             # filter pairs using stdev around the mode
+            check_pairs_using_mode_stdev(
+                pkl_path=abbr_pkl_path,  # find a way to automatically get this path,
+                out_dir=out_dir,  # for debugging purposes
+                stdev_threshold=15,  # milliseconds
+            )
+            bad_mode_stdev_pairs_path = os.path.join(
+                out_dir, "mode_stdev_bad_pairs.txt"
+            )
+            filtered_pairs = filter_pairs_using_mode_stdev(
+                filtered_pairs,
+                bad_pairs_path=bad_mode_stdev_pairs_path,
+            )
 
             top_bump = sorted(
                 [(pair, np.max(crosscorrs[pair][5])) for pair in filtered_pairs],
