@@ -464,6 +464,7 @@ def check_pairs_using_mode_stdev(
 
         lags = np.asarray(value[0], dtype=float)
         corr = np.asarray(value[1], dtype=float)
+        print(lags.size, corr.size)
 
         # skip empty or mismatched arrays
         if lags.size == 0 or corr.size == 0 or lags.size != corr.size:
