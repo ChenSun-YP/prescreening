@@ -255,7 +255,7 @@ def check_histogram_unimodal(
 
     # print(f"Unimodality p-value: {p_value}")
 
-    return p_value >= alpha
+    return p_value >= alpha, p_value
 
 
 def check_correlations_unimodal(
@@ -263,7 +263,7 @@ def check_correlations_unimodal(
     out_dir="selected_neurons_first_200s",  # for debugging purposes
     bin_centers=None,
     smoothing_sigma=1.0,
-    prominence_fraction=0.05,
+    prominence_fraction=0.25,
     min_distance_bins=1,
 ):
 
@@ -289,14 +289,14 @@ def check_correlations_unimodal(
         if counts is None or len(counts) == 0:
             continue
 
-        unimodality = check_histogram_unimodal(
+        unimodality, significance = check_histogram_unimodal(
             preNeuron=pre,
             postNeuron=post,
             alpha=prominence_fraction,
         )
 
         if unimodality is False:
-            print(f"{pre}, {post} — Correlogram is not unimodal")
+            print(f"{pre}, {post} — Correlogram is not unimodal p={significance:.4f}")
             bad_pairs.append((pre, post))
         else:
             good_pairs.append((pre, post))

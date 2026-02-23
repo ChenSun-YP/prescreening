@@ -353,7 +353,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 out_dir=out_dir,  # for debugging purposes
                 bin_centers=None,
                 smoothing_sigma=1.0,
-                prominence_fraction=0.25,
+                prominence_fraction=0.35,
                 min_distance_bins=1,
             )
             bad_unimodal_pairs_path = os.path.join(out_dir, "unimodal_bad_pairs.txt")
