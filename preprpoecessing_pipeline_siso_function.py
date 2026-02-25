@@ -505,8 +505,24 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             plt.close()
 
             # make a figure of bump score distribution
+            # make a figure of bump score distribution
             plt.figure()
-            plt.hist(bump_scores, bins=20)
+
+            if bump_scores:  # non-empty list
+                plt.hist(bump_scores, bins=20)
+            else:
+                # leave it blank (optionally add a small note)
+                plt.text(
+                    0.5,
+                    0.5,
+                    "No bump scores available",
+                    ha="center",
+                    va="center",
+                    transform=plt.gca().transAxes,
+                )
+                plt.xticks([])
+                plt.yticks([])
+
             plt.savefig(
                 os.path.join(
                     save_dir, f"bump_score_distribution_{resolution.lower()}.png"
