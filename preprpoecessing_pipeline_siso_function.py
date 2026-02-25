@@ -144,7 +144,7 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
     # Detect binary spike train (many zeros) and convert to spike indices
     if not neurons:
         print("No neuron data found — skipping this file.")
-        return
+        neurons = {}
 
     first_key = next(iter(neurons))
 
@@ -232,7 +232,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
         # **Stage 1: Load the spiketrain data from the .pkl file**
         neurons, rec_info = load_neurons(pkl_path)
-        if neurons is None:
+        if neurons is None or len(neurons) == 0:
             if verbose:
                 print(f"Skipping {pkl_path} due to no Neurons")
             continue
