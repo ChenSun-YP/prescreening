@@ -235,6 +235,9 @@ def check_histogram_unimodal(
     n = len(corr_ms)
 
     if n == 0:
+        print(
+            f"{preNeuron}, {postNeuron} — Empty correlogram, skipping unimodality test"
+        )
         return False, 0.0
 
     # Infer lag axis from length
@@ -243,12 +246,18 @@ def check_histogram_unimodal(
     lags_ms = np.arange(-half, half + 1)
 
     if len(lags_ms) != n:
+        print(
+            f"{preNeuron}, {postNeuron} — Correlogram length {n} does not match expected lag axis length {len(lags_ms)}, skipping unimodality test"
+        )
         raise ValueError("Correlogram length must be odd and centered at zero lag")
 
     # Reconstruct raw lag samples
     samples = np.repeat(lags_ms, corr_ms.astype(int))
 
     if len(samples) <= 3:  # too few data to run test; exclude
+        print(
+            f"{preNeuron}, {postNeuron} — Only {len(samples)} samples in correlogram, skipping unimodality test"
+        )
         return False, 0.0
 
     _, p_value = diptest(samples)
