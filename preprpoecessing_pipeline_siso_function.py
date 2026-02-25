@@ -403,6 +403,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 figsize=(fig_width, fig_height),
             )
 
+            bump_scores = []
             # Top bump score pairs
             for i, (pair, bump_score) in enumerate(top_bump):
                 row = i // plots_per_row
