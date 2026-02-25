@@ -145,15 +145,15 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
     if not neurons:
         print("No neuron data found — skipping this file.")
         neurons = {}
+    elif neurons:
+        first_key = next(iter(neurons))
 
-    first_key = next(iter(neurons))
+        arr = np.asarray(neurons[first_key])
+        if arr.size > 100 and np.sum(arr == 0) > 100:
+            neurons = {k: np.where(np.asarray(v))[0] for k, v in neurons.items()}
 
-    arr = np.asarray(neurons[first_key])
-    if arr.size > 100 and np.sum(arr == 0) > 100:
-        neurons = {k: np.where(np.asarray(v))[0] for k, v in neurons.items()}
-
-    if length_of_spiketrain is not None:
-        neurons = {k: v[v < length_of_spiketrain] for k, v in neurons.items()}
+        if length_of_spiketrain is not None:
+            neurons = {k: v[v < length_of_spiketrain] for k, v in neurons.items()}
 
     return neurons, rec_info
 
