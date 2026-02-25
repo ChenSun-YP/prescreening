@@ -142,8 +142,12 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
         print("Loaded neurons in simple format with keys:", list(neurons.keys())[:5])
 
     # Detect binary spike train (many zeros) and convert to spike indices
-    if neurons:
-        first_key = next(iter(neurons.keys()))
+    if not neurons:
+        print("No neuron data found — skipping this file.")
+        return
+
+    first_key = next(iter(neurons))
+
     arr = np.asarray(neurons[first_key])
     if arr.size > 100 and np.sum(arr == 0) > 100:
         neurons = {k: np.where(np.asarray(v))[0] for k, v in neurons.items()}
@@ -228,6 +232,10 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
         # **Stage 1: Load the spiketrain data from the .pkl file**
         neurons, rec_info = load_neurons(pkl_path)
+        if neurons is None:
+            if verbose:
+                print(f"Skipping {pkl_path} due to no Neurons")
+            continue
         n_before = len(neurons)
 
         # **Stage 2: Filter neurons for spike count**
