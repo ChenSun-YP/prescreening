@@ -358,7 +358,10 @@ def calc_mode_using_kde(
     grid_size=1000,
 ):
 
-    kde = gaussian_kde(dataset=lags, weights=corr, bw_method=None)
+    # ensure no negative weights
+    weights = np.clip(corr, a_min=0.0, a_max=None)
+
+    kde = gaussian_kde(dataset=lags, weights=weights, bw_method=None)
     grid = np.linspace(lags.min(), lags.max(), grid_size)
     density = kde(grid)
     mode = grid[np.argmax(density)]
@@ -402,7 +405,11 @@ def check_stdev_around_mode(
         mode = calc_mode_using_kde(lags, corr)
         print(f"{pre}, {post} — Mode of correlogram: {mode:.2f} ms")
 
-        stdev = np.sqrt(np.sum(corr * (lags - mode) ** 2) / np.sum(corr))
+        if mode is None:
+            print(f"{pre}, {post} — Could not calculate mode, skipping stdev check")
+            stdev = stdev_threshold + 1.0  # force it to be bad
+        else:
+            stdev = np.sqrt(np.sum(corr * (lags - mode) ** 2) / np.sum(corr))
         print(f"{pre}, {post} — Stdev around mode: {stdev:.2f} ms")
 
         if stdev > stdev_threshold:
