@@ -1,6 +1,6 @@
 import pickle
 
-file_path = "data\\1151b033.pkl"
+file_path = "data\\1151b040.pkl"
 
 # "data/analysis/selected_neurons_first_200s/autocorrs_edge_mean_True_ultra-fine.pkl"
 # "data/selected_neurons_first_200s.pkl"
@@ -11,8 +11,26 @@ with open(file_path, "rb") as file:
     data = pickle.load(file)
 
 # Now 'data' contains the deserialized Python object
-print(data)
+# print(data)
 
+print("Top-level type:", type(data))
+
+if isinstance(data, dict):
+    for k in data:
+        print(k, "->", type(data[k]))
+        try:
+            print("  Sample:", data[k][:5])
+        except:
+            print("  Preview:", str(data[k])[:100])
+
+# if hasattr(data, "columns"):
+#     print("Columns:", data.columns.tolist())
+# elif isinstance(data, dict):
+#     print("Keys:", list(data.keys()))
+# elif isinstance(data, list) and data and isinstance(data[0], dict):
+#     print("Keys from first entry:", list(data[0].keys()))
+# else:
+#     print("Unknown structure")
 
 # printed output of "data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl"
 """
