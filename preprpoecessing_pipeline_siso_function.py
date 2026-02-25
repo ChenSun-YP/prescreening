@@ -509,7 +509,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             # make a figure of bump score distribution
             plt.figure()
 
-            if bump_scores:  # non-empty list
+            if len(bump_scores) > 0:  # non-empty list
                 plt.hist(bump_scores, bins=20)
             else:
                 # leave it blank (optionally add a small note)
