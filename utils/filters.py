@@ -235,7 +235,7 @@ def check_histogram_unimodal(
     n = len(corr_ms)
 
     if n == 0:
-        return True
+        return False, 0.0
 
     # Infer lag axis from length
     # Example: n=17 → lags = [-8, ..., 0, ..., +8]
@@ -254,8 +254,11 @@ def check_histogram_unimodal(
     _, p_value = diptest(samples)
 
     # print(f"Unimodality p-value: {p_value}")
+    test_result = False
+    if p_value >= alpha:
+        test_result = True
 
-    return p_value >= alpha, p_value
+    return test_result, p_value
 
 
 def check_correlations_unimodal(
