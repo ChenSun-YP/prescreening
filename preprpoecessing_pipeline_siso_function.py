@@ -375,7 +375,8 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             check_stdev_around_mode(
                 pkl_path=abbr_pkl_path,  # find a way to automatically get this path,
                 out_dir=out_dir,  # for debugging purposes
-                stdev_threshold=30,  # milliseconds
+                stdev_upper_threshold=30,  # milliseconds
+                stdev_lower_threshold=20,  # milliseconds
             )
             bad_mode_stdev_pairs_path = os.path.join(
                 out_dir, "mode_stdev_bad_pairs.txt"

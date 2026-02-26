@@ -384,7 +384,8 @@ def calc_mode_using_kde(
 def check_stdev_around_mode(
     pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
     out_dir="selected_neurons_first_200s",  # for debugging purposes
-    stdev_threshold=15.0,  # in ms
+    stdev_upper_threshold=30.0,  # in ms
+    stdev_lower_threshold=20.0,  # in ms
 ):
 
     os.makedirs(out_dir, exist_ok=True)
@@ -419,14 +420,15 @@ def check_stdev_around_mode(
 
         if mode is None:
             print(f"{pre}, {post} — Could not calculate mode, skipping stdev check")
-            stdev = stdev_threshold + 1.0  # force it to be bad
+            stdev = stdev_upper_threshold + 1.0  # force it to be bad
         else:
             stdev = np.sqrt(np.sum(corr * (lags - mode) ** 2) / np.sum(corr))
         print(f"{pre}, {post} — Stdev around mode: {stdev:.2f} ms")
 
-        if stdev > stdev_threshold:
+        if stdev > stdev_upper_threshold or stdev < stdev_lower_threshold:
+
             print(
-                f"{pre}, {post} — Stdev around mode {stdev:.2f} ms exceeds threshold {stdev_threshold} ms"
+                f"{pre}, {post} — Stdev around mode {stdev:.2f} ms exceeds threshold {stdev_upper_threshold} ms or is below threshold {stdev_lower_threshold} ms"
             )
             bad_pairs.append((pre, post))
         else:
