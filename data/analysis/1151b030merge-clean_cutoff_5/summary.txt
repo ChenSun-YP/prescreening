@@ -1,0 +1,64 @@
+Dataset: 1151b030merge-clean_cutoff_5.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 8
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n061_L_CA1_wire_8_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=9.82
+Pair ('n001_L_CA3_wire_1_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=7.51
+Pair ('n001_L_CA3_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=6.94
+Pair ('n061_L_CA1_wire_8_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=3.43
+Pair ('n005_L_CA3_wire_2_cell_1', 'n061_L_CA1_wire_8_cell_1'): total_bump_score=2.97
+Pair ('n001_L_CA3_wire_1_cell_1', 'n061_L_CA1_wire_8_cell_1'): total_bump_score=2.45
+Pair ('n074_R_CA1_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.91
+Pair ('n001_L_CA3_wire_1_cell_1', 'n005_L_CA3_wire_2_cell_1'): total_bump_score=1.67
+Pair ('n005_L_CA3_wire_2_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=1.47
+Pair ('n005_L_CA3_wire_2_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=0.96
+Bottom pairs by total bump score:
+Pair ('n005_L_CA3_wire_2_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=0.96
+Pair ('n005_L_CA3_wire_2_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=1.47
+Pair ('n001_L_CA3_wire_1_cell_1', 'n005_L_CA3_wire_2_cell_1'): total_bump_score=1.67
+Pair ('n074_R_CA1_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.91
+Pair ('n001_L_CA3_wire_1_cell_1', 'n061_L_CA1_wire_8_cell_1'): total_bump_score=2.45
+Pair ('n005_L_CA3_wire_2_cell_1', 'n061_L_CA1_wire_8_cell_1'): total_bump_score=2.97
+Pair ('n061_L_CA1_wire_8_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=3.43
+Pair ('n001_L_CA3_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=6.94
+Pair ('n001_L_CA3_wire_1_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=7.51
+Pair ('n061_L_CA1_wire_8_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=9.82
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data/analysis/1151b030merge-clean_cutoff_5
+Pair rankings saved in: data/analysis/1151b030merge-clean_cutoff_5/pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: 1151b030merge-clean_cutoff_5.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 8
+Number of neurons after filtering: 5
+Number of pairs: 10
+Top pairs by total bump score:
+Pair ('n001_L_CA3_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=21.78
+Pair ('n061_L_CA1_wire_8_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=18.75
+Pair ('n061_L_CA1_wire_8_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=15.88
+Pair ('n001_L_CA3_wire_1_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=12.21
+Pair ('n074_R_CA1_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=8.21
+Pair ('n005_L_CA3_wire_2_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=7.39
+Pair ('n005_L_CA3_wire_2_cell_1', 'n061_L_CA1_wire_8_cell_1'): total_bump_score=6.61
+Pair ('n001_L_CA3_wire_1_cell_1', 'n005_L_CA3_wire_2_cell_1'): total_bump_score=6.03
+Pair ('n005_L_CA3_wire_2_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=4.24
+Pair ('n001_L_CA3_wire_1_cell_1', 'n061_L_CA1_wire_8_cell_1'): total_bump_score=3.47
+Bottom pairs by total bump score:
+Pair ('n001_L_CA3_wire_1_cell_1', 'n061_L_CA1_wire_8_cell_1'): total_bump_score=3.47
+Pair ('n005_L_CA3_wire_2_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=4.24
+Pair ('n001_L_CA3_wire_1_cell_1', 'n005_L_CA3_wire_2_cell_1'): total_bump_score=6.03
+Pair ('n005_L_CA3_wire_2_cell_1', 'n061_L_CA1_wire_8_cell_1'): total_bump_score=6.61
+Pair ('n005_L_CA3_wire_2_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=7.39
+Pair ('n074_R_CA1_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=8.21
+Pair ('n001_L_CA3_wire_1_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=12.21
+Pair ('n061_L_CA1_wire_8_cell_1', 'n074_R_CA1_wire_3_cell_2'): total_bump_score=15.88
+Pair ('n061_L_CA1_wire_8_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=18.75
+Pair ('n001_L_CA3_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=21.78
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data/analysis/1151b030merge-clean_cutoff_5
+Pair rankings saved in: data/analysis/1151b030merge-clean_cutoff_5/pair_rankings_ultra-fine.csv
+--------------------------------------------------
