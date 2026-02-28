@@ -1,0 +1,510 @@
+Dataset: 1151b044merge-clean_cutoff_5.pkl
+Bin size: 80ms
+Max lag: 1000ms
+Resolution: Broad
+Number of neurons before filtering: 14
+Number of neurons after filtering: 10
+Number of pairs: 45
+Top pairs by total bump score:
+Pair ('n086_R_CA1_wire_6_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=21.91
+Pair ('n081_R_CA1_wire_5_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=13.50
+Pair ('n010_L_CA3_wire_3_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=13.43
+Pair ('n010_L_CA3_wire_3_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=12.64
+Pair ('n041_L_CA1_wire_3_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=12.51
+Pair ('n041_L_CA1_wire_3_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=10.00
+Pair ('n097_R_CA1_wire_1_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=9.70
+Pair ('n010_L_CA3_wire_3_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=9.16
+Pair ('n082_R_CA1_wire_5_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=9.06
+Pair ('n081_R_CA1_wire_5_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=8.85
+Pair ('n105_R_CA3_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=8.33
+Pair ('n086_R_CA1_wire_6_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=7.76
+Pair ('n086_R_CA1_wire_6_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=6.40
+Pair ('n006_L_CA3_wire_2_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=6.06
+Pair ('n097_R_CA1_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=5.76
+Pair ('n086_R_CA1_wire_6_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=5.61
+Pair ('n010_L_CA3_wire_3_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=5.20
+Pair ('n006_L_CA3_wire_2_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=4.63
+Pair ('n041_L_CA1_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.51
+Pair ('n082_R_CA1_wire_5_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=3.94
+Pair ('n006_L_CA3_wire_2_cell_2', 'n010_L_CA3_wire_3_cell_2'): total_bump_score=3.83
+Pair ('n081_R_CA1_wire_5_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=3.81
+Pair ('n106_R_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=3.77
+Pair ('n041_L_CA1_wire_3_cell_1', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=3.70
+Pair ('n010_L_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=3.50
+Pair ('n105_R_CA3_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=3.08
+Pair ('n006_L_CA3_wire_2_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.92
+Pair ('n041_L_CA1_wire_3_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.91
+Pair ('n097_R_CA1_wire_1_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.91
+Pair ('n041_L_CA1_wire_3_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=2.86
+Pair ('n081_R_CA1_wire_5_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.63
+Pair ('n006_L_CA3_wire_2_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=2.52
+Pair ('n010_L_CA3_wire_3_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=2.50
+Pair ('n081_R_CA1_wire_5_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=1.93
+Pair ('n010_L_CA3_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.79
+Pair ('n041_L_CA1_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.66
+Pair ('n006_L_CA3_wire_2_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=1.62
+Pair ('n082_R_CA1_wire_5_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=1.54
+Pair ('n010_L_CA3_wire_3_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.42
+Pair ('n081_R_CA1_wire_5_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.35
+Pair ('n082_R_CA1_wire_5_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.29
+Pair ('n082_R_CA1_wire_5_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=0.97
+Pair ('n006_L_CA3_wire_2_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=0.80
+Pair ('n006_L_CA3_wire_2_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=0.70
+Pair ('n006_L_CA3_wire_2_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=0.63
+Bottom pairs by total bump score:
+Pair ('n006_L_CA3_wire_2_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=0.63
+Pair ('n006_L_CA3_wire_2_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=0.70
+Pair ('n006_L_CA3_wire_2_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=0.80
+Pair ('n082_R_CA1_wire_5_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=0.97
+Pair ('n082_R_CA1_wire_5_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.29
+Pair ('n081_R_CA1_wire_5_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.35
+Pair ('n010_L_CA3_wire_3_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.42
+Pair ('n082_R_CA1_wire_5_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=1.54
+Pair ('n006_L_CA3_wire_2_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=1.62
+Pair ('n041_L_CA1_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.66
+Pair ('n010_L_CA3_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.79
+Pair ('n081_R_CA1_wire_5_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=1.93
+Pair ('n010_L_CA3_wire_3_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=2.50
+Pair ('n006_L_CA3_wire_2_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=2.52
+Pair ('n081_R_CA1_wire_5_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.63
+Pair ('n041_L_CA1_wire_3_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=2.86
+Pair ('n097_R_CA1_wire_1_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.91
+Pair ('n041_L_CA1_wire_3_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.91
+Pair ('n006_L_CA3_wire_2_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.92
+Pair ('n105_R_CA3_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=3.08
+Pair ('n010_L_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=3.50
+Pair ('n041_L_CA1_wire_3_cell_1', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=3.70
+Pair ('n106_R_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=3.77
+Pair ('n081_R_CA1_wire_5_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=3.81
+Pair ('n006_L_CA3_wire_2_cell_2', 'n010_L_CA3_wire_3_cell_2'): total_bump_score=3.83
+Pair ('n082_R_CA1_wire_5_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=3.94
+Pair ('n041_L_CA1_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.51
+Pair ('n006_L_CA3_wire_2_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=4.63
+Pair ('n010_L_CA3_wire_3_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=5.20
+Pair ('n086_R_CA1_wire_6_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=5.61
+Pair ('n097_R_CA1_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=5.76
+Pair ('n006_L_CA3_wire_2_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=6.06
+Pair ('n086_R_CA1_wire_6_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=6.40
+Pair ('n086_R_CA1_wire_6_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=7.76
+Pair ('n105_R_CA3_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=8.33
+Pair ('n081_R_CA1_wire_5_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=8.85
+Pair ('n082_R_CA1_wire_5_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=9.06
+Pair ('n010_L_CA3_wire_3_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=9.16
+Pair ('n097_R_CA1_wire_1_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=9.70
+Pair ('n041_L_CA1_wire_3_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=10.00
+Pair ('n041_L_CA1_wire_3_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=12.51
+Pair ('n010_L_CA3_wire_3_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=12.64
+Pair ('n010_L_CA3_wire_3_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=13.43
+Pair ('n081_R_CA1_wire_5_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=13.50
+Pair ('n086_R_CA1_wire_6_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=21.91
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data/analysis/1151b044merge-clean_cutoff_5
+Pair rankings saved in: data/analysis/1151b044merge-clean_cutoff_5/pair_rankings_broad.csv
+--------------------------------------------------
+Dataset: 1151b044merge-clean_cutoff_5.pkl
+Bin size: 40ms
+Max lag: 500ms
+Resolution: Medium
+Number of neurons before filtering: 14
+Number of neurons after filtering: 10
+Number of pairs: 45
+Top pairs by total bump score:
+Pair ('n086_R_CA1_wire_6_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=38.00
+Pair ('n010_L_CA3_wire_3_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=18.17
+Pair ('n041_L_CA1_wire_3_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=16.42
+Pair ('n041_L_CA1_wire_3_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=15.88
+Pair ('n010_L_CA3_wire_3_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=14.75
+Pair ('n081_R_CA1_wire_5_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=12.35
+Pair ('n010_L_CA3_wire_3_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=12.06
+Pair ('n086_R_CA1_wire_6_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=10.94
+Pair ('n006_L_CA3_wire_2_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=9.85
+Pair ('n081_R_CA1_wire_5_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=9.26
+Pair ('n097_R_CA1_wire_1_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=9.17
+Pair ('n086_R_CA1_wire_6_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=9.01
+Pair ('n082_R_CA1_wire_5_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=8.37
+Pair ('n097_R_CA1_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=7.62
+Pair ('n086_R_CA1_wire_6_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=6.83
+Pair ('n010_L_CA3_wire_3_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=6.49
+Pair ('n081_R_CA1_wire_5_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=6.25
+Pair ('n041_L_CA1_wire_3_cell_1', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=5.45
+Pair ('n082_R_CA1_wire_5_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=5.24
+Pair ('n006_L_CA3_wire_2_cell_2', 'n010_L_CA3_wire_3_cell_2'): total_bump_score=5.04
+Pair ('n105_R_CA3_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.83
+Pair ('n041_L_CA1_wire_3_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=4.60
+Pair ('n006_L_CA3_wire_2_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=4.31
+Pair ('n041_L_CA1_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.25
+Pair ('n041_L_CA1_wire_3_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=3.87
+Pair ('n097_R_CA1_wire_1_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=3.71
+Pair ('n010_L_CA3_wire_3_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=3.66
+Pair ('n106_R_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=3.60
+Pair ('n006_L_CA3_wire_2_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=3.19
+Pair ('n010_L_CA3_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=3.16
+Pair ('n006_L_CA3_wire_2_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=3.09
+Pair ('n010_L_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.90
+Pair ('n010_L_CA3_wire_3_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.29
+Pair ('n105_R_CA3_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.17
+Pair ('n081_R_CA1_wire_5_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.12
+Pair ('n041_L_CA1_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.89
+Pair ('n081_R_CA1_wire_5_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.60
+Pair ('n082_R_CA1_wire_5_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=1.57
+Pair ('n006_L_CA3_wire_2_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=1.48
+Pair ('n006_L_CA3_wire_2_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.30
+Pair ('n006_L_CA3_wire_2_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.26
+Pair ('n081_R_CA1_wire_5_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.22
+Pair ('n082_R_CA1_wire_5_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.15
+Pair ('n082_R_CA1_wire_5_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.08
+Pair ('n006_L_CA3_wire_2_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=0.96
+Bottom pairs by total bump score:
+Pair ('n006_L_CA3_wire_2_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=0.96
+Pair ('n082_R_CA1_wire_5_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.08
+Pair ('n082_R_CA1_wire_5_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.15
+Pair ('n081_R_CA1_wire_5_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.22
+Pair ('n006_L_CA3_wire_2_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.26
+Pair ('n006_L_CA3_wire_2_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.30
+Pair ('n006_L_CA3_wire_2_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=1.48
+Pair ('n082_R_CA1_wire_5_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=1.57
+Pair ('n081_R_CA1_wire_5_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.60
+Pair ('n041_L_CA1_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.89
+Pair ('n081_R_CA1_wire_5_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.12
+Pair ('n105_R_CA3_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.17
+Pair ('n010_L_CA3_wire_3_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.29
+Pair ('n010_L_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.90
+Pair ('n006_L_CA3_wire_2_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=3.09
+Pair ('n010_L_CA3_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=3.16
+Pair ('n006_L_CA3_wire_2_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=3.19
+Pair ('n106_R_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=3.60
+Pair ('n010_L_CA3_wire_3_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=3.66
+Pair ('n097_R_CA1_wire_1_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=3.71
+Pair ('n041_L_CA1_wire_3_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=3.87
+Pair ('n041_L_CA1_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.25
+Pair ('n006_L_CA3_wire_2_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=4.31
+Pair ('n041_L_CA1_wire_3_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=4.60
+Pair ('n105_R_CA3_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.83
+Pair ('n006_L_CA3_wire_2_cell_2', 'n010_L_CA3_wire_3_cell_2'): total_bump_score=5.04
+Pair ('n082_R_CA1_wire_5_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=5.24
+Pair ('n041_L_CA1_wire_3_cell_1', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=5.45
+Pair ('n081_R_CA1_wire_5_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=6.25
+Pair ('n010_L_CA3_wire_3_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=6.49
+Pair ('n086_R_CA1_wire_6_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=6.83
+Pair ('n097_R_CA1_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=7.62
+Pair ('n082_R_CA1_wire_5_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=8.37
+Pair ('n086_R_CA1_wire_6_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=9.01
+Pair ('n097_R_CA1_wire_1_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=9.17
+Pair ('n081_R_CA1_wire_5_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=9.26
+Pair ('n006_L_CA3_wire_2_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=9.85
+Pair ('n086_R_CA1_wire_6_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=10.94
+Pair ('n010_L_CA3_wire_3_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=12.06
+Pair ('n081_R_CA1_wire_5_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=12.35
+Pair ('n010_L_CA3_wire_3_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=14.75
+Pair ('n041_L_CA1_wire_3_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=15.88
+Pair ('n041_L_CA1_wire_3_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=16.42
+Pair ('n010_L_CA3_wire_3_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=18.17
+Pair ('n086_R_CA1_wire_6_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=38.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data/analysis/1151b044merge-clean_cutoff_5
+Pair rankings saved in: data/analysis/1151b044merge-clean_cutoff_5/pair_rankings_medium.csv
+--------------------------------------------------
+Dataset: 1151b044merge-clean_cutoff_5.pkl
+Bin size: 20ms
+Max lag: 250ms
+Resolution: Fine
+Number of neurons before filtering: 14
+Number of neurons after filtering: 10
+Number of pairs: 45
+Top pairs by total bump score:
+Pair ('n086_R_CA1_wire_6_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=44.00
+Pair ('n041_L_CA1_wire_3_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=24.00
+Pair ('n041_L_CA1_wire_3_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=22.40
+Pair ('n010_L_CA3_wire_3_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=21.72
+Pair ('n010_L_CA3_wire_3_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=20.91
+Pair ('n010_L_CA3_wire_3_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=14.00
+Pair ('n086_R_CA1_wire_6_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=13.35
+Pair ('n006_L_CA3_wire_2_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=13.17
+Pair ('n086_R_CA1_wire_6_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=11.78
+Pair ('n097_R_CA1_wire_1_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=11.15
+Pair ('n081_R_CA1_wire_5_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=11.12
+Pair ('n081_R_CA1_wire_5_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=9.08
+Pair ('n086_R_CA1_wire_6_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=8.71
+Pair ('n082_R_CA1_wire_5_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=8.33
+Pair ('n081_R_CA1_wire_5_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=7.49
+Pair ('n097_R_CA1_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=7.25
+Pair ('n041_L_CA1_wire_3_cell_1', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=6.99
+Pair ('n010_L_CA3_wire_3_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=6.49
+Pair ('n082_R_CA1_wire_5_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=6.47
+Pair ('n006_L_CA3_wire_2_cell_2', 'n010_L_CA3_wire_3_cell_2'): total_bump_score=6.35
+Pair ('n041_L_CA1_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=6.04
+Pair ('n041_L_CA1_wire_3_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=5.69
+Pair ('n041_L_CA1_wire_3_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=5.31
+Pair ('n006_L_CA3_wire_2_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=4.81
+Pair ('n010_L_CA3_wire_3_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=4.39
+Pair ('n010_L_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.36
+Pair ('n010_L_CA3_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=4.15
+Pair ('n006_L_CA3_wire_2_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=4.01
+Pair ('n041_L_CA1_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=3.58
+Pair ('n010_L_CA3_wire_3_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=3.04
+Pair ('n106_R_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.81
+Pair ('n006_L_CA3_wire_2_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.81
+Pair ('n097_R_CA1_wire_1_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.61
+Pair ('n105_R_CA3_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.34
+Pair ('n105_R_CA3_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.28
+Pair ('n082_R_CA1_wire_5_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.13
+Pair ('n081_R_CA1_wire_5_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.04
+Pair ('n006_L_CA3_wire_2_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.97
+Pair ('n082_R_CA1_wire_5_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.92
+Pair ('n081_R_CA1_wire_5_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.90
+Pair ('n006_L_CA3_wire_2_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.82
+Pair ('n082_R_CA1_wire_5_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.72
+Pair ('n006_L_CA3_wire_2_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=1.66
+Pair ('n081_R_CA1_wire_5_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.56
+Pair ('n006_L_CA3_wire_2_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=1.55
+Bottom pairs by total bump score:
+Pair ('n006_L_CA3_wire_2_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=1.55
+Pair ('n081_R_CA1_wire_5_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.56
+Pair ('n006_L_CA3_wire_2_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=1.66
+Pair ('n082_R_CA1_wire_5_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.72
+Pair ('n006_L_CA3_wire_2_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.82
+Pair ('n081_R_CA1_wire_5_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.90
+Pair ('n082_R_CA1_wire_5_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=1.92
+Pair ('n006_L_CA3_wire_2_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=1.97
+Pair ('n081_R_CA1_wire_5_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.04
+Pair ('n082_R_CA1_wire_5_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.13
+Pair ('n105_R_CA3_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.28
+Pair ('n105_R_CA3_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.34
+Pair ('n097_R_CA1_wire_1_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.61
+Pair ('n006_L_CA3_wire_2_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.81
+Pair ('n106_R_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.81
+Pair ('n010_L_CA3_wire_3_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=3.04
+Pair ('n041_L_CA1_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=3.58
+Pair ('n006_L_CA3_wire_2_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=4.01
+Pair ('n010_L_CA3_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=4.15
+Pair ('n010_L_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.36
+Pair ('n010_L_CA3_wire_3_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=4.39
+Pair ('n006_L_CA3_wire_2_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=4.81
+Pair ('n041_L_CA1_wire_3_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=5.31
+Pair ('n041_L_CA1_wire_3_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=5.69
+Pair ('n041_L_CA1_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=6.04
+Pair ('n006_L_CA3_wire_2_cell_2', 'n010_L_CA3_wire_3_cell_2'): total_bump_score=6.35
+Pair ('n082_R_CA1_wire_5_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=6.47
+Pair ('n010_L_CA3_wire_3_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=6.49
+Pair ('n041_L_CA1_wire_3_cell_1', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=6.99
+Pair ('n097_R_CA1_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=7.25
+Pair ('n081_R_CA1_wire_5_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=7.49
+Pair ('n082_R_CA1_wire_5_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=8.33
+Pair ('n086_R_CA1_wire_6_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=8.71
+Pair ('n081_R_CA1_wire_5_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=9.08
+Pair ('n081_R_CA1_wire_5_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=11.12
+Pair ('n097_R_CA1_wire_1_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=11.15
+Pair ('n086_R_CA1_wire_6_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=11.78
+Pair ('n006_L_CA3_wire_2_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=13.17
+Pair ('n086_R_CA1_wire_6_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=13.35
+Pair ('n010_L_CA3_wire_3_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=14.00
+Pair ('n010_L_CA3_wire_3_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=20.91
+Pair ('n010_L_CA3_wire_3_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=21.72
+Pair ('n041_L_CA1_wire_3_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=22.40
+Pair ('n041_L_CA1_wire_3_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=24.00
+Pair ('n086_R_CA1_wire_6_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=44.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data/analysis/1151b044merge-clean_cutoff_5
+Pair rankings saved in: data/analysis/1151b044merge-clean_cutoff_5/pair_rankings_fine.csv
+--------------------------------------------------
+Dataset: 1151b044merge-clean_cutoff_5.pkl
+Bin size: 10ms
+Max lag: 100ms
+Resolution: semiFine
+Number of neurons before filtering: 14
+Number of neurons after filtering: 10
+Number of pairs: 45
+Top pairs by total bump score:
+Pair ('n086_R_CA1_wire_6_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=32.00
+Pair ('n041_L_CA1_wire_3_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=28.00
+Pair ('n041_L_CA1_wire_3_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=21.83
+Pair ('n010_L_CA3_wire_3_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=18.25
+Pair ('n010_L_CA3_wire_3_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=15.85
+Pair ('n086_R_CA1_wire_6_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=13.29
+Pair ('n086_R_CA1_wire_6_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=12.67
+Pair ('n010_L_CA3_wire_3_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=12.57
+Pair ('n006_L_CA3_wire_2_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=11.57
+Pair ('n041_L_CA1_wire_3_cell_1', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=8.85
+Pair ('n082_R_CA1_wire_5_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=7.71
+Pair ('n041_L_CA1_wire_3_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=7.69
+Pair ('n006_L_CA3_wire_2_cell_2', 'n010_L_CA3_wire_3_cell_2'): total_bump_score=7.33
+Pair ('n097_R_CA1_wire_1_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=7.31
+Pair ('n086_R_CA1_wire_6_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=7.03
+Pair ('n081_R_CA1_wire_5_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=6.45
+Pair ('n081_R_CA1_wire_5_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=5.71
+Pair ('n097_R_CA1_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=5.59
+Pair ('n041_L_CA1_wire_3_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=5.47
+Pair ('n081_R_CA1_wire_5_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=5.15
+Pair ('n006_L_CA3_wire_2_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=5.03
+Pair ('n006_L_CA3_wire_2_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=4.66
+Pair ('n041_L_CA1_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.57
+Pair ('n010_L_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.55
+Pair ('n010_L_CA3_wire_3_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=4.21
+Pair ('n010_L_CA3_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=4.21
+Pair ('n010_L_CA3_wire_3_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=4.21
+Pair ('n041_L_CA1_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=4.03
+Pair ('n082_R_CA1_wire_5_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=3.71
+Pair ('n010_L_CA3_wire_3_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=3.60
+Pair ('n097_R_CA1_wire_1_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=3.50
+Pair ('n082_R_CA1_wire_5_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.31
+Pair ('n006_L_CA3_wire_2_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.26
+Pair ('n105_R_CA3_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.22
+Pair ('n006_L_CA3_wire_2_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.21
+Pair ('n106_R_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.21
+Pair ('n082_R_CA1_wire_5_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.17
+Pair ('n082_R_CA1_wire_5_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.08
+Pair ('n081_R_CA1_wire_5_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.05
+Pair ('n081_R_CA1_wire_5_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.04
+Pair ('n081_R_CA1_wire_5_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.01
+Pair ('n006_L_CA3_wire_2_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=1.78
+Pair ('n006_L_CA3_wire_2_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=1.71
+Pair ('n105_R_CA3_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=1.43
+Pair ('n006_L_CA3_wire_2_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=1.35
+Bottom pairs by total bump score:
+Pair ('n006_L_CA3_wire_2_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=1.35
+Pair ('n105_R_CA3_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=1.43
+Pair ('n006_L_CA3_wire_2_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=1.71
+Pair ('n006_L_CA3_wire_2_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=1.78
+Pair ('n081_R_CA1_wire_5_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.01
+Pair ('n081_R_CA1_wire_5_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.04
+Pair ('n081_R_CA1_wire_5_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.05
+Pair ('n082_R_CA1_wire_5_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.08
+Pair ('n082_R_CA1_wire_5_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.17
+Pair ('n106_R_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.21
+Pair ('n006_L_CA3_wire_2_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.21
+Pair ('n105_R_CA3_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=2.22
+Pair ('n006_L_CA3_wire_2_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=2.26
+Pair ('n082_R_CA1_wire_5_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=2.31
+Pair ('n097_R_CA1_wire_1_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=3.50
+Pair ('n010_L_CA3_wire_3_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=3.60
+Pair ('n082_R_CA1_wire_5_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=3.71
+Pair ('n041_L_CA1_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=4.03
+Pair ('n010_L_CA3_wire_3_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=4.21
+Pair ('n010_L_CA3_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=4.21
+Pair ('n010_L_CA3_wire_3_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=4.21
+Pair ('n010_L_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.55
+Pair ('n041_L_CA1_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=4.57
+Pair ('n006_L_CA3_wire_2_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=4.66
+Pair ('n006_L_CA3_wire_2_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=5.03
+Pair ('n081_R_CA1_wire_5_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=5.15
+Pair ('n041_L_CA1_wire_3_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=5.47
+Pair ('n097_R_CA1_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=5.59
+Pair ('n081_R_CA1_wire_5_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=5.71
+Pair ('n081_R_CA1_wire_5_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=6.45
+Pair ('n086_R_CA1_wire_6_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=7.03
+Pair ('n097_R_CA1_wire_1_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=7.31
+Pair ('n006_L_CA3_wire_2_cell_2', 'n010_L_CA3_wire_3_cell_2'): total_bump_score=7.33
+Pair ('n041_L_CA1_wire_3_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=7.69
+Pair ('n082_R_CA1_wire_5_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=7.71
+Pair ('n041_L_CA1_wire_3_cell_1', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=8.85
+Pair ('n006_L_CA3_wire_2_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=11.57
+Pair ('n010_L_CA3_wire_3_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=12.57
+Pair ('n086_R_CA1_wire_6_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=12.67
+Pair ('n086_R_CA1_wire_6_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=13.29
+Pair ('n010_L_CA3_wire_3_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=15.85
+Pair ('n010_L_CA3_wire_3_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=18.25
+Pair ('n041_L_CA1_wire_3_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=21.83
+Pair ('n041_L_CA1_wire_3_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=28.00
+Pair ('n086_R_CA1_wire_6_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=32.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data/analysis/1151b044merge-clean_cutoff_5
+Pair rankings saved in: data/analysis/1151b044merge-clean_cutoff_5/pair_rankings_semifine.csv
+--------------------------------------------------
+Dataset: 1151b044merge-clean_cutoff_5.pkl
+Bin size: 2ms
+Max lag: 50ms
+Resolution: Ultra-fine
+Number of neurons before filtering: 14
+Number of neurons after filtering: 10
+Number of pairs: 45
+Top pairs by total bump score:
+Pair ('n041_L_CA1_wire_3_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=92.00
+Pair ('n086_R_CA1_wire_6_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=84.00
+Pair ('n086_R_CA1_wire_6_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=70.00
+Pair ('n010_L_CA3_wire_3_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=66.00
+Pair ('n086_R_CA1_wire_6_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=66.00
+Pair ('n041_L_CA1_wire_3_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=55.54
+Pair ('n010_L_CA3_wire_3_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=49.61
+Pair ('n010_L_CA3_wire_3_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=46.00
+Pair ('n041_L_CA1_wire_3_cell_1', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=43.76
+Pair ('n041_L_CA1_wire_3_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=36.00
+Pair ('n086_R_CA1_wire_6_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=35.82
+Pair ('n006_L_CA3_wire_2_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=35.56
+Pair ('n081_R_CA1_wire_5_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=34.85
+Pair ('n097_R_CA1_wire_1_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=30.14
+Pair ('n082_R_CA1_wire_5_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=29.45
+Pair ('n010_L_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=26.03
+Pair ('n010_L_CA3_wire_3_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=25.22
+Pair ('n041_L_CA1_wire_3_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=24.75
+Pair ('n010_L_CA3_wire_3_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=24.67
+Pair ('n041_L_CA1_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=24.23
+Pair ('n097_R_CA1_wire_1_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=23.88
+Pair ('n006_L_CA3_wire_2_cell_2', 'n010_L_CA3_wire_3_cell_2'): total_bump_score=23.63
+Pair ('n082_R_CA1_wire_5_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=23.11
+Pair ('n097_R_CA1_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=21.84
+Pair ('n006_L_CA3_wire_2_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=21.49
+Pair ('n041_L_CA1_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=21.40
+Pair ('n081_R_CA1_wire_5_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=19.91
+Pair ('n006_L_CA3_wire_2_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=19.33
+Pair ('n010_L_CA3_wire_3_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=18.66
+Pair ('n010_L_CA3_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=17.40
+Pair ('n081_R_CA1_wire_5_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=13.95
+Pair ('n081_R_CA1_wire_5_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=13.04
+Pair ('n081_R_CA1_wire_5_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=11.72
+Pair ('n082_R_CA1_wire_5_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=11.35
+Pair ('n082_R_CA1_wire_5_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=8.85
+Pair ('n082_R_CA1_wire_5_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=8.14
+Pair ('n081_R_CA1_wire_5_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=8.08
+Pair ('n006_L_CA3_wire_2_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=7.87
+Pair ('n006_L_CA3_wire_2_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=7.53
+Pair ('n006_L_CA3_wire_2_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=7.35
+Pair ('n006_L_CA3_wire_2_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=7.35
+Pair ('n106_R_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=7.22
+Pair ('n105_R_CA3_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=6.72
+Pair ('n105_R_CA3_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=6.49
+Pair ('n006_L_CA3_wire_2_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=5.23
+Bottom pairs by total bump score:
+Pair ('n006_L_CA3_wire_2_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=5.23
+Pair ('n105_R_CA3_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=6.49
+Pair ('n105_R_CA3_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=6.72
+Pair ('n106_R_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=7.22
+Pair ('n006_L_CA3_wire_2_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=7.35
+Pair ('n006_L_CA3_wire_2_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=7.35
+Pair ('n006_L_CA3_wire_2_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=7.53
+Pair ('n006_L_CA3_wire_2_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=7.87
+Pair ('n081_R_CA1_wire_5_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=8.08
+Pair ('n082_R_CA1_wire_5_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=8.14
+Pair ('n082_R_CA1_wire_5_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=8.85
+Pair ('n082_R_CA1_wire_5_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=11.35
+Pair ('n081_R_CA1_wire_5_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=11.72
+Pair ('n081_R_CA1_wire_5_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=13.04
+Pair ('n081_R_CA1_wire_5_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=13.95
+Pair ('n010_L_CA3_wire_3_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=17.40
+Pair ('n010_L_CA3_wire_3_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=18.66
+Pair ('n006_L_CA3_wire_2_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=19.33
+Pair ('n081_R_CA1_wire_5_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=19.91
+Pair ('n041_L_CA1_wire_3_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=21.40
+Pair ('n006_L_CA3_wire_2_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=21.49
+Pair ('n097_R_CA1_wire_1_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=21.84
+Pair ('n082_R_CA1_wire_5_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=23.11
+Pair ('n006_L_CA3_wire_2_cell_2', 'n010_L_CA3_wire_3_cell_2'): total_bump_score=23.63
+Pair ('n097_R_CA1_wire_1_cell_1', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=23.88
+Pair ('n041_L_CA1_wire_3_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=24.23
+Pair ('n010_L_CA3_wire_3_cell_2', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=24.67
+Pair ('n041_L_CA1_wire_3_cell_1', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=24.75
+Pair ('n010_L_CA3_wire_3_cell_2', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=25.22
+Pair ('n010_L_CA3_wire_3_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=26.03
+Pair ('n082_R_CA1_wire_5_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=29.45
+Pair ('n097_R_CA1_wire_1_cell_1', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=30.14
+Pair ('n081_R_CA1_wire_5_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=34.85
+Pair ('n006_L_CA3_wire_2_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=35.56
+Pair ('n086_R_CA1_wire_6_cell_2', 'n106_R_CA3_wire_3_cell_2'): total_bump_score=35.82
+Pair ('n041_L_CA1_wire_3_cell_1', 'n082_R_CA1_wire_5_cell_2'): total_bump_score=36.00
+Pair ('n041_L_CA1_wire_3_cell_1', 'n081_R_CA1_wire_5_cell_1'): total_bump_score=43.76
+Pair ('n010_L_CA3_wire_3_cell_2', 'n041_L_CA1_wire_3_cell_1'): total_bump_score=46.00
+Pair ('n010_L_CA3_wire_3_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=49.61
+Pair ('n041_L_CA1_wire_3_cell_1', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=55.54
+Pair ('n086_R_CA1_wire_6_cell_2', 'n105_R_CA3_wire_3_cell_1'): total_bump_score=66.00
+Pair ('n010_L_CA3_wire_3_cell_2', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=66.00
+Pair ('n086_R_CA1_wire_6_cell_2', 'n118_R_CA3_wire_6_cell_2'): total_bump_score=70.00
+Pair ('n086_R_CA1_wire_6_cell_2', 'n097_R_CA1_wire_1_cell_1'): total_bump_score=84.00
+Pair ('n041_L_CA1_wire_3_cell_1', 'n086_R_CA1_wire_6_cell_2'): total_bump_score=92.00
+Additional plots (silent periods, raster, autocorrelations, etc.) saved in: data/analysis/1151b044merge-clean_cutoff_5
+Pair rankings saved in: data/analysis/1151b044merge-clean_cutoff_5/pair_rankings_ultra-fine.csv
+--------------------------------------------------

@@ -1,0 +1,2 @@
+n105_R_CA3_wire_3_cell_1	n106_R_CA3_wire_3_cell_2
+n106_R_CA3_wire_3_cell_2	n105_R_CA3_wire_3_cell_1
