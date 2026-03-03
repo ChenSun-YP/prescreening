@@ -20,6 +20,33 @@ import argparse
 import gc
 import scipy.signal
 import psutil
+import pickle
+import scipy.signal
+from scipy.signal import find_peaks
+from diptest import diptest
+from kilosort import CCG
+
+
+def _estimate_contamination_rate(spike_times_sec, min_spikes=20):
+    """
+    Estimate contamination rate for a single unit using kilosort's CCG.refract.
+    spike_times_sec: 1d array of spike times in seconds.
+    Returns float or None if failed / too few spikes.
+    """
+    if spike_times_sec is None or len(spike_times_sec) < min_spikes:
+        return None
+    spike_times_sec = np.asarray(spike_times_sec, dtype=np.float64)
+    cluster_ids = np.zeros(len(spike_times_sec), dtype=np.int32)
+    try:
+        _, est_contam_rate = CCG.refract(cluster_ids, spike_times_sec)
+        if np.isscalar(est_contam_rate):
+            return float(est_contam_rate)
+        if hasattr(est_contam_rate, '__len__') and len(est_contam_rate) > 0:
+            return float(np.mean(est_contam_rate))
+        return float(est_contam_rate)
+    except Exception:
+        return None
+
 
 # Try to import tqdm for progress bars, fallback to simple progress if not available
 try:
@@ -66,11 +93,6 @@ plt.rcParams.update({
     'figure.figsize': (10, 8)
 })
 
-# # For better readability in dense plots
-# plt.rcParams['lines.linewidth'] = 2
-# plt.rcParams['axes.grid'] = True
-# plt.rcParams['grid.alpha'] = 0.3
-
 
 
 # Command-line argument parsing
@@ -105,6 +127,10 @@ def parse_arguments():
     parser.add_argument('--only_use_trial_data', action='store_true',
                         default=False,
                         help='Only use trial data for the neurons')
+    parser.add_argument('--feedback_penalty_alpha', type=float, default=0.0,
+                        help='L1/L2 penalty strength applied ONLY to feedback (post-spike) filter weights. >0 reduces autoregressive dominance. Try 0.1-2.0.')
+    parser.add_argument('--feedback_L1_wt', type=float, default=0.5,
+                        help='Elastic-net mix for feedback penalty: 0=pure L2, 1=pure L1. Default 0.5.')
     return parser.parse_args()
 
 # Global variables that will be set in __main__ or by external scripts
@@ -121,6 +147,8 @@ RANK_RANGE = None
 f_SISO = None
 neurons = None
 neuron_pairs = None
+feedback_penalty_alpha = None
+feedback_L1_wt = None
 
 # Helper function to get memory usage
 def get_memory_usage_mb():
@@ -183,7 +211,28 @@ def preprocess_neuron_data(input_neuron, output_neuron, neurons, sample_rate):
     full_set, _, _, _ = create_dataset(x_full, y_full)
     return (full_set[0][0], full_set[0][1], x_full, y_full)
 
-def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neuron, rank, chunk_size=10000, min_spike_factor=1.5, max_tau=100, folds=5, save_dir='.', sigma=None, n_resample=10):
+
+def _fit_glm_asymmetric_regularization(glm_model, n_basis, has_intercept, feedback_penalty_alpha, feedback_L1_wt, maxiter=100):
+    """
+    Fit GLM with optional heavy L1/L2 penalty on feedback (post-spike) coefficients only.
+    Reduces autoregressive dominance so the model uses stimulus/coupling (x) more.
+    """
+    n_params = (1 + 2 * n_basis) if has_intercept else (2 * n_basis)
+    if feedback_penalty_alpha is None or feedback_penalty_alpha <= 0:
+        return glm_model.fit(maxiter=maxiter, tol=1e-9)
+    alpha_vec = np.zeros(n_params)
+    fb_start = (1 + n_basis) if has_intercept else n_basis
+    alpha_vec[fb_start:] = feedback_penalty_alpha
+    return glm_model.fit_regularized(
+        method='elastic_net',
+        alpha=alpha_vec,
+        L1_wt=np.clip(feedback_L1_wt, 0.0, 1.0),
+        maxiter=maxiter,
+        refit=False,
+    )
+
+
+def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neuron, rank, chunk_size=10000, min_spike_factor=1.5, max_tau=100, folds=5, save_dir='.', sigma=None, n_resample=10, feedback_penalty_alpha=None, feedback_L1_wt=0.5):
     '''
     Fits a Generalized Linear Model (GLM) to Spike-Timing-Dependent Plasticity (STDP) data.
     Handles both standard and sigma (offset) cases, with proper cross-validation splitting of sigma.
@@ -315,7 +364,7 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
                 print(f"  VIF: {[f'{v:.2f}' for v in vif]}")  # VIF > 5-10 indicates issues
                 print(f"  Fold {fold_idx + 1}: Fitting GLM (train: {len(y_train):,} samples)...", flush=True)
                 glm_model = sm.GLM(y_train, X, family=sm.families.Binomial(link=sm.families.links.Probit()), offset=sigma_train)
-                model_fit = glm_model.fit(maxiter=50, tol=1e-9)
+                model_fit = _fit_glm_asymmetric_regularization(glm_model, ff_basis.shape[1], has_intercept=False, feedback_penalty_alpha=feedback_penalty_alpha, feedback_L1_wt=feedback_L1_wt, maxiter=50)
                 # Get iteration count safely
                 iterations = 'N/A'
                 try:
@@ -326,7 +375,7 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
                 except (AttributeError, TypeError):
                     pass
                 print(f"  Fold {fold_idx + 1}: GLM fit complete (iterations: {iterations})", flush=True)
-                conf_int = model_fit.conf_int()
+                conf_int = model_fit.conf_int() if hasattr(model_fit, 'conf_int') and callable(getattr(model_fit, 'conf_int')) else None
                 y_pred = model_fit.fittedvalues
                 y_pred_val = model_fit.predict(X_val, offset=sigma_val)
                 n_basis = ff_basis.shape[1]
@@ -379,7 +428,7 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
 
                 print(f"  Fold {fold_idx + 1}: Fitting GLM (train: {len(y_train):,} samples)...", flush=True)
                 glm_model = sm.GLM(y_train, X, family=sm.families.Binomial(link=sm.families.links.Probit()))
-                model_fit = glm_model.fit(maxiter=100, tol=1e-9)
+                model_fit = _fit_glm_asymmetric_regularization(glm_model, ff_basis.shape[1], has_intercept=True, feedback_penalty_alpha=feedback_penalty_alpha, feedback_L1_wt=feedback_L1_wt, maxiter=100)
                 # Get iteration count safely
                 iterations = 'N/A'
                 try:
@@ -391,9 +440,7 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
                     pass
                 print(f"  Fold {fold_idx + 1}: GLM fit complete (iterations: {iterations})", flush=True)
 
-
-
-
+                conf_int = model_fit.conf_int() if hasattr(model_fit, 'conf_int') and callable(getattr(model_fit, 'conf_int')) else None
                 # # Fit GLM with IRLS
                 # model_fit_irls = glm_model.fit(method='IRLS', maxiter=500, tol=1e-9)
                 # # Fit GLM with BFGS, capturing optimization result
@@ -401,9 +448,6 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
                 # model_fit_irls = glm_model.fit(method='IRLS', maxiter=500, tol=1e-9)
                 # model_fit = glm_model.fit(method='bfgs', maxiter=500, tol=1e-9)
 
-
-
-                conf_int = model_fit.conf_int()
                 y_pred = model_fit.fittedvalues
                 y_pred_val = model_fit.predict(X_val)
                 n_basis = ff_basis.shape[1]
@@ -512,7 +556,7 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
             sigma_full = sigma_np[:T_full]
             print("Fitting full GLM model...", flush=True)
             glm_full = sm.GLM(y_target_full, X_full, family=sm.families.Binomial(link=sm.families.links.Probit()), offset=sigma_full)
-            model_full = glm_full.fit(maxiter=100, tol=1e-9)
+            model_full = _fit_glm_asymmetric_regularization(glm_full, ff_basis.shape[1], has_intercept=False, feedback_penalty_alpha=feedback_penalty_alpha, feedback_L1_wt=feedback_L1_wt, maxiter=100)
             # Get iteration count safely
             iterations = 'N/A'
             try:
@@ -553,7 +597,7 @@ def fit_glm_to_stdp(data, target, L, alpha_k, alpha_h, input_neuron, output_neur
             process_chunks_to_design(x_full, y_full, ff_basis_batched, fb_basis_batched, T_full, chunk_size, X_full, desc="Full design matrix")
             print("Fitting full GLM model...", flush=True)
             glm_full = sm.GLM(y_target_full, X_full, family=sm.families.Binomial(link=sm.families.links.Probit()))
-            model_full = glm_full.fit(maxiter=100, tol=1e-9)
+            model_full = _fit_glm_asymmetric_regularization(glm_full, ff_basis.shape[1], has_intercept=True, feedback_penalty_alpha=feedback_penalty_alpha, feedback_L1_wt=feedback_L1_wt, maxiter=100)
             # Get iteration count safely
             iterations = 'N/A'
             try:
@@ -608,7 +652,12 @@ def compute_metrics(y_true, y_pred, y_val_true, y_pred_val, model_fit, X, X_val,
         c_ff = params[1:n_basis + 1]
         c_fb = params[n_basis + 1:]
 
-    metrics['deviance_reduction'] = (model_fit.null_deviance - model_fit.deviance) / model_fit.null_deviance * 100
+    _null_dev = getattr(model_fit, 'null_deviance', None)
+    _dev = getattr(model_fit, 'deviance', None)
+    if _null_dev is not None and _dev is not None and _null_dev > 0:
+        metrics['deviance_reduction'] = (_null_dev - _dev) / _null_dev * 100
+    else:
+        metrics['deviance_reduction'] = None
 
     for dataset, y_t, y_p in [('train', y_true, y_pred), ('val', y_val_true, y_pred_val)]:
         rmse = np.sqrt(np.mean((y_t - y_p) ** 2))
@@ -663,10 +712,10 @@ def compute_metrics(y_true, y_pred, y_val_true, y_pred_val, model_fit, X, X_val,
             'n_val': n_val,
             'Zs': ks_train[1], 'b': ks_train[2], 'b95': ks_train[3], 'Tau': ks_train[4],
             'Zs_val': ks_val[1], 'b_val': ks_val[2], 'b95_val': ks_val[3], 'Tau_val': ks_val[4],
-            'log_likelihood': model_fit.llf,
-            'null_log_likelihood': model_fit.llnull,
-            'aic': model_fit.aic,
-            'bic': model_fit.bic,
+            'log_likelihood': getattr(model_fit, 'llf', None),
+            'null_log_likelihood': getattr(model_fit, 'llnull', None),
+            'aic': getattr(model_fit, 'aic', None),
+            'bic': getattr(model_fit, 'bic', None),
             'c_ff': c_ff,
             'c_fb': c_fb,
             'ff_kernel': ff_kernel,
@@ -687,10 +736,10 @@ def compute_metrics(y_true, y_pred, y_val_true, y_pred_val, model_fit, X, X_val,
             'n_val': 0,
             'Zs': ks_train[1], 'b': ks_train[2], 'b95': ks_train[3], 'Tau': ks_train[4],
             'Zs_val': ks_val[1], 'b_val': ks_val[2], 'b95_val': ks_val[3], 'Tau_val': ks_val[4],
-            'log_likelihood': model_fit.llf,
-            'null_log_likelihood': model_fit.llnull,
-            'aic': model_fit.aic,
-            'bic': model_fit.bic,
+            'log_likelihood': getattr(model_fit, 'llf', None),
+            'null_log_likelihood': getattr(model_fit, 'llnull', None),
+            'aic': getattr(model_fit, 'aic', None),
+            'bic': getattr(model_fit, 'bic', None),
             'c_ff': c_ff,
             'c_fb': c_fb,
             'L': L,
@@ -698,251 +747,225 @@ def compute_metrics(y_true, y_pred, y_val_true, y_pred_val, model_fit, X, X_val,
             'alpha_h': alpha_h
         })
     return metrics
-def kernel_data(all_metrics, ff_basis, fb_basis, c_ff, c_fb, L, alpha_k, alpha_h,k0, input_neuron, output_neuron, rank):
-    ff_kernel_avg = np.dot(ff_basis, c_ff)
-    fb_kernel_avg = np.dot(fb_basis, c_fb) 
-    # Save kernels to pickle
-    kernel_data = {
-            'input_neuron': input_neuron,
-            'output_neuron': output_neuron,
-            'rank': rank,
-            'c_ff': c_ff,
-            'c_fb': c_fb,
-            'ff_kernel': ff_kernel_avg,
-            'fb_kernel': fb_kernel_avg,
-            'L': L,
-            'alpha_k': alpha_k,
-            'alpha_h': alpha_h,
-            'k0': k0,
-            'all_metrics': all_metrics  # Add all fold metrics, including matrices
-        }
-    return kernel_data
-
-
-def plot_fit_and_save_kernels(all_metrics, model_full, ff_basis, fb_basis, c_ff, c_fb, L, alpha_k, alpha_h,k0, input_neuron, output_neuron, x_full, y_full, rank):
+def kernel_data(all_metrics, ff_basis, fb_basis, c_ff, c_fb, L, alpha_k, alpha_h, k0, input_neuron, output_neuron, rank, contam_input=None, contam_output=None):
     ff_kernel_avg = np.dot(ff_basis, c_ff)
     fb_kernel_avg = np.dot(fb_basis, c_fb)
-    
     # Save kernels to pickle
-    kernel_data = {
+    out = {
         'input_neuron': input_neuron,
         'output_neuron': output_neuron,
         'rank': rank,
+        'c_ff': c_ff,
+        'c_fb': c_fb,
         'ff_kernel': ff_kernel_avg,
         'fb_kernel': fb_kernel_avg,
         'L': L,
         'alpha_k': alpha_k,
         'alpha_h': alpha_h,
         'k0': k0,
-        'all_metrics': all_metrics  # Add all fold metrics, including matrices
+        'all_metrics': all_metrics,
+        'contam_input': contam_input,
+        'contam_output': contam_output,
     }
-    kernel_file = os.path.join(SAVE_DIR, f'kernels_{input_neuron}_{output_neuron}_rank{rank}.pkl')
-    with open(kernel_file, 'wb') as f:
-        pickle.dump(kernel_data, f)
-    print(f'Saved kernels at {kernel_file}')
+    return out
 
-    # Generate individual fit plot
-    fig = plt.figure(figsize=(18, 18))
-    plt.suptitle(f'Fit for L={L} - Input: {input_neuron}, Output: {output_neuron}, '
-                 f'alpha_k={alpha_k:.4f}, alpha_h={alpha_h:.4f}, k0={k0:.3f}, Rank={rank}')
+# def plot_fit_and_save_kernels(all_metrics, model_full, ff_basis, fb_basis, c_ff, c_fb, L, alpha_k, alpha_h,k0, input_neuron, output_neuron, x_full, y_full, rank):
+#     ff_kernel_avg = np.dot(ff_basis, c_ff)
+#     fb_kernel_avg = np.dot(fb_basis, c_fb)
     
-    T_full = x_full.shape[-1]
-    ff_basis_batched = ff_basis.unsqueeze(0).permute(2, 0, 1).flip(dims=[-1])
-    fb_basis_batched = fb_basis.unsqueeze(0).permute(2, 0, 1).flip(dims=[-1])
-    X_full_file = os.path.join(SAVE_DIR, f'X_full_temp_plot_rank{rank}.npy')
-    X_full = np.memmap(X_full_file, dtype='float32', mode='w+', shape=(T_full, 2 * L + 1))
-    X_full[:, 0] = 1
+#     # Save kernels to pickle
+#     kernel_data = {
+#         'input_neuron': input_neuron,
+#         'output_neuron': output_neuron,
+#         'rank': rank,
+#         'ff_kernel': ff_kernel_avg,
+#         'fb_kernel': fb_kernel_avg,
+#         'L': L,
+#         'alpha_k': alpha_k,
+#         'alpha_h': alpha_h,
+#         'k0': k0,
+#         'all_metrics': all_metrics  # Add all fold metrics, including matrices
+#     }
+#     kernel_file = os.path.join(SAVE_DIR, f'kernels_{input_neuron}_{output_neuron}_rank{rank}.pkl')
+#     with open(kernel_file, 'wb') as f:
+#         pickle.dump(kernel_data, f)
+#     print(f'Saved kernels at {kernel_file}')
+
+#     # Generate individual fit plot
+#     fig = plt.figure(figsize=(18, 18))
+#     plt.suptitle(f'Fit for L={L} - Input: {input_neuron}, Output: {output_neuron}, '
+#                  f'alpha_k={alpha_k:.4f}, alpha_h={alpha_h:.4f}, k0={k0:.3f}, Rank={rank}')
     
-    def process_chunks_to_design(input_x, input_y, basis_ff, basis_fb, total_length, chunk_size, design_matrix):
-        step_size = chunk_size
-        num_chunks = (total_length + step_size - 1) // step_size
-        padding = basis_ff.shape[-1] - 1
-        for i in range(num_chunks):
-            start = i * step_size
-            end = min(start + step_size + padding, total_length)
-            chunk_x = input_x[:, :, start:end]
-            chunk_y = input_y[:, :, start:end]
-            if chunk_x.shape[-1] < padding + 1:
-                chunk_x = F.pad(chunk_x, (padding + 1 - chunk_x.shape[-1], 0), mode='constant', value=0)
-                chunk_y = F.pad(chunk_y, (padding + 1 - chunk_y.shape[-1], 0), mode='constant', value=0)
+#     T_full = x_full.shape[-1]
+#     ff_basis_batched = ff_basis.unsqueeze(0).permute(2, 0, 1).flip(dims=[-1])
+#     fb_basis_batched = fb_basis.unsqueeze(0).permute(2, 0, 1).flip(dims=[-1])
+#     X_full_file = os.path.join(SAVE_DIR, f'X_full_temp_plot_rank{rank}.npy')
+#     X_full = np.memmap(X_full_file, dtype='float32', mode='w+', shape=(T_full, 2 * L + 1))
+#     X_full[:, 0] = 1
+    
+#     def process_chunks_to_design(input_x, input_y, basis_ff, basis_fb, total_length, chunk_size, design_matrix):
+#         step_size = chunk_size
+#         num_chunks = (total_length + step_size - 1) // step_size
+#         padding = basis_ff.shape[-1] - 1
+#         for i in range(num_chunks):
+#             start = i * step_size
+#             end = min(start + step_size + padding, total_length)
+#             chunk_x = input_x[:, :, start:end]
+#             chunk_y = input_y[:, :, start:end]
+#             if chunk_x.shape[-1] < padding + 1:
+#                 chunk_x = F.pad(chunk_x, (padding + 1 - chunk_x.shape[-1], 0), mode='constant', value=0)
+#                 chunk_y = F.pad(chunk_y, (padding + 1 - chunk_y.shape[-1], 0), mode='constant', value=0)
             
-            ff_conv = F.conv1d(chunk_x, basis_ff, padding=padding)[:, :, :-padding + 1]
-            fb_conv = F.conv1d(chunk_y, basis_fb, padding=padding)[:, :, :-padding + 1]
+#             ff_conv = F.conv1d(chunk_x, basis_ff, padding=padding)[:, :, :-padding + 1]
+#             fb_conv = F.conv1d(chunk_y, basis_fb, padding=padding)[:, :, :-padding + 1]
             
-            valid_length = total_length - start if i == num_chunks - 1 else step_size
+#             valid_length = total_length - start if i == num_chunks - 1 else step_size
             
-            ff_conv_chunk = ff_conv[:, :, :valid_length].transpose(1, 2)[0].cpu().numpy()
-            fb_conv_chunk = fb_conv[:, :, :valid_length].transpose(1, 2)[0].cpu().numpy()
-            design_matrix[start:start + valid_length, 1:L + 1] = ff_conv_chunk
-            design_matrix[start:start + valid_length, L + 1:] = fb_conv_chunk
+#             ff_conv_chunk = ff_conv[:, :, :valid_length].transpose(1, 2)[0].cpu().numpy()
+#             fb_conv_chunk = fb_conv[:, :, :valid_length].transpose(1, 2)[0].cpu().numpy()
+#             design_matrix[start:start + valid_length, 1:L + 1] = ff_conv_chunk
+#             design_matrix[start:start + valid_length, L + 1:] = fb_conv_chunk
     
-    process_chunks_to_design(x_full, y_full, ff_basis_batched, fb_basis_batched, T_full, 50000, X_full)
-    Pb_full = model_full.predict(X_full)
-    y_full_np = y_full.flatten().cpu().numpy()
-    ks_full = time_rescaling_ks(Pb_full, y_full_np)
+#     process_chunks_to_design(x_full, y_full, ff_basis_batched, fb_basis_batched, T_full, 50000, X_full)
+#     Pb_full = model_full.predict(X_full)
+#     y_full_np = y_full.flatten().cpu().numpy()
+#     ks_full = time_rescaling_ks(Pb_full, y_full_np)
     
-    del X_full
-    os.remove(X_full_file)
+#     del X_full
+#     os.remove(X_full_file)
 
-    def get_max_nonzero_idx(data, axis=None):
-        if torch.is_tensor(data):
-            data = data.detach().cpu().numpy()
-        if axis is not None:
-            return np.max([np.max(np.where(np.abs(data[:, j]) > 0.001)[0]) + 1 
-                           if np.any(np.abs(data[:, j]) > 0.001) else 0 
-                           for j in range(data.shape[1])])
-        else:
-            return np.max(np.where(np.abs(data) > 0.001)[0]) + 1 if np.any(np.abs(data) > 0.001) else len(data)
+#     def get_max_nonzero_idx(data, axis=None):
+#         if torch.is_tensor(data):
+#             data = data.detach().cpu().numpy()
+#         if axis is not None:
+#             return np.max([np.max(np.where(np.abs(data[:, j]) > 0.001)[0]) + 1 
+#                            if np.any(np.abs(data[:, j]) > 0.001) else 0 
+#                            for j in range(data.shape[1])])
+#         else:
+#             return np.max(np.where(np.abs(data) > 0.001)[0]) + 1 if np.any(np.abs(data) > 0.001) else len(data)
 
-    max_nonzero_idx_ff_basis = get_max_nonzero_idx(ff_basis, axis=1)
-    max_nonzero_idx_fb_basis = get_max_nonzero_idx(fb_basis, axis=1)
-    max_nonzero_idx_ff_kernel = get_max_nonzero_idx(ff_kernel_avg.squeeze())
-    max_nonzero_idx_fb_kernel = get_max_nonzero_idx(fb_kernel_avg.squeeze())
-    global_max_nonzero_idx = max(max_nonzero_idx_ff_basis, max_nonzero_idx_fb_basis, 
-                                 max_nonzero_idx_ff_kernel, max_nonzero_idx_fb_kernel)
+#     max_nonzero_idx_ff_basis = get_max_nonzero_idx(ff_basis, axis=1)
+#     max_nonzero_idx_fb_basis = get_max_nonzero_idx(fb_basis, axis=1)
+#     max_nonzero_idx_ff_kernel = get_max_nonzero_idx(ff_kernel_avg.squeeze())
+#     max_nonzero_idx_fb_kernel = get_max_nonzero_idx(fb_kernel_avg.squeeze())
+#     global_max_nonzero_idx = max(max_nonzero_idx_ff_basis, max_nonzero_idx_fb_basis, 
+#                                  max_nonzero_idx_ff_kernel, max_nonzero_idx_fb_kernel)
 
-    gs = fig.add_gridspec(4, 3, height_ratios=[1, 1, 1, 0.5], hspace=0.4, wspace=0.4)
-    ax_ff = fig.add_subplot(gs[0, 0])
-    ax_ff.plot(ff_kernel_avg.squeeze(), label='FF Kernel', color='blue')
-    ax_ff.set_title('Feedforward Kernel')
-    ax_ff.set_xlabel('Time (ms)')
-    ax_ff.set_ylabel('Amplitude')
-    ax_ff.legend(loc='upper right')
-    ax_ff.set_xlim(0, global_max_nonzero_idx)
-    ax_ff.set_box_aspect(1)
+#     gs = fig.add_gridspec(4, 3, height_ratios=[1, 1, 1, 0.5], hspace=0.4, wspace=0.4)
+#     ax_ff = fig.add_subplot(gs[0, 0])
+#     ax_ff.plot(ff_kernel_avg.squeeze(), label='FF Kernel', color='blue')
+#     ax_ff.set_title('Feedforward Kernel')
+#     ax_ff.set_xlabel('Time (ms)')
+#     ax_ff.set_ylabel('Amplitude')
+#     ax_ff.legend(loc='upper right')
+#     ax_ff.set_xlim(0, global_max_nonzero_idx)
+#     ax_ff.set_box_aspect(1)
 
-    ax_fb = fig.add_subplot(gs[1, 0])
-    ax_fb.plot(fb_kernel_avg.squeeze(), label='FB Kernel', color='blue')
-    ax_fb.set_title('Feedback Kernel')
-    ax_fb.set_xlabel('Time (ms)')
-    ax_fb.set_ylabel('Amplitude')
-    ax_fb.legend(loc='upper right')
-    ax_fb.set_xlim(0, global_max_nonzero_idx)
-    ax_fb.set_box_aspect(1)
+#     ax_fb = fig.add_subplot(gs[1, 0])
+#     ax_fb.plot(fb_kernel_avg.squeeze(), label='FB Kernel', color='blue')
+#     ax_fb.set_title('Feedback Kernel')
+#     ax_fb.set_xlabel('Time (ms)')
+#     ax_fb.set_ylabel('Amplitude')
+#     ax_fb.legend(loc='upper right')
+#     ax_fb.set_xlim(0, global_max_nonzero_idx)
+#     ax_fb.set_box_aspect(1)
 
-    ax_ks = fig.add_subplot(gs[2, 0])
-    ax_ks.step(ks_full[2], ks_full[1], where='post', label="Empirical CDF", color="black")
-    ax_ks.step(ks_full[2], ks_full[2], where='post', label="Uniform CDF", color="red", linestyle='--')
-    ax_ks.fill_between(ks_full[2], ks_full[3][:, 0], ks_full[3][:, 1], color="gray", alpha=0.3, label="95% CI")
-    ax_ks.set_xlabel("Theoretical Quantiles")
-    ax_ks.set_ylabel("Transformed Values")
-    ax_ks.set_title(f"KS Score: {ks_full[0]:.3f}")
-    ax_ks.legend()
-    ax_ks.set_box_aspect(1)
+#     ax_ks = fig.add_subplot(gs[2, 0])
+#     ax_ks.step(ks_full[2], ks_full[1], where='post', label="Empirical CDF", color="black")
+#     ax_ks.step(ks_full[2], ks_full[2], where='post', label="Uniform CDF", color="red", linestyle='--')
+#     ax_ks.fill_between(ks_full[2], ks_full[3][:, 0], ks_full[3][:, 1], color="gray", alpha=0.3, label="95% CI")
+#     ax_ks.set_xlabel("Theoretical Quantiles")
+#     ax_ks.set_ylabel("Transformed Values")
+#     ax_ks.set_title(f"KS Score: {ks_full[0]:.3f}")
+#     ax_ks.legend()
+#     ax_ks.set_box_aspect(1)
 
-    x_1d = x_full.flatten().numpy()
-    y_1d = y_full.flatten().numpy()
+#     x_1d = x_full.flatten().numpy()
+#     y_1d = y_full.flatten().numpy()
 
-    def compute_correlogram(x, y, max_lag_ms, bin_size, mode):
-        n_original = len(x)
-        resampling_factor = int(bin_size / 1)  # Assuming original data is in 1ms bins
-        n_resampled = n_original // resampling_factor
-        x_resampled = np.array([np.sum(x[i:i+resampling_factor]) for i in range(0, n_original, resampling_factor)])
-        y_resampled = np.array([np.sum(y[i:i+resampling_factor]) for i in range(0, n_original, resampling_factor)])
-        
-        x_resampled = (x_resampled > 0).astype(float)
-        y_resampled = (y_resampled > 0).astype(float)
-        
-        max_lag_bins = int(max_lag_ms / bin_size)
-        corr = scipy.signal.correlate(y_resampled, x_resampled, mode='full')
-        center = len(corr) // 2
-        start_idx = center - max_lag_bins
-        end_idx = center + max_lag_bins + 1
-        corr_trimmed = corr[start_idx:end_idx]
-        
-        if mode == 'auto':
-            corr_trimmed[max_lag_bins] = 0
-        
-        lags = np.arange(-max_lag_bins, max_lag_bins + 1) * bin_size
-        return lags, corr_trimmed
 
-    lags_x_1000, autocorr_x_1000 = compute_correlogram(x_1d, x_1d, 1000, 80, mode='auto')
-    lags_y_1000, autocorr_y_1000 = compute_correlogram(y_1d, y_1d, 1000, 80, mode='auto')
-    lags_xy_1000, crosscorr_xy_1000 = compute_correlogram(x_1d, y_1d, 1000, 80, mode='cross')
-    lags_x_100, autocorr_x_100 = compute_correlogram(x_1d, x_1d, 100, 4, mode='auto')
-    lags_y_100, autocorr_y_100 = compute_correlogram(y_1d, y_1d, 100, 4, mode='auto')
-    lags_xy_100, crosscorr_xy_100 = compute_correlogram(x_1d, y_1d, 100, 4, mode='cross')
 
-    gs_corr_full = gs[0:3, 1].subgridspec(3, 1, hspace=0.3)
-    ax_corr1 = fig.add_subplot(gs_corr_full[0])
-    ax_corr1.bar(lags_x_1000[:-1], autocorr_x_1000[:-1], width=np.diff(lags_x_1000), color='blue', alpha=0.8, linewidth=0.5, align='edge')
-    ax_corr1.set_ylabel('x_ac')
-    ax_corr1.set_title('Full Correlograms (±1000ms)')
-    ax_corr1.set_box_aspect(1)
+#     lags_x_1000, autocorr_x_1000 = compute_correlogram(x_1d, x_1d, 200, 10, mode='auto')
+#     lags_y_1000, autocorr_y_1000 = compute_correlogram(y_1d, y_1d, 200, 10, mode='auto')
+#     lags_xy_1000, crosscorr_xy_1000 = compute_correlogram(x_1d, y_1d, 200, 10, mode='cross')
+#     lags_x_100, autocorr_x_100 = compute_correlogram(x_1d, x_1d, 100, 4, mode='auto')
+#     lags_y_100, autocorr_y_100 = compute_correlogram(y_1d, y_1d, 100, 4, mode='auto')
+#     lags_xy_100, crosscorr_xy_100 = compute_correlogram(x_1d, y_1d, 100, 4, mode='cross')
 
-    ax_corr2 = fig.add_subplot(gs_corr_full[1])
-    ax_corr2.bar(lags_y_1000[:-1], autocorr_y_1000[:-1], width=np.diff(lags_y_1000), color='green', alpha=0.8, linewidth=0.5, align='edge')
-    ax_corr2.set_ylabel('y_ac')
-    ax_corr2.set_box_aspect(1)
+#     gs_corr_full = gs[0:3, 1].subgridspec(3, 1, hspace=0.3)
+#     ax_corr1 = fig.add_subplot(gs_corr_full[0])
+#     ax_corr1.bar(lags_x_1000[:-1], autocorr_x_1000[:-1], width=np.diff(lags_x_1000), color='blue', alpha=0.8, linewidth=0.5, align='edge')
+#     ax_corr1.set_ylabel('x_ac')
+#     ax_corr1.set_title('Full Correlograms (±200ms)')
+#     ax_corr1.set_box_aspect(1)
 
-    ax_corr3 = fig.add_subplot(gs_corr_full[2])
-    ax_corr3.bar(lags_xy_1000[:-1], crosscorr_xy_1000[:-1], width=np.diff(lags_xy_1000), color='red', alpha=0.8, linewidth=0.5, align='edge')
-    ax_corr3.set_xlabel('Lag (ms)')
-    ax_corr3.set_ylabel('cc')
-    ax_corr3.set_box_aspect(1)
+#     ax_corr2 = fig.add_subplot(gs_corr_full[1])
+#     ax_corr2.bar(lags_y_1000[:-1], autocorr_y_1000[:-1], width=np.diff(lags_y_1000), color='green', alpha=0.8, linewidth=0.5, align='edge')
+#     ax_corr2.set_ylabel('y_ac')
+#     ax_corr2.set_box_aspect(1)
 
-    gs_corr_zoom = gs[0:3, 2].subgridspec(3, 1, hspace=0.3)
-    ax_corr1_zoom = fig.add_subplot(gs_corr_zoom[0])
-    ax_corr1_zoom.bar(lags_x_100[:-1], autocorr_x_100[:-1], width=np.diff(lags_x_100), color='blue', alpha=0.8, linewidth=0.5, align='edge')
-    ax_corr1_zoom.set_ylabel('x_ac')
-    ax_corr1_zoom.set_title('Zoomed Correlograms (±100ms)')
-    ax_corr1_zoom.set_box_aspect(1)
+#     ax_corr3 = fig.add_subplot(gs_corr_full[2])
+#     ax_corr3.bar(lags_xy_1000[:-1], crosscorr_xy_1000[:-1], width=np.diff(lags_xy_1000), color='red', alpha=0.8, linewidth=0.5, align='edge')
+#     ax_corr3.set_xlabel('Lag (ms)')
+#     ax_corr3.set_ylabel('cc')
+#     ax_corr3.set_box_aspect(1)
 
-    ax_corr2_zoom = fig.add_subplot(gs_corr_zoom[1])
-    ax_corr2_zoom.bar(lags_y_100[:-1], autocorr_y_100[:-1], width=np.diff(lags_y_100), color='green', alpha=0.8, linewidth=0.5, align='edge')
-    ax_corr2_zoom.set_ylabel('y_ac')
-    ax_corr2_zoom.set_box_aspect(1)
+#     gs_corr_zoom = gs[0:3, 2].subgridspec(3, 1, hspace=0.3)
+#     ax_corr1_zoom = fig.add_subplot(gs_corr_zoom[0])
+#     ax_corr1_zoom.bar(lags_x_100[:-1], autocorr_x_100[:-1], width=np.diff(lags_x_100), color='blue', alpha=0.8, linewidth=0.5, align='edge')
+#     ax_corr1_zoom.set_ylabel('x_ac')
+#     ax_corr1_zoom.set_title('Zoomed Correlograms (±100ms)')
+#     ax_corr1_zoom.set_box_aspect(1)
 
-    ax_corr3_zoom = fig.add_subplot(gs_corr_zoom[2])
-    ax_corr3_zoom.bar(lags_xy_100[:-1], crosscorr_xy_100[:-1], width=np.diff(lags_xy_100), color='red', alpha=0.8, linewidth=0.5, align='edge')
-    ax_corr3_zoom.set_xlabel('Lag (ms)')
-    ax_corr3_zoom.set_ylabel('cc')
-    ax_corr3_zoom.set_box_aspect(1)
+#     ax_corr2_zoom = fig.add_subplot(gs_corr_zoom[1])
+#     ax_corr2_zoom.bar(lags_y_100[:-1], autocorr_y_100[:-1], width=np.diff(lags_y_100), color='green', alpha=0.8, linewidth=0.5, align='edge')
+#     ax_corr2_zoom.set_ylabel('y_ac')
+#     ax_corr2_zoom.set_box_aspect(1)
 
-    plot_length = x_full.shape[-1]
-    x_spikes = torch.where(x_full[0, 0, :] == 1)[0].cpu().numpy()
-    y_spikes = torch.where(y_full[0, 0, :] == 1)[0].cpu().numpy()
+#     ax_corr3_zoom = fig.add_subplot(gs_corr_zoom[2])
+#     ax_corr3_zoom.bar(lags_xy_100[:-1], crosscorr_xy_100[:-1], width=np.diff(lags_xy_100), color='red', alpha=0.8, linewidth=0.5, align='edge')
+#     ax_corr3_zoom.set_xlabel('Lag (ms)')
+#     ax_corr3_zoom.set_ylabel('cc')
+#     ax_corr3_zoom.set_box_aspect(1)
 
-    bin_size = 1000
-    bins = np.arange(0, plot_length + bin_size, bin_size)
-    x_hist, _ = np.histogram(x_spikes, bins=bins)
-    y_hist, _ = np.histogram(y_spikes, bins=bins)
-    x_rate = x_hist / (bin_size / 1000)
-    y_rate = y_hist / (bin_size / 1000)
-    x_rate_smooth = gaussian_filter1d(x_rate, sigma=1)
-    y_rate_smooth = gaussian_filter1d(y_rate, sigma=1)
-    x_spike_rates = np.interp(x_spikes, bins[:-1], x_rate_smooth)
-    y_spike_rates = np.interp(y_spikes, bins[:-1], y_rate_smooth)
+#     plot_length = x_full.shape[-1]
+#     x_spikes = torch.where(x_full[0, 0, :] == 1)[0].cpu().numpy()
+#     y_spikes = torch.where(y_full[0, 0, :] == 1)[0].cpu().numpy()
 
-    raster_gs = gs[3, :].subgridspec(1, 1, height_ratios=[0.05])  # Small height for raster
-    ax_raster = fig.add_subplot(raster_gs[0])
-    scatter_x = ax_raster.scatter(x_spikes, np.ones_like(x_spikes) * 0.2, c=x_spike_rates, cmap='Blues', label='Input (X) Spikes', s=20, vmin=0)
-    scatter_y = ax_raster.scatter(y_spikes, np.ones_like(y_spikes) * 0.1, c=y_spike_rates, cmap='Reds', label='Output (Y) Spikes', s=20, vmin=0)
-    ax_raster.set_yticks([0.1, 0.2])  # Adjusted to match new y-values
-    ax_raster.set_yticklabels(['Y', 'X'])
-    ax_raster.set_xlabel('Time (ms)')
-    ax_raster.set_title('Raster Plot with Temporal Firing Rate', fontsize=14)
-    ax_raster.set_xlim(0, plot_length)
-    ax_raster.set_ylim(0.05, 0.25)  # Tight range to keep them close
-    ax_raster.grid(True, alpha=0.3)
-    pos = ax_raster.get_position()  # Get current position (x0, y0, width, height)
-    new_height = 0.05  # Desired height in figure coordinates (e.g., 5% of figure height)
-    ax_raster.set_position([pos.x0, pos.y0, pos.width, new_height])  # Set new height
+#     bin_size = 1000
+#     bins = np.arange(0, plot_length + bin_size, bin_size)
+#     x_hist, _ = np.histogram(x_spikes, bins=bins)
+#     y_hist, _ = np.histogram(y_spikes, bins=bins)
+#     x_rate = x_hist / (bin_size / 1000)
+#     y_rate = y_hist / (bin_size / 1000)
+#     x_rate_smooth = gaussian_filter1d(x_rate, sigma=1)
+#     y_rate_smooth = gaussian_filter1d(y_rate, sigma=1)
+
+#     raster_gs = gs[3, :].subgridspec(1, 1, height_ratios=[0.05])  # Small height for raster
+#     ax_raster = fig.add_subplot(raster_gs[0])
+#     ax_raster.set_yticks([0.1, 0.2])  # Adjusted to match new y-values
+#     ax_raster.set_yticklabels(['Y', 'X'])
+#     ax_raster.set_xlabel('Time (ms)')
+#     ax_raster.set_title('Raster Plot with Temporal Firing Rate', fontsize=14)
+#     ax_raster.set_xlim(0, plot_length)
+#     ax_raster.set_ylim(0.05, 0.25)  # Tight range to keep them close
+#     ax_raster.grid(True, alpha=0.3)
+#     pos = ax_raster.get_position()  # Get current position (x0, y0, width, height)
+#     new_height = 0.05  # Desired height in figure coordinates (e.g., 5% of figure height)
+#     ax_raster.set_position([pos.x0, pos.y0, pos.width, new_height])  # Set new height
     
-    divider = make_axes_locatable(ax_raster)
-    cax1 = divider.append_axes("right", size="0.5%", pad=0.05)
-    cax2 = divider.append_axes("right", size="0.5%", pad=0.05)
-    cbar_x = plt.colorbar(scatter_x, cax=cax1)
-    cbar_y = plt.colorbar(scatter_y, cax=cax2)
-    
+#     divider = make_axes_locatable(ax_raster)
+#     cax1 = divider.append_axes("right", size="0.5%", pad=0.05)
+#     cax2 = divider.append_axes("right", size="0.5%", pad=0.05)
 
 
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    filename = os.path.join(SAVE_DIR, f'fit_L{L}_input{input_neuron}_output{output_neuron}_ak{alpha_k:.4f}_ah{alpha_h:.4f}_rank{rank}.png')
-    plt.savefig(filename)
-    plt.close()
 
-    print(f'Saved plot at {filename}')
+#     plt.tight_layout(rect=[0, 0, 1, 0.95])
+#     filename = os.path.join(SAVE_DIR, f'fit_L{L}_input{input_neuron}_output{output_neuron}_ak{alpha_k:.4f}_ah{alpha_h:.4f}_rank{rank}.png')
+#     plt.savefig(filename)
+#     plt.close()
+
+#     print(f'Saved plot at {filename}')
 
 def plot_fit(data, model_full, x_full, y_full, model_fsiso=None, save_dir=''):
     '''
@@ -1156,42 +1179,31 @@ def plot_fit(data, model_full, x_full, y_full, model_fsiso=None, save_dir=''):
     x_1d = x_full.flatten().numpy()
     y_1d = y_full.flatten().numpy()
 
-    def compute_correlogram(x, y, max_lag_ms, bin_size, mode):
-        n_original = len(x)
-        resampling_factor = int(bin_size / 1)  # Assuming original data is in 1ms bins
-        n_resampled = n_original // resampling_factor
-        x_resampled = np.array([np.sum(x[i:i+resampling_factor]) for i in range(0, n_original, resampling_factor)])
-        y_resampled = np.array([np.sum(y[i:i+resampling_factor]) for i in range(0, n_original, resampling_factor)])
-        x_resampled = (x_resampled > 0).astype(float)
-        y_resampled = (y_resampled > 0).astype(float)
-        max_lag_bins = int(max_lag_ms / bin_size)
-        corr = scipy.signal.correlate(y_resampled, x_resampled, mode='full')
-        center = len(corr) // 2
-        start_idx = center - max_lag_bins
-        end_idx = center + max_lag_bins + 1
-        corr_trimmed = corr[start_idx:end_idx]
-        if mode == 'auto':
-            corr_trimmed[max_lag_bins] = 0
-        lags = np.arange(-max_lag_bins, max_lag_bins + 1) * bin_size
-        return lags, corr_trimmed
+    # Contamination rate (from refractory period; spike times in seconds, 1 ms bins)
+    x_spikes_sec = np.where(x_1d == 1)[0].astype(np.float64) / 1000.0
+    y_spikes_sec = np.where(y_1d == 1)[0].astype(np.float64) / 1000.0
+    contam_x = _estimate_contamination_rate(x_spikes_sec)
+    contam_y = _estimate_contamination_rate(y_spikes_sec)
+    contam_x_str = f'{contam_x:.3f}' if contam_x is not None else 'N/A'
+    contam_y_str = f'{contam_y:.3f}' if contam_y is not None else 'N/A'
 
-    lags_x_1000, autocorr_x_1000 = compute_correlogram(x_1d, x_1d, 1000, 80, mode='auto')
-    lags_y_1000, autocorr_y_1000 = compute_correlogram(y_1d, y_1d, 1000, 80, mode='auto')
-    lags_xy_1000, crosscorr_xy_1000 = compute_correlogram(x_1d, y_1d, 1000, 80, mode='cross')
-    lags_x_100, autocorr_x_100 = compute_correlogram(x_1d, x_1d, 100, 4, mode='auto')
-    lags_y_100, autocorr_y_100 = compute_correlogram(y_1d, y_1d, 100, 4, mode='auto')
-    lags_xy_100, crosscorr_xy_100 = compute_correlogram(x_1d, y_1d, 100, 4, mode='cross')
+    lags_x_1000, autocorr_x_1000 = compute_correlogram_normalized_cc_first(x_1d, x_1d, 200, 10, mode='auto')
+    lags_y_1000, autocorr_y_1000 = compute_correlogram_normalized_cc_first(y_1d, y_1d, 200, 10, mode='auto')
+    lags_xy_1000, crosscorr_xy_1000 = compute_correlogram_normalized_cc_first(x_1d, y_1d, 200, 10, mode='cross')
+    lags_x_100, autocorr_x_100 = compute_correlogram_normalized_cc_first(x_1d, x_1d, 100, 4, mode='auto')
+    lags_y_100, autocorr_y_100 = compute_correlogram_normalized_cc_first(y_1d, y_1d, 100, 4, mode='auto')
+    lags_xy_100, crosscorr_xy_100 = compute_correlogram_normalized_cc_first(x_1d, y_1d, 100, 4, mode='cross')
 
     gs_corr_full = gs[0:3, corr_col_start].subgridspec(3, 1, hspace=0.3)
     ax_corr1 = fig.add_subplot(gs_corr_full[0])
     ax_corr1.bar(lags_x_1000[:-1], autocorr_x_1000[:-1], width=np.diff(lags_x_1000), color='blue', alpha=0.8, linewidth=0.5, align='edge')
-    ax_corr1.set_ylabel('x_ac')
-    ax_corr1.set_title('Full Correlograms (±1000ms)')
+    ax_corr1.set_ylabel(f'x_ac (contam={contam_x_str})')
+    ax_corr1.set_title('Full Correlograms (±200ms)')
     ax_corr1.set_box_aspect(1)
 
     ax_corr2 = fig.add_subplot(gs_corr_full[1])
     ax_corr2.bar(lags_y_1000[:-1], autocorr_y_1000[:-1], width=np.diff(lags_y_1000), color='green', alpha=0.8, linewidth=0.5, align='edge')
-    ax_corr2.set_ylabel('y_ac')
+    ax_corr2.set_ylabel(f'y_ac (contam={contam_y_str})')
     ax_corr2.set_box_aspect(1)
 
     ax_corr3 = fig.add_subplot(gs_corr_full[2])
@@ -1203,13 +1215,13 @@ def plot_fit(data, model_full, x_full, y_full, model_fsiso=None, save_dir=''):
     gs_corr_zoom = gs[0:3, corr_col_start + 1].subgridspec(3, 1, hspace=0.3)
     ax_corr1_zoom = fig.add_subplot(gs_corr_zoom[0])
     ax_corr1_zoom.bar(lags_x_100[:-1], autocorr_x_100[:-1], width=np.diff(lags_x_100), color='blue', alpha=0.8, linewidth=0.5, align='edge')
-    ax_corr1_zoom.set_ylabel('x_ac')
+    ax_corr1_zoom.set_ylabel(f'x_ac (contam={contam_x_str})')
     ax_corr1_zoom.set_title('Zoomed Correlograms (±100ms)')
     ax_corr1_zoom.set_box_aspect(1)
 
     ax_corr2_zoom = fig.add_subplot(gs_corr_zoom[1])
     ax_corr2_zoom.bar(lags_y_100[:-1], autocorr_y_100[:-1], width=np.diff(lags_y_100), color='green', alpha=0.8, linewidth=0.5, align='edge')
-    ax_corr2_zoom.set_ylabel('y_ac')
+    ax_corr2_zoom.set_ylabel(f'y_ac (contam={contam_y_str})')
     ax_corr2_zoom.set_box_aspect(1)
 
     ax_corr3_zoom = fig.add_subplot(gs_corr_zoom[2])
@@ -1250,8 +1262,7 @@ def plot_fit(data, model_full, x_full, y_full, model_fsiso=None, save_dir=''):
     divider = make_axes_locatable(ax_raster)
     cax1 = divider.append_axes("right", size="0.5%", pad=0.05)
     cax2 = divider.append_axes("right", size="0.5%", pad=0.05)
-    cbar_x = plt.colorbar(scatter_x, cax=cax1)
-    cbar_y = plt.colorbar(scatter_y, cax=cax2)
+
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     
@@ -1262,88 +1273,156 @@ def plot_fit(data, model_full, x_full, y_full, model_fsiso=None, save_dir=''):
     print(f'Saved plot at {filename}')
     return filename
 
-def overlay_kernels(save_dir):
-    kernel_files = [f for f in os.listdir(save_dir) if f.startswith('kernels_') and f.endswith('.pkl')]
-    ff_kernels = []
-    fb_kernels = []
-    k0_list = []
-    labels = []
-    k0_values = []
+def compute_correlogram(x, y, max_lag_ms, bin_size, mode):
+    n_original = len(x)
+    resampling_factor = int(bin_size / 1)  # Assuming original data is in 1ms bins
+    x_resampled = np.array([np.sum(x[i:i+resampling_factor]) for i in range(0, n_original, resampling_factor)])
+    y_resampled = np.array([np.sum(y[i:i+resampling_factor]) for i in range(0, n_original, resampling_factor)])
+    x_resampled = (x_resampled > 0).astype(float)
+    y_resampled = (y_resampled > 0).astype(float)
+    max_lag_bins = int(max_lag_ms / bin_size)
+    corr = scipy.signal.correlate(y_resampled, x_resampled, mode='full')
+    center = len(corr) // 2
+    start_idx = center - max_lag_bins
+    end_idx = center + max_lag_bins + 1
+    corr_trimmed = corr[start_idx:end_idx]
+    lags = np.arange(-max_lag_bins, max_lag_bins + 1) * bin_size
 
-    max_length = 0
-    for kernel_file in kernel_files:
-        with open(os.path.join(save_dir, kernel_file), 'rb') as f:
-            kernel_data = pickle.load(f)
-        ff_kernels.append(kernel_data['SISO']['ff_kernel'])
-        fb_kernels.append(kernel_data['SISO']['fb_kernel'])
+    if mode == 'auto':
+        # corr_trimmed[max_lag_bins] = 0
+        corr_trimmed = np.delete(corr_trimmed, len(corr_trimmed)//2)
+        lags = np.delete(lags, len(lags)//2)
 
-        k0_list.append(kernel_data['k0'])
-        labels.append(f"{kernel_data['input_neuron']}-{kernel_data['output_neuron']} (Rank {kernel_data['rank']})")
-        max_length = max(max_length, len(kernel_data['ff_kernel']), len(kernel_data['fb_kernel']))
 
-    # Pad kernels to the same length
-    for i in range(len(ff_kernels)):
-        ff_kernels[i] = np.pad(ff_kernels[i], (0, max_length - len(ff_kernels[i])), mode='constant', constant_values=0)
-        fb_kernels[i] = np.pad(fb_kernels[i], (0, max_length - len(fb_kernels[i])), mode='constant', constant_values=0)
+    return lags, corr_trimmed
+def compute_correlogram_normalized_cc_first(
+    x, y, max_lag_ms, bin_size, mode,
+    firing_rate_x=None, firing_rate_y=None, T=None, score_type=None,normalize_by_firing_rate=False):
 
-    # Normalize kernels by absolute value of k0
-    ff_kernels_normalized = []
-    fb_kernels_normalized = []
-    for i, kernel_file in enumerate(kernel_files):
-        with open(os.path.join(save_dir, kernel_file), 'rb') as f:
-            kernel_data = pickle.load(f)
-        # Assuming k0 is stored in metrics or needs to be approximated; here we use max absolute value as a proxy
-        ff_kernels_normalized.append(ff_kernels[i] / abs(k0_list[i]))
-        fb_kernels_normalized.append(fb_kernels[i] / abs(k0_list[i]))
+    def bin_correlate(x, y, max_lag_ms, bin_size, T, mode):
+        max_lag_bins = int(max_lag_ms / bin_size)
+        x = np.pad(x, (0, T - len(x)), 'constant')
+        y = np.pad(y, (0, T - len(y)), 'constant')
 
-    # Create two figures
-    time = np.arange(max_length)
+        corr = scipy.signal.correlate(y, x, mode='full')
+        center = len(corr) // 2 
+        corr_trim = corr[center - max_lag_ms : center + max_lag_ms + 1]
+        # convert all values to integers
+        corr_trim = corr_trim
+        if mode == 'auto':
+            # remove the center bin directly from the corr_trim so is one less bin
+            corr_trim = np.delete(corr_trim, len(corr_trim)//2)
+            # corr_trim[len(corr_trim)//2] -= np.sum(x)
 
-    # Figure 1: Original Kernels
-    fig1, (ax_ff1, ax_fb1) = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
-    for ff_kernel, label in zip(ff_kernels, labels):
-        ax_ff1.plot(time, ff_kernel, label=label, alpha=0.5)
-    ax_ff1.set_title('Feedforward Kernels Overlay (Original)')
-    ax_ff1.set_ylabel('Amplitude')
-    ax_ff1.legend(loc='upper right', fontsize='small')
-    ax_ff1.grid(True, alpha=0.3)
+        lags = np.arange(-max_lag_bins, max_lag_bins + 1) * bin_size
+        binned = np.array([
+            corr_trim[int(lags[i] + max_lag_ms):int(lags[i+1] + max_lag_ms)].sum()
+            for i in range(2 * max_lag_bins)
+        ])
+        return (lags[:-1] + lags[1:]) / 2, binned
+    
+    def normalize(binned, fr_x, fr_y, T, bin_size):
+        E = fr_x * fr_y * T * bin_size 
+        return binned / E if E > 0 else binned.copy()
 
-    for fb_kernel, label in zip(fb_kernels, labels):
-        ax_fb1.plot(time, fb_kernel, label=label, alpha=0.5)
-    ax_fb1.set_title('Feedback Kernels Overlay (Original)')
-    ax_fb1.set_xlabel('Time (ms)')
-    ax_fb1.set_ylabel('Amplitude')
-    ax_fb1.legend(loc='upper right', fontsize='small')
-    ax_fb1.grid(True, alpha=0.3)
+    def pct_empty(cc):
+        return np.mean(cc < 1e-3)
 
-    plt.tight_layout()
-    overlay_file_original = os.path.join(save_dir, f'kernel_overlay_original_L{L}_ak{alpha_k:.4f}_ah{alpha_h:.4f}.png')
-    fig1.savefig(overlay_file_original)
-    plt.close(fig1)
-    print(f'Saved original kernel overlay plot at {overlay_file_original}')
+    def bump_score(cc, baseline, max_lag):
+        # max_lag is in milliseconds for one direction, so we need to double it for the full window width
+        dev = np.maximum(cc - baseline, 0)           # 1. remove below baseline
+        if dev.max() <= 0:
+            return 0.0, np.zeros_like(cc)
 
-    # Figure 2: Normalized Kernels
-    fig2, (ax_ff2, ax_fb2) = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
-    for ff_kernel_norm, label in zip(ff_kernels_normalized, labels):
-        ax_ff2.plot(time, ff_kernel_norm, label=label, alpha=0.5)
-    ax_ff2.set_title('Feedforward Kernels Overlay (Normalized by Abs Max)')
-    ax_ff2.set_ylabel('Normalized Amplitude')
-    ax_ff2.legend(loc='upper right', fontsize='small')
-    ax_ff2.grid(True, alpha=0.3)
+        l0 = np.argmax(dev)                           # 2. center = biggest bin
 
-    for fb_kernel_norm, label in zip(fb_kernels_normalized, labels):
-        ax_fb2.plot(time, fb_kernel_norm, label=label, alpha=0.5)
-    ax_fb2.set_title('Feedback Kernels Overlay (Normalized by Abs Max)')
-    ax_fb2.set_xlabel('Time (ms)')
-    ax_fb2.set_ylabel('Normalized Amplitude')
-    ax_fb2.legend(loc='upper right', fontsize='small')
-    ax_fb2.grid(True, alpha=0.3)
+        W = max_lag/2                               # full window width
+        if W == 0:
+            return dev[l0], np.zeros_like(cc)
 
-    plt.tight_layout()
-    overlay_file_normalized = os.path.join(save_dir, f'kernel_overlay_normalized_L{L}_ak{alpha_k:.4f}_ah{alpha_h:.4f}.png')
-    fig2.savefig(overlay_file_normalized)
-    plt.close(fig2)
-    print(f'Saved normalized kernel overlay plot at {overlay_file_normalized}')
+        # 3. sigmoid curves (tanh stretched to go -1→1 over W/2 on each side)
+        left_center  = l0 - W/2
+        right_center = l0 + W/2
+
+        l = np.arange(len(cc))
+        s = np.full_like(cc, -1.0, dtype=float)
+
+        left_mask  = (l >= l0 - W) & (l <= l0)
+        right_mask = (l >  l0)     & (l <= l0 + W)
+
+        s[left_mask]  = np.tanh(7 * (l[left_mask]  - left_center)  / W)
+        s[right_mask] = np.tanh(7 * (right_center - l[right_mask]) / W)
+
+        # 4. score = sum( dev(l) * s(l) )
+        total = np.sum(dev * s) * (1 - pct_empty(cc))**2
+
+        scores = dev * s   # optional: per-bin contribution
+        # print(scores)
+        return total, scores
+
+    def multi_score(lags, cc):
+        if len(cc) < 8:
+            return 0.0
+        samples = np.repeat(lags, np.round(cc * 10).astype(int))
+        if len(samples) < 10:
+            return 0.0
+        dip, _ = diptest(samples)
+        dev = np.abs(cc - cc.mean())
+        p, props = find_peaks(dev, prominence=0.005 * cc.mean(), distance=2)
+        max_prom = props['prominences'].max() / cc.mean() if len(p) else 0
+        return dip * (1 + max_prom * 3)
+    
+    def snr_excess_area(cc_norm, mean_cc, std_cc):
+        if mean_cc <= 0:
+            return 0.0
+        dev = cc_norm - mean_cc
+        peaks, props = find_peaks(dev, prominence=0.01 * mean_cc)
+        troughs, tprops = find_peaks(-dev, prominence=0.01 * mean_cc)
+        
+        peak_area = np.sum(props['prominences']) if len(peaks) else 0
+        trough_area = np.sum(tprops['prominences']) if len(troughs) else 0
+        
+        norm_factor = std_cc if std_cc > 0 else 1
+        return (peak_area + trough_area) / norm_factor  # Captures modes + deviations
+
+
+    if T is None:
+        T = max(( len(x)), (len(y))) + 1
+
+    lags, binned = bin_correlate(x, y, max_lag_ms, bin_size, T, mode)
+    cc_norm = binned 
+    if mode == 'cross' and normalize_by_firing_rate:
+        cc_norm = normalize(binned, firing_rate_x, firing_rate_y, T, bin_size)
+    else:
+        cc_norm = binned
+
+    mean_cc = cc_norm.mean()
+    std_cc  = cc_norm.std()
+
+    z = (cc_norm - mean_cc) / mean_cc if mean_cc > 0 else np.zeros_like(cc_norm)
+    bs, bump_arr = bump_score(cc_norm, mean_cc, max_lag_ms)
+
+    ms = multi_score(lags, cc_norm)
+
+    above = np.maximum(cc_norm - mean_cc, 0)
+    # signal to noise ratio excess area
+    snr_excess_area = np.sum(above) / (np.std(cc_norm) + 1e-6)
+    # snr excess area with penalty for extremely small bins
+    pe = np.mean(cc_norm < 1e-3)
+    snr_excess_area_with_penalty = snr_excess_area * (1 - pe)**2
+
+    total = ms * (1 - pe)**2 * (1 + bs)
+
+    if score_type == 'bump':
+        return lags, cc_norm, mean_cc, std_cc, bump_arr, bs
+    elif score_type == 'z_score':
+        return lags, cc_norm, mean_cc, std_cc, z, total
+    elif score_type == 'snr_excess_area':
+        return lags, cc_norm, mean_cc, std_cc, snr_excess_area_with_penalty,snr_excess_area_with_penalty
+    else:
+        return lags, cc_norm
+
+
 
 def run_glm_fitting():
     logging.basicConfig(
@@ -1358,6 +1437,8 @@ def run_glm_fitting():
     print(f"GLM Fitting Configuration:")
     print(f"  L={L}, alpha_k={alpha_k:.4f}, alpha_h={alpha_h:.4f}")
     print(f"  max_tau={max_tau}, folds={NUMBER_OF_FOLDS}, chunk_size={cmd_args.chunk_size if cmd_args else 10000}")
+    if feedback_penalty_alpha and feedback_penalty_alpha > 0:
+        print(f"  feedback-only penalty: alpha={feedback_penalty_alpha}, L1_wt={feedback_L1_wt} (post-spike filter regularized)")
     print(f"  Processing {len(neuron_pairs)} neuron pair(s)")
     print(f"{'#'*60}\n")
     print_memory_status("Initial ")
@@ -1375,19 +1456,31 @@ def run_glm_fitting():
         try:
             pair_data = preprocess_neuron_data(input_neuron, output_neuron, neurons, sample_rate)
             model_full, conf_int, all_metrics, avg_ff_coeffs, avg_fb_coeffs,k0, ff_basis, fb_basis = fit_glm_to_stdp(
-                pair_data[0], pair_data[1], L, alpha_k, alpha_h,input_neuron, output_neuron,rank,max_tau=max_tau, folds=NUMBER_OF_FOLDS)
+                pair_data[0], pair_data[1], L, alpha_k, alpha_h,input_neuron, output_neuron,rank,max_tau=max_tau, folds=NUMBER_OF_FOLDS,
+                feedback_penalty_alpha=feedback_penalty_alpha if feedback_penalty_alpha is not None else 0.0,
+                feedback_L1_wt=feedback_L1_wt if feedback_L1_wt is not None else 0.5)
             # Print object sizes for memory usage tracking
             if f_SISO:
                 print(f"\n[{pair_idx}/{len(neuron_pairs)}] Processing reverse direction: {output_neuron} -> {input_neuron} (Rank {rank})")
                 print_memory_status("Before reverse fit ")
                 pair_data_reverse = preprocess_neuron_data(output_neuron, input_neuron, neurons, sample_rate)
                 model_full_reverse, conf_int_reverse, all_metrics_reverse, avg_ff_coeffs_reverse, avg_fb_coeffs_reverse,k0_reverse, ff_basis_reverse, fb_basis_reverse = fit_glm_to_stdp(
-                    pair_data_reverse[0], pair_data_reverse[1], L, alpha_k, alpha_h,output_neuron, input_neuron,rank,max_tau=max_tau, folds=NUMBER_OF_FOLDS)
+                    pair_data_reverse[0], pair_data_reverse[1], L, alpha_k, alpha_h,output_neuron, input_neuron,rank,max_tau=max_tau, folds=NUMBER_OF_FOLDS,
+                    feedback_penalty_alpha=feedback_penalty_alpha if feedback_penalty_alpha is not None else 0.0,
+                    feedback_L1_wt=feedback_L1_wt if feedback_L1_wt is not None else 0.5)
                 print_memory_status("After reverse fit ")
             
             if model_full is None:
                 logger.error(f"GLM fitting failed for {input_neuron} -> {output_neuron}")
                 continue
+
+            # Contamination rate for input (X) and output (Y) neurons (1 ms bins -> spike times in sec)
+            x_1d = pair_data[2].flatten().numpy()
+            y_1d = pair_data[3].flatten().numpy()
+            x_spikes_sec = np.where(x_1d == 1)[0].astype(np.float64) / 1000.0
+            y_spikes_sec = np.where(y_1d == 1)[0].astype(np.float64) / 1000.0
+            contam_input = _estimate_contamination_rate(x_spikes_sec)
+            contam_output = _estimate_contamination_rate(y_spikes_sec)
             
             # Save metrics to CSV
             with open(pair_metrics_file, 'a', newline='') as csvfile:
@@ -1396,7 +1489,7 @@ def run_glm_fitting():
                             'nrmse_range_train', 'nrmse_mean_train', 'rmse_val', 'nrmse_range_val', 'nrmse_mean_val',
                             'precision', 'recall', 'f1', 'roc_auc', 'KS_score', 'KS_score_normalized', 'KS_score_val',
                             'KS_score_val_normalized', 'cross_entropy_train', 'cross_entropy_val', 'n_train', 'n_val',
-                            'c_ff', 'c_fb']
+                            'contam_input', 'contam_output', 'c_ff', 'c_fb']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
                 for fold_idx, metrics in enumerate(all_metrics['fold_metrics']):
@@ -1436,6 +1529,8 @@ def run_glm_fitting():
                         'cross_entropy_val': metrics['cross_entropy_val'],
                         'n_train': metrics['n_train'],
                         'n_val': metrics['n_val'],
+                        'contam_input': contam_input if contam_input is not None else '',
+                        'contam_output': contam_output if contam_output is not None else '',
                         'c_ff': metrics['c_ff'],
                         'c_fb': metrics['c_fb']
                     })
@@ -1477,12 +1572,14 @@ def run_glm_fitting():
                             'cross_entropy_val': metrics['cross_entropy_val'],
                             'n_train': metrics['n_train'],
                             'n_val': metrics['n_val'],
+                            'contam_input': contam_input if contam_input is not None else '',
+                            'contam_output': contam_output if contam_output is not None else '',
                             'c_ff': metrics['c_ff'],
                             'c_fb': metrics['c_fb']
                         })
                     
             # Generate plot and save kernels
-            siso_data = kernel_data(all_metrics, ff_basis, fb_basis,  avg_ff_coeffs, avg_fb_coeffs, L, alpha_k, alpha_h,k0, input_neuron, output_neuron, rank)
+            siso_data = kernel_data(all_metrics, ff_basis, fb_basis, avg_ff_coeffs, avg_fb_coeffs, L, alpha_k, alpha_h, k0, input_neuron, output_neuron, rank, contam_input=contam_input, contam_output=contam_output)
             
             # Compute and print average c_ff and c_fb across folds (like in read_out script)
             c_ff_values = []
@@ -1520,7 +1617,7 @@ def run_glm_fitting():
                 siso_data['num_folds'] = num_folds
             
             if f_SISO:
-                siso_data_reverse = kernel_data(all_metrics_reverse, ff_basis_reverse, fb_basis_reverse,  avg_ff_coeffs_reverse, avg_fb_coeffs_reverse, L, alpha_k, alpha_h,k0_reverse, output_neuron, input_neuron, rank)
+                siso_data_reverse = kernel_data(all_metrics_reverse, ff_basis_reverse, fb_basis_reverse, avg_ff_coeffs_reverse, avg_fb_coeffs_reverse, L, alpha_k, alpha_h, k0_reverse, output_neuron, input_neuron, rank, contam_input=contam_output, contam_output=contam_input)
                 
                 # Compute and print average c_ff and c_fb across folds for reverse direction
                 c_ff_values_reverse = []
@@ -1568,17 +1665,13 @@ def run_glm_fitting():
                 pickle.dump(data, f)
             print(f'Saved kernels at {kernel_file}')
 
-            
-            # plot_fit_and_save_kernels(all_metrics, model_full, ff_basis, fb_basis, avg_ff_coeffs, avg_fb_coeffs, L, alpha_k, alpha_h,k0,
-                                    # input_neuron, output_neuron, pair_data[2], pair_data[3], rank)
             avg_norm_ce_val = np.mean([m['cross_entropy_val_normalized'] for m in all_metrics['fold_metrics']])
             se_norm_ce_val = np.std([m['cross_entropy_val_normalized'] for m in all_metrics['fold_metrics']]) / np.sqrt(len(all_metrics['fold_metrics']))
             avg_rmse = np.mean([m['rmse_train'] for m in all_metrics['fold_metrics']])
             logger.info(f"Results for {input_neuron} -> {output_neuron}: Norm CE Val: {avg_norm_ce_val:.4f}, SE: {se_norm_ce_val:.4f}, RMSE: {avg_rmse:.4f}")
         
             if f_SISO:
-                # plot_fit_and_save_kernels(all_metrics_reverse, model_full_reverse, ff_basis_reverse, fb_basis_reverse, avg_ff_coeffs_reverse, avg_fb_coeffs_reverse, L, alpha_k, alpha_h,k0_reverse,
-                #                     output_neuron, input_neuron, pair_data[3], pair_data[2], rank)
+
                 avg_norm_ce_val = np.mean([m['cross_entropy_val_normalized'] for m in all_metrics_reverse['fold_metrics']])
                 se_norm_ce_val = np.std([m['cross_entropy_val_normalized'] for m in all_metrics_reverse['fold_metrics']]) / np.sqrt(len(all_metrics_reverse['fold_metrics']))
                 avg_rmse = np.mean([m['rmse_train'] for m in all_metrics_reverse['fold_metrics']])
@@ -1598,8 +1691,6 @@ def run_glm_fitting():
     print_memory_status("Final ")
     print(f"{'#'*60}\n")
     
-    # # Generate overlay plot
-    # overlay_kernels(SAVE_DIR)
 
 def plot_glm_fit_results(results, x_full, y_full, input_neuron='input', output_neuron='output', rank=1, save_dir='', f_siso_results=None):
     """
@@ -1682,6 +1773,10 @@ if __name__ == "__main__":
     f_SISO = cmd_args.f_SISO
     RANK_RANGE = [int(rank) for rank in RANK_RANGE.split('-')]
     print(f'Analyzing ranks {RANK_RANGE[0]} to {RANK_RANGE[1]}')
+    feedback_penalty_alpha = getattr(cmd_args, 'feedback_penalty_alpha', 0.0) or 0.0
+    feedback_L1_wt = getattr(cmd_args, 'feedback_L1_wt', 0.5)
+    if feedback_penalty_alpha > 0:
+        print(f'Feedback-only penalty: alpha={feedback_penalty_alpha}, L1_wt={feedback_L1_wt} (reduces autoregressive dominance)')
     
     if not os.path.exists(SAVE_DIR):
         os.makedirs(SAVE_DIR)
@@ -1732,7 +1827,6 @@ if __name__ == "__main__":
                     neuron_pairs.append((row['Neuron1'], row['Neuron2'], float(row['BumpScore']), rank))
 
     run_glm_fitting()
-    # overlay_kernels(SAVE_DIR)
     #  python glm_fit_cv_one_neuron.py --data_file DNMS_data/april14testsim24000s_with_runsiso_stdp_fffb_sim.pkl --ranking_file DNMS_data/analysis/april14testsim24000s_with_runsiso_stdp_fffb_sim/pair_rankings_ultra-fine.csv  --rank_range 1-2 --f_SISO True
 
 
@@ -1826,4 +1920,16 @@ python utils/glm_fit_cv_one_neuron.py \
     --num_folds 5 \
     --L 5 \
     --max_tau 100 --only_use_trial_data
+
+
+python utils/glm_fit_cv_one_neuron.py \
+    --data_file "data/Jan2010-Nonstationarity_Learning/1150_10_sec/1150b032merge-clean_cutoff_5.pkl" \
+    --ranking_file "data/Jan2010-Nonstationarity_Learning/analysis/1150_10_sec/1150b032merge-clean_cutoff_5/pair_rankings_semifine.csv" \
+    --save_dir "data/Jan2010-Nonstationarity_Learning/single_pair_analysis/1150_10_sec/1150b032merge-clean_cutoff_5_100_L5_k0_7_h0_7" \
+    --rank_range "1-2" \
+    --alpha_k 0.7 \
+    --alpha_h 0.7 \
+    --num_folds 5 \
+    --L 5 \
+    --max_tau 100 --only_use_trial_data --feedback_penalty_alpha 0.5 --feedback_L1_wt 0.5
 '''

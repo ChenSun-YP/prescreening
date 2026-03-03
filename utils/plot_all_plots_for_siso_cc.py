@@ -3,14 +3,35 @@ import os
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.signal import fftconvolve
 import scipy.signal
 from scipy.stats import norm
 import textwrap
 from scipy.signal import find_peaks
+# from diptest import diptest
+from scipy.signal import correlate
 from diptest import diptest
-from scipy.signal import peak_widths
-import scipy.signal as signal
+# Configuration
+FILE_DIR = 'pkl_files'
+SAMPLE_RATE = 30000
 
+
+# FILE_DIR = 'den_data/DEN1_D012'
+# SAMPLE_RATE = 40000
+
+
+FILE_DIR = 'den_data/sim_data_possion'
+SAMPLE_RATE = 1
+
+# FILE_DIR = 'den_data/sim_data_possion_highfreq'
+# SAMPLE_RATE = 1
+
+
+# FILE_DIR = 'DNMS_data'
+# SAMPLE_RATE = 1
+
+ANALYSIS_DIR = os.path.join(FILE_DIR, 'analysis')
+os.makedirs(ANALYSIS_DIR, exist_ok=True)
 
 def get_color_intensity(value, mean, std):
     if std == 0:
@@ -18,6 +39,27 @@ def get_color_intensity(value, mean, std):
     z_score = abs(value - mean) / std
     alpha = min(1.0, max(0.2, z_score / 3))
     return (1, 0, 0, alpha)
+
+def process_pkl_file(pkl_path):
+    filename = os.path.splitext(os.path.basename(pkl_path))[0]
+    save_dir = os.path.join(ANALYSIS_DIR, filename)
+    os.makedirs(save_dir, exist_ok=True)
+    print(f"Processing {filename}...")
+    
+    with open(pkl_path, 'rb') as f:
+        neurons = pickle.load(f)
+    
+    first_key = next(iter(neurons.keys()))
+    if np.sum(np.array(neurons[first_key]) == 0) > 100:
+        neurons = {k: np.where(v)[0] for k, v in neurons.items()}
+    
+    # plot_all_neurons_silent_periods(neurons, save_dir, SAMPLE_RATE)
+    # plot_spike_raster(neurons, save_dir, SAMPLE_RATE, bin_size=100)
+    # plot_neuron_autocorrelations_combined(neurons, save_dir, SAMPLE_RATE)
+    # plot_neuron_cross_correlations_combined(neurons, save_dir, SAMPLE_RATE)
+    # plot_z_score_distribution(neurons, save_dir, SAMPLE_RATE)
+    plot_neuron_correlation_matrices(neurons, save_dir, SAMPLE_RATE)
+    print(f"Completed processing {filename}")
 
 def plot_all_neurons_silent_periods(neurons, save_dir, sample_rate):
     neuron_spike_trains = {}
@@ -60,8 +102,7 @@ def plot_all_neurons_silent_periods(neurons, save_dir, sample_rate):
     print(f'Saved at {os.path.join(save_dir, "all_neurons_silent_periods.png")}')
     plt.close()
 
-def plot_spike_raster(neurons, save_dir, sample_rate, bin_size, cutoff_time=None):
-    """Plot spike raster (full duration). If cutoff_time is set (same units as spike times), draw a vertical dashed line at last trial end."""
+def plot_spike_raster(neurons, save_dir, sample_rate, bin_size):
     neuron_spike_indices = {}
     global_max_time = 0
     firing_rates = {}
@@ -83,10 +124,6 @@ def plot_spike_raster(neurons, save_dir, sample_rate, bin_size, cutoff_time=None
     for i, neuron_id in enumerate(neuron_ids):
         spike_bins = np.where(binned_spikes[neuron_id])[0]
         ax.plot(spike_bins * bin_size, [i] * len(spike_bins), 'k.', markersize=4, alpha=0.5)
-    # Vertical dashed line at last TRIAL end (x in ms)
-    if cutoff_time is not None:
-        cutoff_ms = float(cutoff_time) / sample_rate * 1000
-        ax.axvline(x=cutoff_ms, color='gray', linestyle='--', linewidth=1, label='Last TRIAL end')
     ax.set_yticks(np.arange(len(neuron_ids)))
     # Create labels with neuron ID and firing rate
     labels = [f'{neuron_id} ({firing_rates[neuron_id]:.2f} Hz)' for neuron_id in neuron_ids]
@@ -95,8 +132,6 @@ def plot_spike_raster(neurons, save_dir, sample_rate, bin_size, cutoff_time=None
     ax.set_ylabel('Neuron ID')
     ax.set_title(f'Spike Raster Plot (Binned at {bin_size} ms)')
     ax.set_xlim(0, global_max_time)
-    if cutoff_time is not None:
-        ax.legend(loc='upper right')
     plt.tight_layout()
     plt.savefig(os.path.join(save_dir, 'spike_raster_binned.png'))
     print(f'Saved at {os.path.join(save_dir, "spike_raster_binned.png")}')
@@ -157,6 +192,135 @@ def compute_correlogram(x, y, max_lag_ms, bin_size, mode, firing_rate_x, firing_
     # std_normalized = np.sqrt(1/E)
     # empirical_std = np.std(corr_normalized)  # Uses all lag bins after normalization
     return lags, corr_trimmed, mean, std, z_scores
+
+
+
+def compute_correlogram_normalized_cc_first(
+    x, y, max_lag_ms, bin_size, mode,
+    firing_rate_x, firing_rate_y, T, score_type='bump'):
+
+    def bin_correlate(x, y, max_lag_ms, bin_size, T, mode):
+        max_lag_bins = int(max_lag_ms / bin_size)
+        x = np.pad(x, (0, T - len(x)), 'constant')
+        y = np.pad(y, (0, T - len(y)), 'constant')
+
+        corr = scipy.signal.correlate(y, x, mode='full')
+        center = len(corr) // 2 
+        corr_trim = corr[center - max_lag_ms : center + max_lag_ms + 1]
+        # convert all values to integers
+        corr_trim = corr_trim
+        if mode == 'auto':
+            # remove the center bin directly from the corr_trim so is one less bin
+            corr_trim = np.delete(corr_trim, len(corr_trim)//2)
+            # corr_trim[len(corr_trim)//2] -= np.sum(x)
+
+        lags = np.arange(-max_lag_bins, max_lag_bins + 1) * bin_size
+        binned = np.array([
+            corr_trim[int(lags[i] + max_lag_ms):int(lags[i+1] + max_lag_ms)].sum()
+            for i in range(2 * max_lag_bins)
+        ])
+        return (lags[:-1] + lags[1:]) / 2, binned
+    
+    def normalize(binned, fr_x, fr_y, T, bin_size):
+        E = fr_x * fr_y * T * bin_size 
+        return binned / E if E > 0 else binned.copy()
+
+    def pct_empty(cc):
+        return np.mean(cc < 1e-3)
+
+    def bump_score(cc, baseline, max_lag):
+        # max_lag is in milliseconds for one direction, so we need to double it for the full window width
+        dev = np.maximum(cc - baseline, 0)           # 1. remove below baseline
+        if dev.max() <= 0:
+            return 0.0, np.zeros_like(cc)
+
+        l0 = np.argmax(dev)                           # 2. center = biggest bin
+
+        W = max_lag/2                               # full window width
+        if W == 0:
+            return dev[l0], np.zeros_like(cc)
+
+        # 3. sigmoid curves (tanh stretched to go -1→1 over W/2 on each side)
+        left_center  = l0 - W/2
+        right_center = l0 + W/2
+
+        l = np.arange(len(cc))
+        s = np.full_like(cc, -1.0, dtype=float)
+
+        left_mask  = (l >= l0 - W) & (l <= l0)
+        right_mask = (l >  l0)     & (l <= l0 + W)
+
+        s[left_mask]  = np.tanh(7 * (l[left_mask]  - left_center)  / W)
+        s[right_mask] = np.tanh(7 * (right_center - l[right_mask]) / W)
+
+        # 4. score = sum( dev(l) * s(l) )
+        total = np.sum(dev * s) * (1 - pct_empty(cc))**2
+
+        scores = dev * s   # optional: per-bin contribution
+        # print(scores)
+        return total, scores
+
+    def multi_score(lags, cc):
+        if len(cc) < 8:
+            return 0.0
+        samples = np.repeat(lags, np.round(cc * 10).astype(int))
+        if len(samples) < 10:
+            return 0.0
+        dip, _ = diptest(samples)
+        dev = np.abs(cc - cc.mean())
+        p, props = find_peaks(dev, prominence=0.005 * cc.mean(), distance=2)
+        max_prom = props['prominences'].max() / cc.mean() if len(p) else 0
+        return dip * (1 + max_prom * 3)
+    
+    def snr_excess_area(cc_norm, mean_cc, std_cc):
+        if mean_cc <= 0:
+            return 0.0
+        dev = cc_norm - mean_cc
+        peaks, props = find_peaks(dev, prominence=0.01 * mean_cc)
+        troughs, tprops = find_peaks(-dev, prominence=0.01 * mean_cc)
+        
+        peak_area = np.sum(props['prominences']) if len(peaks) else 0
+        trough_area = np.sum(tprops['prominences']) if len(troughs) else 0
+        
+        norm_factor = std_cc if std_cc > 0 else 1
+        return (peak_area + trough_area) / norm_factor  # Captures modes + deviations
+
+
+    if T is None:
+        T = max((x.max() if len(x) else 0), (y.max() if len(y) else 0)) + 1
+
+    lags, binned = bin_correlate(x, y, max_lag_ms, bin_size, T, mode)
+    cc_norm = binned 
+    if mode == 'cross':
+        cc_norm = normalize(binned, firing_rate_x, firing_rate_y, T, bin_size)
+    else:
+        cc_norm = binned
+
+    mean_cc = cc_norm.mean()
+    std_cc  = cc_norm.std()
+
+    z = (cc_norm - mean_cc) / mean_cc if mean_cc > 0 else np.zeros_like(cc_norm)
+    bs, bump_arr = bump_score(cc_norm, mean_cc, max_lag_ms)
+
+    ms = multi_score(lags, cc_norm)
+
+    above = np.maximum(cc_norm - mean_cc, 0)
+    # signal to noise ratio excess area
+    snr_excess_area = np.sum(above) / (np.std(cc_norm) + 1e-6)
+    # snr excess area with penalty for extremely small bins
+    pe = np.mean(cc_norm < 1e-3)
+    snr_excess_area_with_penalty = snr_excess_area * (1 - pe)**2
+
+    total = ms * (1 - pe)**2 * (1 + bs)
+
+    if score_type == 'bump':
+        return lags, cc_norm, mean_cc, std_cc, bump_arr, bs
+    elif score_type == 'z_score':
+        return lags, cc_norm, mean_cc, std_cc, z, total
+    elif score_type == 'snr_excess_area':
+        return lags, cc_norm, mean_cc, std_cc, snr_excess_area_with_penalty,snr_excess_area_with_penalty
+
+
 
 # def compute_correlogram_normalized_cc_first(x, y, max_lag_ms, bin_size, mode, firing_rate_x, firing_rate_y,T,edge_mean=True,score_type='bump'):
 #     '''
@@ -224,9 +388,9 @@ def compute_correlogram(x, y, max_lag_ms, bin_size, mode, firing_rate_x, firing_
 
 #     z_scores = (corr_normalized - mean_normalized) / mean_normalized if mean_normalized > 0 else np.zeros_like(corr_normalized)
 #     baseline = np.mean(corr_normalized)  # As per your normalization, baseline is 1 but here we are using the global mean
-
+#     # bump_scores = np.sqrt(np.abs(corr_normalized - baseline)) / std_normalized if std_normalized > 0 else np.zeros_like(corr_normalized)
+#     # bump_scores = np.sqrt(np.abs(corr_normalized - baseline)) /baseline
 #     total_z_score = np.sum(np.abs(z_scores))
-
 
 #     # bumpt measure
 #     from scipy.signal import find_peaks
@@ -235,258 +399,14 @@ def compute_correlogram(x, y, max_lag_ms, bin_size, mode, firing_rate_x, firing_
 #     bump_scores = np.zeros_like(corr_normalized)
 #     bump_scores[peaks] = props['prominences'] / baseline
 
-#     # Percentage of bins that are smaller then 1e-10
-#     pct_empty = np.mean(corr_normalized < 1e-3)
-#     # Add term: for each bump bin, cross_corr * (1 - pct_empty)
-#     total_bump_score = np.sum(bump_scores)
-#     if len(peaks) > 0:
-#         total_bump_score += np.sum(corr_normalized[peaks] * (1 - pct_empty))
+#     total_bump_score = np.sum(bump_scores)  # Total score across all lags to identify significant pairs
 
 #     # std is rootsqure of E
 #     score_type = 'z_score'
-#     total_z_score = total_z_score * ((1 - pct_empty)**2)
-
-
-
 #     if score_type == 'bump':
 #         return lags, corr_normalized, mean_normalized, std_normalized, bump_scores, total_bump_score
 #     elif score_type == 'z_score':
 #         return lags, corr_normalized, mean_normalized, std_normalized, z_scores, total_z_score
-
-
-# def compute_correlogram_normalized_cc_first(x, y, max_lag_ms, bin_size, mode, firing_rate_x, firing_rate_y, T, edge_mean=True, score_type='bump'):
-#     '''
-#     x and y are the spike trains of the two neurons
-#     max_lag_ms is the maximum lag in milliseconds
-#     bin_size is the bin size in milliseconds
-#     mode is either 'auto' or 'cross'
-#     firing_rate_x and firing_rate_y are the firing rates of the two neurons
-#     T is the total time of the spike trains
-#     mean after normalizing by the expected coincidences is 1 as we did not remove the baseline firing rate
-#     also return the std after normalizing by the expected coincidences
-#     '''
-#     import scipy.signal
-#     from diptest import diptest
-#     from scipy.signal import find_peaks
-#     import numpy as np
-
-#     # Convert max_lag from milliseconds to number of bins
-#     max_lag_bins = int(max_lag_ms / bin_size)
-    
-#     x_centered = x 
-#     y_centered = y 
-    
-#     x_centered = np.pad(x_centered, (0, T - len(x_centered)), 'constant')
-#     y_centered = np.pad(y_centered, (0, T - len(y_centered)), 'constant')
-    
-#     corr = scipy.signal.correlate(y_centered, x_centered, mode='full')
-#     center = len(corr) // 2
-    
-#     start_idx = center - max_lag_ms
-#     end_idx = center + max_lag_ms + 1
-#     corr_trimmed = corr[start_idx:end_idx]
-    
-#     if mode == 'auto':
-#         num_spikes = np.sum(x) 
-#         corr_trimmed[max_lag_bins] -= num_spikes
-    
-#     lags = np.arange(-max_lag_bins, max_lag_bins + 1) * bin_size
-#     binned_corr = np.zeros(2 * max_lag_bins)
-#     for i in range(2 * max_lag_bins):
-#         start_lag = lags[i] + max_lag_ms
-#         end_lag = lags[i + 1] + max_lag_ms
-#         binned_corr[i] = np.sum(corr_trimmed[start_lag:end_lag])
-
-#     E = firing_rate_x * firing_rate_y * T * bin_size
-#     if E <= 0:
-#         print(f"Warning: Expected coincidences (E) is {E}")
-#     corr_normalized = binned_corr / E if E > 0 else binned_corr
-
-#     mean_normalized = np.mean(corr_normalized)
-#     std_normalized = np.std(corr_normalized)
-
-#     z_scores = (corr_normalized - mean_normalized) / mean_normalized if mean_normalized > 0 else np.zeros_like(corr_normalized)
-#     baseline = mean_normalized
-
-#     total_z_score = np.sum(np.abs(z_scores))
-
-
-#     # After computing binned_corr (length 2*max_lag_bins)
-#     lags = np.linspace(-max_lag_ms, max_lag_ms, len(binned_corr), endpoint=False)
-
-#     # Then for dip test:
-#     samples = np.repeat(lags, np.round(corr_normalized * 10).astype(int))
-
-
-#     dip_stat, _ = diptest(samples) if len(samples) > 10 else (0.0, 1.0)
-
-#     dev = np.abs(corr_normalized - mean_normalized)
-#     peaks, props = find_peaks(dev, prominence=0.005 * mean_normalized, distance=2)
-#     max_prom = np.max(props['prominences']) / mean_normalized if len(peaks) > 0 else 0.0
-
-#     mode_strength = dip_stat * (1 + max_prom * 3)
-#     print(f'mode_strength: {mode_strength}')
-
-#     pct_empty = np.mean(corr_normalized < 1e-3)
-#     total_z_score = total_z_score * mode_strength * ((1 - pct_empty)**2)
-
-#     # bump measure
-#     dev_bump = np.abs(corr_normalized - baseline)
-#     peaks_bump, props_bump = find_peaks(dev_bump, prominence=0.01 * baseline)
-#     bump_scores = np.zeros_like(corr_normalized)
-#     bump_scores[peaks_bump] = props_bump['prominences'] / baseline
-
-#     total_bump_score = np.sum(bump_scores)
-#     if len(peaks_bump) > 0:
-#         total_bump_score += np.sum(corr_normalized[peaks_bump] * (1 - pct_empty))
-#     score_type = 'z_score'    
-#     if score_type == 'bump':
-#         return lags, corr_normalized, mean_normalized, std_normalized, bump_scores, total_bump_score
-#     elif score_type == 'z_score':
-#         return lags, corr_normalized, mean_normalized, std_normalized, z_scores, total_z_score
-
-
-def compute_correlogram_normalized_cc_first(
-    x, y, max_lag_ms, bin_size, mode,
-    firing_rate_x, firing_rate_y, T,
-    edge_mean=True, score_type='bump'):
-
-
-    def bin_correlate(x, y, max_lag_ms, bin_size, T, mode):
-        max_lag_bins = int(max_lag_ms / bin_size)
-        x = np.pad(x, (0, T - len(x)), 'constant')
-        y = np.pad(y, (0, T - len(y)), 'constant')
-
-        corr = scipy.signal.correlate(y, x, mode='full')
-        center = len(corr) // 2
-        corr_trim = corr[center - max_lag_ms : center + max_lag_ms + 1]
-
-        if mode == 'auto':
-            corr_trim[max_lag_bins] -= np.sum(x)
-
-        lags = np.arange(-max_lag_bins, max_lag_bins + 1) * bin_size
-        binned = np.array([
-            corr_trim[int(lags[i] + max_lag_ms):int(lags[i+1] + max_lag_ms)].sum()
-            for i in range(2 * max_lag_bins)
-        ])
-        return (lags[:-1] + lags[1:]) / 2, binned
-
-    def normalize(binned, fr_x, fr_y, T, bin_size):
-        E = fr_x * fr_y * T * bin_size 
-        return binned / E if E > 0 else binned.copy()
-
-    def pct_empty(cc):
-        return np.mean(cc < 1e-3)
-
-    # def bump_score(cc, baseline):
-    #     dev = np.abs(cc - baseline)
-    #     p, props = find_peaks(dev, prominence=0.01 * baseline, distance=2)
-    #     if len(p) == 0:
-    #         return 0.0, np.zeros_like(cc)
-    #     scores = np.zeros_like(cc)
-    #     scores[p] = props['prominences'] / baseline
-    #     total = scores.sum() + cc[p].sum() * (1 - pct_empty(cc))
-    #     return total, scores
-
-
-
-
-    def bump_score(cc, baseline, max_lag):
-        # max_lag is in milliseconds for one direction, so we need to double it for the full window width
-        dev = np.maximum(cc - baseline, 0)           # 1. remove below baseline
-        if dev.max() <= 0:
-            return 0.0, np.zeros_like(cc)
-
-        l0 = np.argmax(dev)                           # 2. center = biggest bin
-
-        W = max_lag/2                               # full window width
-        if W == 0:
-            return dev[l0], np.zeros_like(cc)
-
-        # 3. sigmoid curves (tanh stretched to go -1→1 over W/2 on each side)
-        left_center  = l0 - W/2
-        right_center = l0 + W/2
-
-        l = np.arange(len(cc))
-        s = np.full_like(cc, -1.0, dtype=float)
-
-        left_mask  = (l >= l0 - W) & (l <= l0)
-        right_mask = (l >  l0)     & (l <= l0 + W)
-
-        s[left_mask]  = np.tanh(7 * (l[left_mask]  - left_center)  / W)
-        s[right_mask] = np.tanh(7 * (right_center - l[right_mask]) / W)
-
-        # 4. score = sum( dev(l) * s(l) )
-        total = np.sum(dev * s) * (1 - pct_empty(cc))**2
-
-        scores = dev * s   # optional: per-bin contribution
-        # print(scores)
-        return total, scores
-
-
-
-
-    def multi_score(lags, cc):
-        if len(cc) < 8:
-            return 0.0
-        samples = np.repeat(lags, np.round(cc * 10).astype(int))
-        if len(samples) < 10:
-            return 0.0
-        dip, _ = diptest(samples)
-        dev = np.abs(cc - cc.mean())
-        p, props = find_peaks(dev, prominence=0.005 * cc.mean(), distance=2)
-        max_prom = props['prominences'].max() / cc.mean() if len(p) else 0
-        return dip * (1 + max_prom * 3)
-    def snr_excess_area(cc_norm, mean_cc, std_cc):
-        if mean_cc <= 0:
-            return 0.0
-        dev = cc_norm - mean_cc
-        peaks, props = find_peaks(dev, prominence=0.01 * mean_cc)
-        troughs, tprops = find_peaks(-dev, prominence=0.01 * mean_cc)
-        
-        peak_area = np.sum(props['prominences']) if len(peaks) else 0
-        trough_area = np.sum(tprops['prominences']) if len(troughs) else 0
-        
-        norm_factor = std_cc if std_cc > 0 else 1
-        return (peak_area + trough_area) / norm_factor  # Captures modes + deviations
-
-
-    if T is None:
-        T = max((x.max() if len(x) else 0), (y.max() if len(y) else 0)) + 1
-
-    lags, binned = bin_correlate(x, y, max_lag_ms, bin_size, T, mode)
-    cc_norm = normalize(binned, firing_rate_x, firing_rate_y, T, bin_size)
-
-    mean_cc = cc_norm.mean()
-    std_cc  = cc_norm.std()
-
-    z = (cc_norm - mean_cc) / mean_cc if mean_cc > 0 else np.zeros_like(cc_norm)
-    bs, bump_arr = bump_score(cc_norm, mean_cc, max_lag_ms)
-
-    ms = multi_score(lags, cc_norm)
-
-    above = np.maximum(cc_norm - mean_cc, 0)
-    # signal to noise ratio excess area
-    snr_excess_area = np.sum(above) / (np.std(cc_norm) + 1e-6)
-    # snr excess area with penalty for extremely small bins
-    pe = np.mean(cc_norm < 1e-3)
-    snr_excess_area_with_penalty = snr_excess_area * (1 - pe)**2
-
-
-    total = ms * (1 - pe)**2 * (1 + bs)
-    # bs = bs * (1 - pe)**2
-
-    if score_type == 'bump':
-        return lags, cc_norm, mean_cc, std_cc, bump_arr, bs
-    elif score_type == 'z_score':
-        return lags, cc_norm, mean_cc, std_cc, z, total
-    elif score_type == 'snr_excess_area':
-        return lags, cc_norm, mean_cc, std_cc, snr_excess_area_with_penalty,snr_excess_area_with_penalty
-
-
-
-
-
 
 def compute_correlogram_normalized(x, y, max_lag_ms, bin_size, mode, firing_rate_x, firing_rate_y, T, edge_mean=True, score_type='bump'):
     '''
@@ -516,14 +436,18 @@ def compute_correlogram_normalized(x, y, max_lag_ms, bin_size, mode, firing_rate
     # Zero out zero-lag bin for autocorrelation
     if mode == 'auto':
         corr_trimmed[max_lag_bins] = 0
-    else:
-        print(f"Warning: mode is {mode}")
     
     # Create lag values in milliseconds
     lags = np.arange(-max_lag_bins, max_lag_bins + 1) * bin_size
     
     # Normalize by number of bins (simple normalization to produce corr_normalized)
     corr_normalized = corr_trimmed 
+
+    # normalize by the expected coincidences
+    # E = firing_rate_x * firing_rate_y  * T * bin_size  # Expected coincidences hz * hz * ms = number of coincidences
+    # print(f'E: {E}')
+    # corr_normalized = corr_trimmed / E if E > 0 else corr_trimmed  # Avoid division by zero
+
 
     
     # Compute mean and std
@@ -537,18 +461,12 @@ def compute_correlogram_normalized(x, y, max_lag_ms, bin_size, mode, firing_rate
     else:  # score_type == 'bump'
         baseline = mean_normalized
         dev = np.abs(corr_normalized - baseline)
-        from scipy.signal import find_peaks
         peaks, props = find_peaks(dev, prominence=0.01 * baseline)
         scores = np.zeros_like(corr_normalized)
         scores[peaks] = props['prominences'] / baseline
         total_score = np.sum(scores)
-        # Add term: for each bump bin, cross_corr * (1 - percentage of empty bins); empty = literally 0
-        pct_empty = np.mean(corr_normalized == 0)
-        if len(peaks) > 0:
-            total_score += np.sum(corr_normalized[peaks] * (1 - pct_empty))
     
     return lags, corr_normalized, mean_normalized, std_normalized, scores, total_score
-
 
 
 def plot_neuron_autocorrelations_combined(neurons, save_dir, sample_rate):
@@ -695,198 +613,198 @@ def plot_neuron_cross_correlations_combined(neurons, save_dir, sample_rate):
         print(f'Saved at {os.path.join(save_dir, f"neuron_pair_correlations_combined_page{page+1}.png")}')
         plt.close()
 
-# def plot_z_score_distribution(neurons, save_dir, sample_rate):
-#     configs = [(80, 1000, "Broad"), (40, 500, "Medium"), (20, 250, "Fine"), (2, 50, "Ultra-fine")]
-#     configs = [(80, 1000, "Broad"), (20, 250, "Fine")]
-#     neuron_ids = list(neurons.keys())
+def plot_z_score_distribution(neurons, save_dir, sample_rate):
+    configs = [(80, 1000, "Broad"), (40, 500, "Medium"), (20, 250, "Fine"), (2, 50, "Ultra-fine")]
+    configs = [(80, 1000, "Broad"), (20, 250, "Fine")]
+    neuron_ids = list(neurons.keys())
     
-#     for bin_size, max_lag, resolution in configs:
-#         neuron_spike_trains, global_max_time, firing_rate, global_max_times = {}, 0, {}, {}
-#         for neuron_id, spike_times in neurons.items():
-#             spike_times = np.array(spike_times) / sample_rate * 1000
-#             spike_indices = np.round(spike_times).astype(int)
-#             global_max_time = max(global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0)
-#             global_max_times[neuron_id] = global_max_time
-#             num_bins = int(np.ceil(global_max_time / bin_size)) + 1
-#             neuron_spike_trains[neuron_id] = np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0] > 0
-#             firing_rate[neuron_id] = np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000)
+    for bin_size, max_lag, resolution in configs:
+        neuron_spike_trains, global_max_time, firing_rate, global_max_times = {}, 0, {}, {}
+        for neuron_id, spike_times in neurons.items():
+            spike_times = np.array(spike_times) / sample_rate * 1000
+            spike_indices = np.round(spike_times).astype(int)
+            global_max_time = max(global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0)
+            global_max_times[neuron_id] = global_max_time
+            num_bins = int(np.ceil(global_max_time / bin_size)) + 1
+            neuron_spike_trains[neuron_id] = np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0] > 0
+            firing_rate[neuron_id] = np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000)
 
-#         crosscorrs = {}
-#         for i, pre in enumerate(neuron_ids):
-#             for post in neuron_ids[i+1:]:
-#                 crosscorrs[(pre, post)] = compute_correlogram_normalized(
-#                     neuron_spike_trains[pre].astype(float),
-#                     neuron_spike_trains[post].astype(float),
-#                     max_lag, bin_size, 'cross',
-#                     firing_rate[pre], firing_rate[post],
-#                     max(global_max_times[pre], global_max_times[post])
-#                 )
+        crosscorrs = {}
+        for i, pre in enumerate(neuron_ids):
+            for post in neuron_ids[i+1:]:
+                crosscorrs[(pre, post)] = compute_correlogram_normalized(
+                    neuron_spike_trains[pre].astype(float),
+                    neuron_spike_trains[post].astype(float),
+                    max_lag, bin_size, 'cross',
+                    firing_rate[pre], firing_rate[post],
+                    max(global_max_times[pre], global_max_times[post])
+                )
 
-#         z_scores = np.concatenate([crosscorrs[(pre, post)][4] for i, pre in enumerate(neuron_ids) 
-#                                    for post in neuron_ids[i+1:]])
+        z_scores = np.concatenate([crosscorrs[(pre, post)][4] for i, pre in enumerate(neuron_ids) 
+                                   for post in neuron_ids[i+1:]])
 
-#         counts, bins = np.histogram(z_scores, bins=100)
-#         normalized_counts = counts / np.sum(counts)
-#         print(f'Sum total count: {np.sum(counts)}')
-#         print(f'Sum total normalized count: {np.sum(normalized_counts):.3f}')
+        counts, bins = np.histogram(z_scores, bins=100)
+        normalized_counts = counts / np.sum(counts)
+        print(f'Sum total count: {np.sum(counts)}')
+        print(f'Sum total normalized count: {np.sum(normalized_counts):.3f}')
 
-#         plt.figure(figsize=(8, 8))  # Square figure
-#         plt.bar(bins[:-1], normalized_counts, width=np.diff(bins), align='edge', alpha=0.7, color='skyblue')  # No edgecolor
-#         bin_width = np.diff(bins)[0]
-#         x = np.linspace(min(bins), max(bins), 100)
-#         gaussian = norm.pdf(x, loc=0, scale=1) * bin_width
-#         plt.plot(x, gaussian, 'r-', lw=2, label='Theoretical Gaussian (N(0,1))')
+        plt.figure(figsize=(8, 8))  # Square figure
+        plt.bar(bins[:-1], normalized_counts, width=np.diff(bins), align='edge', alpha=0.7, color='skyblue')  # No edgecolor
+        bin_width = np.diff(bins)[0]
+        x = np.linspace(min(bins), max(bins), 100)
+        gaussian = norm.pdf(x, loc=0, scale=1) * bin_width
+        plt.plot(x, gaussian, 'r-', lw=2, label='Theoretical Gaussian (N(0,1))')
 
-#         plt.ylabel('Proportion of Pairs', fontsize=20)
-#         plt.xlabel('Z-score', fontsize=20)
-#         plt.title(f'{save_dir}\nZ-score Distribution of Cross-Correlations\n({resolution}: ±{max_lag}ms, {bin_size}ms bins)', 
-#                   fontsize=20, pad=20)
-#         plt.ylim(0, 0.05)  # Global ylim
+        plt.ylabel('Proportion of Pairs', fontsize=20)
+        plt.xlabel('Z-score', fontsize=20)
+        plt.title(f'{save_dir}\nZ-score Distribution of Cross-Correlations\n({resolution}: ±{max_lag}ms, {bin_size}ms bins)', 
+                  fontsize=20, pad=20)
+        plt.ylim(0, 0.05)  # Global ylim
 
-#         num_pairs = len(crosscorrs)
-#         plt.text(0.95, 0.95, f'N={num_pairs} pairs', transform=plt.gca().transAxes, 
-#                  fontsize=20, ha='right', va='top', bbox=dict(facecolor='white', alpha=0.8))
+        num_pairs = len(crosscorrs)
+        plt.text(0.95, 0.95, f'N={num_pairs} pairs', transform=plt.gca().transAxes, 
+                 fontsize=20, ha='right', va='top', bbox=dict(facecolor='white', alpha=0.8))
 
-#         plt.legend(fontsize=20)
-#         plt.grid(True, linestyle=':', alpha=0.5)
-#         plt.tick_params(axis='both', labelsize=20)
-#         plt.tight_layout()
+        plt.legend(fontsize=20)
+        plt.grid(True, linestyle=':', alpha=0.5)
+        plt.tick_params(axis='both', labelsize=20)
+        plt.tight_layout()
 
-#         save_path = os.path.join(save_dir, f'z_score_distribution_{resolution.lower()}.png')
-#         plt.savefig(save_path, dpi=300, bbox_inches='tight')
-#         print(f'Saved {resolution} resolution z-score distribution at {save_path}')
-#         plt.close()
+        save_path = os.path.join(save_dir, f'z_score_distribution_{resolution.lower()}.png')
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        print(f'Saved {resolution} resolution z-score distribution at {save_path}')
+        plt.close()
 
-# def plot_z_score_distributions_multiple(pkl_list, sample_rate, save_dir, dataset_names=None):
-#     """Plot z-score distributions for multiple datasets as both subplots and overlay, for each resolution."""
-#     if dataset_names is None or len(dataset_names) != len(pkl_list):
-#         dataset_names = [f'Dataset {i+1}' for i in range(len(pkl_list))]
+def plot_z_score_distributions_multiple(pkl_list, sample_rate, save_dir, dataset_names=None):
+    """Plot z-score distributions for multiple datasets as both subplots and overlay, for each resolution."""
+    if dataset_names is None or len(dataset_names) != len(pkl_list):
+        dataset_names = [f'Dataset {i+1}' for i in range(len(pkl_list))]
     
-#     configs = [(80, 1000, "Broad") , (20, 250, "Fine")]
+    configs = [(80, 1000, "Broad") , (20, 250, "Fine")]
     
-#     for bin_size, max_lag, resolution in configs:
-#         # Calculate grid size for subplots
-#         n_datasets = len(pkl_list)
-#         n_cols = int(np.ceil(np.sqrt(n_datasets)))
-#         n_rows = int(np.ceil(n_datasets / n_cols))
+    for bin_size, max_lag, resolution in configs:
+        # Calculate grid size for subplots
+        n_datasets = len(pkl_list)
+        n_cols = int(np.ceil(np.sqrt(n_datasets)))
+        n_rows = int(np.ceil(n_datasets / n_cols))
         
-#         # Create two figures: one for subplots, one for overlay
-#         fig_subplots = plt.figure(figsize=(6 * n_cols, 5 * n_rows))
-#         fig_overlay = plt.figure(figsize=(8, 8))
+        # Create two figures: one for subplots, one for overlay
+        fig_subplots = plt.figure(figsize=(6 * n_cols, 5 * n_rows))
+        fig_overlay = plt.figure(figsize=(8, 8))
         
-#         colors = plt.cm.viridis(np.linspace(0, 1, len(pkl_list)))
-#         all_z_scores = []  # Store all z_scores for consistent binning
+        colors = plt.cm.viridis(np.linspace(0, 1, len(pkl_list)))
+        all_z_scores = []  # Store all z_scores for consistent binning
         
-#         # First pass: collect all z-scores and create individual subplots
-#         for idx, (pkl_path, dataset_name) in enumerate(zip(pkl_list, dataset_names)):
-#             with open(pkl_path, 'rb') as f:
-#                 neurons = pickle.load(f)
+        # First pass: collect all z-scores and create individual subplots
+        for idx, (pkl_path, dataset_name) in enumerate(zip(pkl_list, dataset_names)):
+            with open(pkl_path, 'rb') as f:
+                neurons = pickle.load(f)
             
-#             neuron_ids = list(neurons.keys())
-#             neuron_spike_trains, global_max_time, firing_rate, global_max_times = {}, 0, {}, {}
+            neuron_ids = list(neurons.keys())
+            neuron_spike_trains, global_max_time, firing_rate, global_max_times = {}, 0, {}, {}
             
-#             # Process spike trains
-#             for neuron_id, spike_times in neurons.items():
-#                 spike_times = np.array(spike_times) / sample_rate * 1000
-#                 spike_indices = np.round(spike_times).astype(int)
-#                 global_max_time = max(global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0)
-#                 global_max_times[neuron_id] = global_max_time
-#                 num_bins = int(np.ceil(global_max_time / bin_size)) + 1
-#                 neuron_spike_trains[neuron_id] = np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0] > 0
-#                 firing_rate[neuron_id] = np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000)
+            # Process spike trains
+            for neuron_id, spike_times in neurons.items():
+                spike_times = np.array(spike_times) / sample_rate * 1000
+                spike_indices = np.round(spike_times).astype(int)
+                global_max_time = max(global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0)
+                global_max_times[neuron_id] = global_max_time
+                num_bins = int(np.ceil(global_max_time / bin_size)) + 1
+                neuron_spike_trains[neuron_id] = np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0] > 0
+                firing_rate[neuron_id] = np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000)
 
-#             # Compute cross-correlations
-#             crosscorrs = {}
-#             for i, pre in enumerate(neuron_ids):
-#                 for post in neuron_ids[i+1:]:
-#                     crosscorrs[(pre, post)] = compute_correlogram(
-#                         neuron_spike_trains[pre].astype(float),
-#                         neuron_spike_trains[post].astype(float),
-#                         max_lag, bin_size, 'cross',
-#                         firing_rate[pre], firing_rate[post],
-#                         max(global_max_times[pre], global_max_times[post])
-#                     )
+            # Compute cross-correlations
+            crosscorrs = {}
+            for i, pre in enumerate(neuron_ids):
+                for post in neuron_ids[i+1:]:
+                    crosscorrs[(pre, post)] = compute_correlogram(
+                        neuron_spike_trains[pre].astype(float),
+                        neuron_spike_trains[post].astype(float),
+                        max_lag, bin_size, 'cross',
+                        firing_rate[pre], firing_rate[post],
+                        max(global_max_times[pre], global_max_times[post])
+                    )
 
-#             z_scores = np.concatenate([crosscorrs[(pre, post)][4] for i, pre in enumerate(neuron_ids) 
-#                                      for post in neuron_ids[i+1:]])
-#             all_z_scores.append(z_scores)
+            z_scores = np.concatenate([crosscorrs[(pre, post)][4] for i, pre in enumerate(neuron_ids) 
+                                     for post in neuron_ids[i+1:]])
+            all_z_scores.append(z_scores)
             
-#             # Create subplot
-#             plt.figure(fig_subplots.number)
-#             ax = plt.subplot(n_rows, n_cols, idx + 1)
-#             counts, bins = np.histogram(z_scores, bins=100)
-#             normalized_counts = counts / np.sum(counts)
-#             ax.bar(bins[:-1], normalized_counts, width=np.diff(bins), align='edge', 
-#                    color=colors[idx], alpha=0.7)
+            # Create subplot
+            plt.figure(fig_subplots.number)
+            ax = plt.subplot(n_rows, n_cols, idx + 1)
+            counts, bins = np.histogram(z_scores, bins=100)
+            normalized_counts = counts / np.sum(counts)
+            ax.bar(bins[:-1], normalized_counts, width=np.diff(bins), align='edge', 
+                   color=colors[idx], alpha=0.7)
             
-#             # Add Gaussian curve to each subplot
-#             bin_width = np.diff(bins)[0]
-#             x = np.linspace(min(bins), max(bins), 100)
-#             gaussian = norm.pdf(x, loc=0, scale=1) * bin_width
-#             ax.plot(x, gaussian, 'r-', lw=1, alpha=0.8)
+            # Add Gaussian curve to each subplot
+            bin_width = np.diff(bins)[0]
+            x = np.linspace(min(bins), max(bins), 100)
+            gaussian = norm.pdf(x, loc=0, scale=1) * bin_width
+            ax.plot(x, gaussian, 'r-', lw=1, alpha=0.8)
 
-#             # put text on the sum bins of the z-scores thats abs +=3
-#             extreme_z = np.mean(np.abs(z_scores) >= 3)
-#             # Add text to plot
-#             ax.text(0.95, 0.95, f'P(|z|≥3): {100*extreme_z:.3f}%', 
-#                     transform=ax.transAxes, 
-#                     ha='right', va='top',
-#                     bbox=dict(facecolor='white', alpha=0.8),
-#                     fontsize=12)
+            # put text on the sum bins of the z-scores thats abs +=3
+            extreme_z = np.mean(np.abs(z_scores) >= 3)
+            # Add text to plot
+            ax.text(0.95, 0.95, f'P(|z|≥3): {100*extreme_z:.3f}%', 
+                    transform=ax.transAxes, 
+                    ha='right', va='top',
+                    bbox=dict(facecolor='white', alpha=0.8),
+                    fontsize=12)
             
-#             # ax.set_title(dataset_name, fontsize=20)
-#                         # Wrap long dataset names to multiple lines
-#             wrapped_name = '\n'.join(textwrap.wrap(dataset_name, width=20))  # adjust width as needed
-#             ax.set_title(wrapped_name, fontsize=20)
-#             ax.set_xlabel('Z-score' if idx >= (n_rows-1)*n_cols else '', fontsize=24)
-#             ax.set_xlabel('Z-score' if idx >= (n_rows-1)*n_cols else '')
-#             ax.set_ylabel('Proportion' if idx % n_cols == 0 else '')
-#             ax.grid(True, linestyle=':', alpha=0.5)
-#             ax.set_ylim(0, 0.05)
+            # ax.set_title(dataset_name, fontsize=20)
+                        # Wrap long dataset names to multiple lines
+            wrapped_name = '\n'.join(textwrap.wrap(dataset_name, width=20))  # adjust width as needed
+            ax.set_title(wrapped_name, fontsize=20)
+            ax.set_xlabel('Z-score' if idx >= (n_rows-1)*n_cols else '', fontsize=24)
+            ax.set_xlabel('Z-score' if idx >= (n_rows-1)*n_cols else '')
+            ax.set_ylabel('Proportion' if idx % n_cols == 0 else '')
+            ax.grid(True, linestyle=':', alpha=0.5)
+            ax.set_ylim(0, 0.05)
         
-#         # Save subplots figure
-#         plt.figure(fig_subplots.number)
-#         plt.suptitle(f'Z-score Distributions by Dataset\n({resolution}: ±{max_lag}ms, {bin_size}ms bins)', 
-#                      fontsize=16, y=1.02)
-#         plt.tight_layout()
-#         save_path_subplots = os.path.join(save_dir, f'z_score_distributions_subplots_{resolution.lower()}.png')
-#         plt.savefig(save_path_subplots, dpi=300, bbox_inches='tight')
+        # Save subplots figure
+        plt.figure(fig_subplots.number)
+        plt.suptitle(f'Z-score Distributions by Dataset\n({resolution}: ±{max_lag}ms, {bin_size}ms bins)', 
+                     fontsize=16, y=1.02)
+        plt.tight_layout()
+        save_path_subplots = os.path.join(save_dir, f'z_score_distributions_subplots_{resolution.lower()}.png')
+        plt.savefig(save_path_subplots, dpi=300, bbox_inches='tight')
         
-#         # Create overlay plot
-#         plt.figure(fig_overlay.number)
-#         for idx, (z_scores, dataset_name) in enumerate(zip(all_z_scores, dataset_names)):
-#             counts, bins = np.histogram(z_scores, bins=100)
-#             normalized_counts = counts / np.sum(counts)
-#             plt.bar(bins[:-1], normalized_counts, width=np.diff(bins), align='edge', 
-#                     alpha=0.5, color=colors[idx], label=dataset_name)
+        # Create overlay plot
+        plt.figure(fig_overlay.number)
+        for idx, (z_scores, dataset_name) in enumerate(zip(all_z_scores, dataset_names)):
+            counts, bins = np.histogram(z_scores, bins=100)
+            normalized_counts = counts / np.sum(counts)
+            plt.bar(bins[:-1], normalized_counts, width=np.diff(bins), align='edge', 
+                    alpha=0.5, color=colors[idx], label=dataset_name)
 
-#         # Add Gaussian curve to overlay
-#         bin_width = np.diff(bins)[0]
-#         x = np.linspace(min(bins), max(bins), 100)
-#         gaussian = norm.pdf(x, loc=0, scale=1) * bin_width
-#         plt.plot(x, gaussian, 'r-', lw=2, label='N(0,1)')
+        # Add Gaussian curve to overlay
+        bin_width = np.diff(bins)[0]
+        x = np.linspace(min(bins), max(bins), 100)
+        gaussian = norm.pdf(x, loc=0, scale=1) * bin_width
+        plt.plot(x, gaussian, 'r-', lw=2, label='N(0,1)')
 
-#         plt.ylabel('Proportion of Pairs', fontsize=20)
-#         plt.xlabel('Z-score', fontsize=20)
-#         plt.title(f'Z-score Distributions Across Datasets\n({resolution}: ±{max_lag}ms, {bin_size}ms bins)', 
-#                  fontsize=20, pad=20)
-#         plt.ylim(0, 0.05)
-#         plt.legend(fontsize=12, bbox_to_anchor=(1.05, 1), loc='upper left')
-#         plt.grid(True, linestyle=':', alpha=0.5)
-#         plt.tick_params(axis='both', labelsize=12)
+        plt.ylabel('Proportion of Pairs', fontsize=20)
+        plt.xlabel('Z-score', fontsize=20)
+        plt.title(f'Z-score Distributions Across Datasets\n({resolution}: ±{max_lag}ms, {bin_size}ms bins)', 
+                 fontsize=20, pad=20)
+        plt.ylim(0, 0.05)
+        plt.legend(fontsize=12, bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.grid(True, linestyle=':', alpha=0.5)
+        plt.tick_params(axis='both', labelsize=12)
         
-#         # Save overlay figure
-#         plt.tight_layout()
-#         save_path_overlay = os.path.join(save_dir, f'z_score_distributions_overlay_{resolution.lower()}.png')
-#         plt.savefig(save_path_overlay, dpi=300, bbox_inches='tight')
+        # Save overlay figure
+        plt.tight_layout()
+        save_path_overlay = os.path.join(save_dir, f'z_score_distributions_overlay_{resolution.lower()}.png')
+        plt.savefig(save_path_overlay, dpi=300, bbox_inches='tight')
         
-#         print(f'Saved {resolution} subplot figure at {save_path_subplots}')
-#         print(f'Saved {resolution} overlay figure at {save_path_overlay}')
-#         plt.close('all')
+        print(f'Saved {resolution} subplot figure at {save_path_subplots}')
+        print(f'Saved {resolution} overlay figure at {save_path_overlay}')
+        plt.close('all')
 
-def plot_neuron_correlation_matrices(neurons, save_dir, sample_rate, edge_mean=True, configs=None, make_plots=True):
+def plot_neuron_correlation_matrices(neurons, save_dir, sample_rate=1, edge_mean=True, configs=None, make_plots=True):
     if configs is None:
-        configs = [(80, 1000, "Broad"), (40, 500, "Medium"), (20, 250, "Fine"),(10, 100, "semiFine"), (2, 50, "Ultra-fine")]
+        configs = [(80, 1000, "Broad"), (40, 500, "Medium"), (10, 100, "semiFine"),(5, 100, "Fine")]
     neuron_ids = list(neurons.keys())
     
     for bin_size, max_lag, resolution in configs:
@@ -900,12 +818,29 @@ def plot_neuron_correlation_matrices(neurons, save_dir, sample_rate, edge_mean=T
             neuron_spike_trains[neuron_id] = np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0] > 0
             firing_rate[neuron_id] = np.sum(neuron_spike_trains[neuron_id]) / global_max_time 
 
-        autocorrs = {n: compute_correlogram_normalized(neuron_spike_trains[n].astype(float), neuron_spike_trains[n].astype(float), max_lag, bin_size, 'auto', firing_rate[n], firing_rate[n], global_max_times[n], edge_mean=edge_mean) 
-                    for n in neuron_ids}
-        # crosscorrs = {(pre, post): compute_correlogram_normalized(neuron_spike_trains[pre].astype(float), neuron_spike_trains[post].astype(float), max_lag, bin_size, 'cross', firing_rate[pre], firing_rate[post], max(global_max_times[pre], global_max_times[post]), edge_mean=edge_mean)
-        #              for pre in neuron_ids for post in neuron_ids if pre != post}
-        crosscorrs = {(pre, post): compute_correlogram_normalized_cc_first(neuron_spike_trains[pre].astype(float), neuron_spike_trains[post].astype(float), max_lag, bin_size, 'cross', firing_rate[pre], firing_rate[post], max(global_max_times[pre], global_max_times[post]), edge_mean=edge_mean)
-                     for pre in neuron_ids for post in neuron_ids if pre != post}
+        # autocorrs = {n: compute_correlogram_normalized(neuron_spike_trains[n].astype(float), neuron_spike_trains[n].astype(float), max_lag, bin_size, 'auto') 
+        #             for n in neuron_ids}
+
+            
+
+
+        autocorrs = {(pre): compute_correlogram_normalized_cc_first(
+            neuron_spike_trains[pre].astype(float),
+            neuron_spike_trains[pre].astype(float),
+            max_lag, bin_size, 'auto',
+            firing_rate[pre], firing_rate[pre],
+            max(global_max_times[pre], global_max_times[pre])
+        )
+        for i, pre in enumerate(neuron_ids) } # only compute the upper triangle of the matrix
+        crosscorrs = {(pre, post): compute_correlogram_normalized_cc_first(
+            neuron_spike_trains[pre].astype(float),
+            neuron_spike_trains[post].astype(float),
+            max_lag, bin_size, 'cross',
+            firing_rate[pre], firing_rate[post],
+            max(global_max_times[pre], global_max_times[post])
+        )
+        for i, pre in enumerate(neuron_ids) for j, post in enumerate(neuron_ids)
+        if i < j} # only compute the upper triangle of the matrix
         if make_plots:
             fig_size = min(24, 1.2 * (len(neuron_ids) + 1))
             fig = plt.figure(figsize=(fig_size, fig_size))
@@ -915,7 +850,11 @@ def plot_neuron_correlation_matrices(neurons, save_dir, sample_rate, edge_mean=T
                 for j, post_id in enumerate(neuron_ids):
                     ax = fig.add_subplot(gs[i + 1, j + 1])
                     if pre_id != post_id:
-                        lags, corr, mean_corr, std_corr, z_score, total_bump_score = crosscorrs[(pre_id, post_id)]
+                        if (pre_id, post_id) in crosscorrs:
+                            lags, corr, mean_corr, std_corr, z_score, total_bump_score = crosscorrs[(pre_id, post_id)]
+                        else:
+                            lags, corr, mean_corr, std_corr, z_score, total_bump_score = crosscorrs[(post_id, pre_id)]
+                            corr = corr[::-1]
                         # Same plot style as pipeline rank fig: stair fill 0→line, red, mean line, gray ±std band
                         n = len(corr)
                         if len(lags) > n:
@@ -971,7 +910,7 @@ def plot_neuron_correlation_matrices(neurons, save_dir, sample_rate, edge_mean=T
                 # Truncate to max 5 letters for title, removing "neuron" prefix
                 neuron_id_short = neuron_id.replace("neuron", "")[:5]
                 ax_top.set_title(neuron_id_short, fontsize=6, pad=2)
-                ax_top.set_box_aspect(1)
+                # ax_top.set_box_aspect(1)
                 
                 ax_left = fig.add_subplot(gs[idx + 1, 0])
                 # Fill under the .step plot with color
@@ -987,7 +926,9 @@ def plot_neuron_correlation_matrices(neurons, save_dir, sample_rate, edge_mean=T
                 # Truncate to max 5 letters for ylabel, removing "neuron" prefix
                 neuron_id_short = neuron_id.replace("neuron", "")[:5]
                 ax_left.set_ylabel(neuron_id_short, fontsize=6)
-                ax_left.set_box_aspect(1)
+                # ax_left.set_box_aspect(1)
+                ax_top.set_aspect('auto')
+                ax_left.set_aspect('auto')
             
             ax_corner = fig.add_subplot(gs[0, 0])
             ax_corner.axis('off')
@@ -1002,16 +943,264 @@ def plot_neuron_correlation_matrices(neurons, save_dir, sample_rate, edge_mean=T
             
             plt.suptitle(f'Cross-correlation Matrix ({resolution} Resolution: ±{max_lag}ms, {bin_size}ms bins)', fontsize=10, y=0.98)
             plt.tight_layout()
+            os.makedirs(save_dir, exist_ok=True)
             filedir = os.path.join(save_dir, f'correlation_matrix_edge_mean_{edge_mean}_{resolution.lower()}.png')
             plt.savefig(filedir, dpi=300, bbox_inches='tight')
             print(f'Saved {resolution} resolution matrix at {filedir}')
+            plt.show()
             plt.close()
-        with open(os.path.join(save_dir, f'crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl'), 'wb') as f:
-            pickle.dump(crosscorrs, f)
-        with open(os.path.join(save_dir, f'autocorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl'), 'wb') as f:
-            pickle.dump(autocorrs, f)
-        print(f'Saved {resolution} resolution crosscorrs and autocorrs at {save_dir}')
+
+
     return configs
 
 
 
+
+# def plot_neuron_correlation_matrices(neurons, save_dir, sample_rate, edge_mean=True, configs=None, make_plots=True):
+#     if configs is None:
+#         configs = [(80, 1000, "Broad"), (40, 500, "Medium"), (20, 250, "Fine"),(10, 100, "semiFine"), (2, 50, "Ultra-fine")]
+#     neuron_ids = list(neurons.keys())
+    
+#     for bin_size, max_lag, resolution in configs:
+#         neuron_spike_trains, global_max_time, firing_rate, global_max_times = {}, 0, {}, {}
+#         for neuron_id, spike_times in neurons.items():
+#             spike_times = np.array(spike_times) / sample_rate * 1000
+#             spike_indices = np.round(spike_times).astype(int)
+#             global_max_time = max(global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0)
+#             global_max_times[neuron_id] = global_max_time
+#             num_bins = global_max_time
+#             neuron_spike_trains[neuron_id] = np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0] > 0
+#             firing_rate[neuron_id] = np.sum(neuron_spike_trains[neuron_id]) / global_max_time 
+
+#         # autocorrs = {n: compute_correlogram_normalized(neuron_spike_trains[n].astype(float), neuron_spike_trains[n].astype(float), max_lag, bin_size, 'auto', firing_rate[n], firing_rate[n], global_max_times[n], edge_mean=edge_mean) 
+#         #             for n in neuron_ids}
+#         # crosscorrs = {(pre, post): compute_correlogram_normalized(neuron_spike_trains[pre].astype(float), neuron_spike_trains[post].astype(float), max_lag, bin_size, 'cross', firing_rate[pre], firing_rate[post], max(global_max_times[pre], global_max_times[post]), edge_mean=edge_mean)
+#         #              for pre in neuron_ids for post in neuron_ids if pre != post}
+#         crosscorrs = {(pre, post): compute_correlogram_normalized_cc_first(neuron_spike_trains[pre].astype(float), neuron_spike_trains[post].astype(float), max_lag, bin_size, 'cross', firing_rate[pre], firing_rate[post], max(global_max_times[pre], global_max_times[post]))
+#                      for pre in neuron_ids for post in neuron_ids if pre != post}
+#         if make_plots:
+#             fig_size = min(24, 1.2 * (len(neuron_ids) + 1))
+#             fig = plt.figure(figsize=(fig_size, fig_size))
+#             gs = fig.add_gridspec(len(neuron_ids) + 1, len(neuron_ids) + 1, hspace=0.15, wspace=0.15)
+            
+#             for i, pre_id in enumerate(neuron_ids):
+#                 for j, post_id in enumerate(neuron_ids):
+#                     ax = fig.add_subplot(gs[i + 1, j + 1])
+#                     if pre_id != post_id:
+#                         lags, corr, mean_corr, std_corr, z_score, total_bump_score = crosscorrs[(pre_id, post_id)]
+#                         for idx in range(len(lags)-1):
+#                             color = get_color_intensity(corr[idx], mean_corr, std_corr)
+#                             ax.fill_between(
+#                                 [lags[idx], lags[idx+1]], 
+#                                 [0, 0], 
+#                                 [corr[idx], corr[idx]], 
+#                                 color=color,
+#                                 alpha=0.6,
+#                                 linewidth=0.5,
+#                             )
+#                         ax.axhline(y=mean_corr, color='black', linestyle='--', linewidth=0.2, alpha=0.8, 
+#                                  label='Mean CC' if i == 1 and j == 1 else None)
+#                         ax.fill_between(
+#                             [lags[0], lags[-1]],
+#                             [mean_corr - std_corr, mean_corr - std_corr],
+#                             [mean_corr + std_corr, mean_corr + std_corr],
+#                             color='gray', alpha=0.2)
+#                     ax.set_xlim(-max_lag, max_lag)
+#                     ax.grid(True, linestyle=':', linewidth=0.5, alpha=0.3)
+#                     ax.spines['top'].set_visible(False)
+#                     ax.spines['right'].set_visible(False)
+#                     ax.axhline(y=0, color='gray', linestyle='--', linewidth=0.5, alpha=0.5)
+#                     if i < len(neuron_ids) - 1:
+#                         ax.set_xticklabels([])
+#                     else:
+#                         ax.set_xlabel('ms', fontsize=6)
+#                     ax.tick_params(labelsize=5)
+#                     if i == 0:
+#                         # Truncate to max 5 letters for title, removing "neuron" prefix
+#                         post_id_short = post_id.replace("neuron", "")[:5]
+#                         ax.set_title(post_id_short, fontsize=6, pad=2)
+#                     if j == 0:
+#                         # Truncate to max 5 letters for ylabel, removing "neuron" prefix
+#                         pre_id_short = pre_id.replace("neuron", "")[:5]
+#                         ax.set_ylabel(pre_id_short, fontsize=6)
+#                     ax.set_box_aspect(1)
+            
+#             for idx, neuron_id in enumerate(neuron_ids):
+#                 lags, corr, mean_corr, std_corr, z_score, total_bump_score = autocorrs[neuron_id]
+#                 y_range = np.max(corr) - np.min(corr)
+#                 ax_top = fig.add_subplot(gs[0, idx + 1])
+#                 ax_top.step(lags, corr, where='mid', color='b', linewidth=0.5)
+#                 ax_top.set_xlim(-max_lag, max_lag)
+#                 ax_top.set_ylim(np.min(corr) - 0.1 * y_range, np.max(corr) + 0.1 * y_range)
+#                 ax_top.grid(True, linestyle=':', linewidth=0.5, alpha=0.3)
+#                 ax_top.tick_params(labelsize=5)
+#                 ax_top.spines['top'].set_visible(False)
+#                 ax_top.spines['right'].set_visible(False)
+#                 ax_top.axhline(y=0, color='gray', linestyle='--', linewidth=0.5, alpha=0.5)
+#                 # Truncate to max 5 letters for title, removing "neuron" prefix
+#                 neuron_id_short = neuron_id.replace("neuron", "")[:5]
+#                 ax_top.set_title(neuron_id_short, fontsize=6, pad=2)
+#                 ax_top.set_box_aspect(1)
+                
+#                 ax_left = fig.add_subplot(gs[idx + 1, 0])
+#                 ax_left.step(lags, corr, where='mid', color='b', linewidth=0.5)
+#                 ax_left.set_xlim(-max_lag, max_lag)
+#                 ax_left.set_ylim(np.min(corr) - 0.1 * y_range, np.max(corr) + 0.1 * y_range)
+#                 ax_left.grid(True, linestyle=':', linewidth=0.5, alpha=0.3)
+#                 ax_left.tick_params(labelsize=5)
+#                 ax_left.spines['top'].set_visible(False)
+#                 ax_left.spines['right'].set_visible(False)
+#                 ax_left.axhline(y=0, color='gray', linestyle='--', linewidth=0.5, alpha=0.5)
+#                 # Truncate to max 5 letters for ylabel, removing "neuron" prefix
+#                 neuron_id_short = neuron_id.replace("neuron", "")[:5]
+#                 ax_left.set_ylabel(neuron_id_short, fontsize=6)
+#                 ax_left.set_box_aspect(1)
+            
+#             ax_corner = fig.add_subplot(gs[0, 0])
+#             ax_corner.axis('off')
+#             ax_corner.set_box_aspect(1)
+            
+#             # Add global note about input-output relationship
+#             ax_corner.text(0.5, 0.5, 'Output TopRow→\n↓\nLeftColInput', 
+#                           transform=ax_corner.transAxes,
+#                           ha='center', va='center',
+#                           fontsize=8, fontweight='bold',
+#                           bbox=dict(facecolor='white', alpha=0.8, boxstyle='round'))
+            
+#             plt.suptitle(f'Cross-correlation Matrix ({resolution} Resolution: ±{max_lag}ms, {bin_size}ms bins)', fontsize=10, y=0.98)
+#             plt.tight_layout()
+#             filedir = os.path.join(save_dir, f'correlation_matrix_edge_mean_{edge_mean}_{resolution.lower()}.png')
+#             plt.savefig(filedir, dpi=300, bbox_inches='tight')
+#             print(f'Saved {resolution} resolution matrix at {filedir}')
+#             plt.close()
+#         with open(os.path.join(save_dir, f'crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl'), 'wb') as f:
+#             pickle.dump(crosscorrs, f)
+#         with open(os.path.join(save_dir, f'autocorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl'), 'wb') as f:
+#             pickle.dump(autocorrs, f)
+#         print(f'Saved {resolution} resolution crosscorrs and autocorrs at {save_dir}')
+#     return configs
+# def test_plot_neuron_correlation_matrices(plot_neuron_correlation_matrices, save_dir="test_correlation"):
+#     """
+#     Simple test for plot_neuron_correlation_matrices using binned spike trains (1 ms bins, 1000 Hz)
+#     with output spikes delayed by 20 ms. Includes diagnostic cross-correlation to verify input.
+#     Neurons are provided as spike times in ms.
+
+#     Parameters:
+#     -----------
+#     plot_neuron_correlation_matrices : callable
+#         Function to test, expecting neurons dict with spike times, save_dir, sample_rate, edge_mean, make_plots.
+#     save_dir : str
+#         Directory to save results (default: "test_correlation").
+
+#     Returns:
+#     --------
+#     dict
+#         Spike counts and firing rates for the 4000 ms window.
+#     """
+#     # Parameters
+#     sample_rate = 1000  # 1kHz, 1 ms bins
+#     duration_ms = 40000  # 40 seconds
+#     delay_ms = 20  # 20 ms delay
+#     input_freq_hz = 3  # 20 Hz input rate
+#     noise_freq_hz = 1  # 1 Hz noise rate for output
+
+#     # Convert to samples
+#     n_samples = duration_ms  # 4000 bins
+#     delay_samples = delay_ms  # 20 bins
+
+#     # Generate input spike train (Poisson, binary)
+#     input_spikes = np.random.poisson(input_freq_hz / sample_rate, n_samples)
+#     input_spikes = (input_spikes > 0).astype(np.int8)  # 0 or 1
+#     input_spike_times = np.where(input_spikes > 0)[0].astype(float)  # ms
+
+#     # Generate output spike train (delayed by 20 ms)
+#     output_spikes = np.zeros(n_samples, dtype=np.int8)
+#     for idx in np.where(input_spikes > 0)[0]:
+#         if idx + delay_samples < n_samples:
+#             output_spikes[idx + delay_samples] = 1
+    
+#     # Add Poisson random noise to output
+#     noise_spikes = np.random.poisson(noise_freq_hz / sample_rate, n_samples)
+#     noise_spikes = (noise_spikes > 0).astype(np.int8)  # 0 or 1
+#     output_spikes = np.logical_or(output_spikes, noise_spikes).astype(np.int8)
+    
+#     output_spike_times = np.where(output_spikes > 0)[0].astype(float)  # ms
+
+#     # Neuron dictionary with spike times in ms
+#     neurons = {
+#         'input': input_spike_times,
+#         'output': output_spike_times
+#     }
+
+#     # Create save directory
+#     os.makedirs(save_dir, exist_ok=True)
+
+
+#     # plot the input and output spike trains
+#     plt.figure(figsize=(10, 5))
+#     plt.vlines(input_spike_times, 0.5, 1.0, colors='b', label='Input Spikes', linewidth=0.5)
+#     plt.vlines(output_spike_times, 0.0, 0.5, colors='r', label='Output Spikes', linewidth=0.5)
+#     plt.ylim(0, 1)
+#     plt.yticks([0.2, 0.8], ['Output', 'Input'])
+#     plt.legend()
+#     plt.savefig(os.path.join(save_dir, 'input_output_spike_trains.png'), dpi=300)
+#     plt.show()
+#     # Call plot_neuron_correlation_matrices
+#     try:
+#         plot_neuron_correlation_matrices(
+#             neurons=neurons,
+#             save_dir=save_dir,
+#             sample_rate=sample_rate,
+#             edge_mean=True,
+#             make_plots=True
+#         )
+#     except Exception as e:
+#         print(f"Error in plot_neuron_correlation_matrices: {e}")
+
+#     # Diagnostic cross-correlation
+#     max_lag_ms = 50  # ±50 ms
+#     max_lag_samples = max_lag_ms  # 50 bins
+
+
+
+#     # Results
+#     results = {
+#         4000: {
+#             'input_spikes': int(np.sum(input_spikes)),
+#             'output_spikes': int(np.sum(output_spikes)),
+#             'input_rate': np.sum(input_spikes) / (duration_ms / 1000),
+#             'output_rate': np.sum(output_spikes) / (duration_ms / 1000)
+#         }
+#     }
+
+#     # Print results
+#     print("\nTest Results (4000 ms):")
+#     print(f"Input Spikes: {results[4000]['input_spikes']}")
+#     print(f"Output Spikes: {results[4000]['output_spikes']}")
+#     print(f"Input Rate: {results[4000]['input_rate']:.2f} Hz")
+#     print(f"Output Rate: {results[4000]['output_rate']:.2f} Hz")
+
+#     return results
+
+
+
+if __name__ == "__main__":
+    # %% Run the causal correlation test
+    # test_plot_neuron_correlation_matrices(
+    #     plot_neuron_correlation_matrices
+    # )   
+    pass 
+
+
+    # %%  Process regular PKL files
+    # pkl_files = [os.path.join(FILE_DIR, f) for f in os.listdir(FILE_DIR) if f.endswith('.pkl')]
+    # if not pkl_files:
+    #     print(f"No PKL files found in {FILE_DIR}")
+    # else:
+    #     print(f"Found {len(pkl_files)} PKL files to process")
+    #     for pkl_file in pkl_files:
+    #         process_pkl_file(pkl_file)
+    #     print("All files processed successfully!")
+    #     # merge all figure into one
+    #     dataset_names = [os.path.splitext(os.path.basename(p))[0] for p in pkl_files]
+    #     # plot_z_score_distributions_multiple(pkl_files, SAMPLE_RATE, ANALYSIS_DIR, dataset_names)
