@@ -320,10 +320,9 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
             # Build new path
             abbr_pkl_path = os.path.join(
-                "data",
-                "analysis",
+                ANALYSIS_DIR,
                 dataset,
-                f"crosscorrs_edge_mean_True_{item}.pkl",
+                f"crosscorrs_edge_mean_True_{edge_mean}_{resolution.lower()}.pkl",
             )
             out_dir = os.path.join(
                 os.path.splitext(os.path.basename(pkl_path))[0], "FilterFiles"
