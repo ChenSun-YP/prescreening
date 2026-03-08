@@ -211,7 +211,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
     # Set up directories
     os.makedirs(ANALYSIS_DIR, exist_ok=True)
-    pkl_files = glob.glob(os.path.join(FILE_DIR, PKL_FILE_PATTERN))
+    pkl_files = glob.glob(os.path.join(FILE_DIR, PKL_FILE_PATTERN), recursive=True)
 
     if verbose:
         print("pkl_files include:\n  ", pkl_files)

@@ -1,8 +1,8 @@
 {
     "paths": {
-      "file_dir": "data",
+      "file_dir": "data/Jan2010-Nonstationarity_Learning",
       "analysis_dir": "analysis",
-      "pkl_file": "*.pkl", 
+      "pkl_file": "**/*_contam_*.pkl", 
       "rank_dir": "data/single_pairs_analysis"
     },
     "processing": {
