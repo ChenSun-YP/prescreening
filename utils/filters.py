@@ -370,14 +370,67 @@ def calc_mode_using_kde(
     grid_size=1000,
 ):
 
-    # ensure no negative weights
+    # ensure arrays and float dtype
+    lags = np.asarray(lags, dtype=float)
+    corr = np.asarray(corr, dtype=float)
+
+    # drop NaNs/infs
+    finite_mask = np.isfinite(lags) & np.isfinite(corr)
+    if not np.any(finite_mask):
+        return None
+    lags = lags[finite_mask]
+    corr = corr[finite_mask]
+
+    # ensure no negative weights (clip)
     weights = np.clip(corr, a_min=0.0, a_max=None)
 
-    kde = gaussian_kde(dataset=lags, weights=weights, bw_method=None)
-    grid = np.linspace(lags.min(), lags.max(), grid_size)
-    density = kde(grid)
-    mode = grid[np.argmax(density)]
-    return float(mode)
+    # if total weight is zero, fall back to unweighted approach
+    if np.sum(weights) <= 0.0:
+        # if there are many points, use histogram mode, else single value
+        if lags.size == 0:
+            return None
+        if lags.size == 1:
+            return float(lags[0])
+        # histogram fallback
+        bins = min(100, max(10, int(np.sqrt(lags.size))))
+        hist, edges = np.histogram(lags, bins=bins)
+        idx = np.argmax(hist)
+        return float(0.5 * (edges[idx] + edges[idx + 1]))
+
+    # remove points that have zero weight (they don't contribute to KDE)
+    positive_mask = weights > 0
+    if np.sum(positive_mask) < 2:
+        # Not enough weighted points for KDE — fallback to weighted histogram
+        if np.sum(positive_mask) == 1:
+            return float(lags[positive_mask][0])
+        # else fall back to histogram on all lags
+        bins = min(100, max(10, int(np.sqrt(lags.size))))
+        hist, edges = np.histogram(lags, bins=bins, weights=weights)
+        idx = np.nanargmax(hist)
+        return float(0.5 * (edges[idx] + edges[idx + 1]))
+
+    lags_w = lags[positive_mask]
+    weights_w = weights[positive_mask]
+
+    # finally try KDE with guarded exception handling
+    try:
+        # gaussian_kde expects 1-D data shaped appropriately; using bw_method 'scott' is safer than None
+        kde = gaussian_kde(dataset=lags_w, weights=weights_w, bw_method="scott")
+        grid = np.linspace(float(lags_w.min()), float(lags_w.max()), grid_size)
+        density = kde(grid)
+        if np.all(np.isnan(density)):
+            raise RuntimeError("KDE returned all NaNs")
+        mode = grid[np.nanargmax(density)]
+        return float(mode)
+    except Exception:
+        # KDE failed (singular covariance or other numerical issue). Use a weighted-histogram fallback.
+        bins = min(200, max(20, int(np.sqrt(lags_w.size))))
+        hist, edges = np.histogram(lags_w, bins=bins, weights=weights_w)
+        if np.all(np.isnan(hist)) or np.sum(hist) == 0:
+            # give up
+            return None
+        idx = int(np.nanargmax(hist))
+        return float(0.5 * (edges[idx] + edges[idx + 1]))
 
 
 # find mode of correlogram & stdev of correlogram
@@ -408,7 +461,10 @@ def check_stdev_around_mode(
         lags = value[0]
         corr = value[1]
 
-        if corr is None or len(corr) == 0:
+        if corr is None or len(corr) == 0 or sum(corr) == 0:
+            print(
+                f"{pre}, {post} — Empty or zero-sum correlogram, skipping mode/stdev check"
+            )
             continue
 
         # adjust lag if need be
