@@ -21,6 +21,7 @@ from scipy.stats import gaussian_kde
 # check all intervals on base of the histogram is full
 def check_correlation_filled_bins(
     pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+    filtered_pairs_path="selected_neurons_first_200s\\fill_bin_good_pairs.txt",
     out_dir="selected_neurons_first_200s",  # for debugging purposes
     harshness=0.10,  # at most 10% of bins can be empty
     power_threshold=-10,  # bins with value < e^-10 are considered empty
@@ -45,6 +46,9 @@ def check_correlation_filled_bins(
     good_pairs_path = os.path.join(out_dir, "fill_bin_good_pairs.txt")
 
     threshold = math.exp(power_threshold)
+    # -------------------------
+    # load allowed pairs
+    # -------------------------
 
     with open(pkl_path, "rb") as f:
         crosscorrs = pickle.load(f)
@@ -52,7 +56,18 @@ def check_correlation_filled_bins(
     bad_pairs = []
     good_pairs = []
 
+    allowed_pairs = set()
+    with open(filtered_pairs_path, "r") as f:
+        for line in f:
+            parts = line.strip().split()
+            if len(parts) == 2:
+                allowed_pairs.add((parts[0], parts[1]))
+
     for (pre, post), value in crosscorrs.items():
+
+        # only process pairs from the txt file
+        if (pre, post) not in allowed_pairs:
+            continue
         # value is a tuple:
         # (lags, corr, mean, std, scores, total_score)
 
@@ -130,6 +145,7 @@ def filter_pairs_using_correlation_filled_bins(
 
 def check_firing_rate(
     pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+    filtered_pairs_path="selected_neurons_first_200s\\fill_bin_good_pairs.txt",
     out_dir="selected_neurons_first_200s",  # for debugging purposes
     min_rate=0.1,  # in Hz
     max_rate=5.0,  # in Hz
@@ -272,6 +288,7 @@ def check_histogram_unimodal(
 
 def check_correlations_unimodal(
     pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+    filtered_pairs_path="selected_neurons_first_200s\\fill_bin_good_pairs.txt",
     out_dir="selected_neurons_first_200s",  # for debugging purposes
     bin_centers=None,
     smoothing_sigma=1.0,
@@ -436,6 +453,7 @@ def calc_mode_using_kde(
 # find mode of correlogram & stdev of correlogram
 def check_stdev_around_mode(
     pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
+    filtered_pairs_path="selected_neurons_first_200s\\fill_bin_good_pairs.txt",
     out_dir="selected_neurons_first_200s",  # for debugging purposes
     stdev_upper_threshold=30.0,  # in ms
     stdev_lower_threshold=20.0,  # in ms

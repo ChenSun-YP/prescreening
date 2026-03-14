@@ -333,22 +333,27 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 harshness=0.10,  # at most 10% of bins can be empty
                 power_threshold=-10,  # bins with value < e^-10 are considered empty
             )
-            bad_pairs_path = os.path.join(out_dir, "fill_bin_bad_pairs.txt")
+            bad_bin_fill_pairs_path = os.path.join(out_dir, "fill_bin_bad_pairs.txt")
+            good_bin_fill_pairs_path = os.path.join(out_dir, "fill_bin_good_pairs.txt")
             # filter pairs using correlation filled bins
             filtered_pairs = filter_pairs_using_correlation_filled_bins(
                 pairs,
-                bad_pairs_path=bad_pairs_path,
+                bad_pairs_path=bad_bin_fill_pairs_path,
             )
             # print("filtered_pairs", filtered_pairs)
 
             check_firing_rate(
                 pkl_path=abbr_pkl_path,  # find a way to automatically get this path
                 out_dir=out_dir,  # for debugging purposes
+                filtered_pairs_path=good_bin_fill_pairs_path,  # only check firing rate for pairs that passed the previous filter
                 min_rate=0.1,  # minimum firing rate in Hz
                 max_rate=20.0,  # maximum firing rate in Hz
             )
             bad_firing_rate_pairs_path = os.path.join(
                 out_dir, "firing_rate_bad_pairs.txt"
+            )
+            good_firing_rate_pairs_path = os.path.join(
+                out_dir, "firing_rate_good_pairs.txt"
             )
 
             filtered_pairs = filter_pairs_using_firing_rate(
@@ -360,12 +365,14 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             check_correlations_unimodal(
                 pkl_path=abbr_pkl_path,  # find a way to automatically get this path,
                 out_dir=out_dir,  # for debugging purposes
+                filtered_pairs_path=good_firing_rate_pairs_path,  # only check unimodality for pairs that passed the previous filter
                 bin_centers=None,
                 smoothing_sigma=1.0,
                 prominence_fraction=0.245,
                 min_distance_bins=1,
             )
             bad_unimodal_pairs_path = os.path.join(out_dir, "unimodal_bad_pairs.txt")
+            good_unimodal_pairs_path = os.path.join(out_dir, "unimodal_good_pairs.txt")
 
             filtered_pairs = filter_pairs_using_unimodality(
                 filtered_pairs,
@@ -376,12 +383,17 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             check_stdev_around_mode(
                 pkl_path=abbr_pkl_path,  # find a way to automatically get this path,
                 out_dir=out_dir,  # for debugging purposes
+                filtered_pairs_path=good_unimodal_pairs_path,  # only check stdev around mode for pairs that passed the previous filter
                 stdev_upper_threshold=30,  # milliseconds
                 stdev_lower_threshold=20,  # milliseconds
             )
             bad_mode_stdev_pairs_path = os.path.join(
                 out_dir, "mode_stdev_bad_pairs.txt"
             )
+            good_mode_stdev_pairs_path = os.path.join(
+                out_dir, "mode_stdev_good_pairs.txt"
+            )
+
             filtered_pairs = filter_pairs_using_mode_stdev(
                 filtered_pairs,
                 bad_pairs_path=bad_mode_stdev_pairs_path,
