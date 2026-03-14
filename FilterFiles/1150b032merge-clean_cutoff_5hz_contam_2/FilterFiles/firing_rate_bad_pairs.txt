@@ -1,0 +1,4 @@
+n030_L_CA3_wire_8_cell_2	n033_L_CA3_wire_1_cell_1
+n033_L_CA3_wire_1_cell_1	n030_L_CA3_wire_8_cell_2
+n057_L_CA1_wire_7_cell_1	n058_L_CA1_wire_7_cell_2
+n058_L_CA1_wire_7_cell_2	n057_L_CA1_wire_7_cell_1
