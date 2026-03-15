@@ -330,6 +330,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             check_correlation_filled_bins(
                 pkl_path=abbr_pkl_path,  # find a way to automatically get this path
                 out_dir=out_dir,
+                
                 harshness=0.10,  # at most 10% of bins can be empty
                 power_threshold=-10,  # bins with value < e^-10 are considered empty
             )

@@ -21,7 +21,7 @@ from scipy.stats import gaussian_kde
 # check all intervals on base of the histogram is full
 def check_correlation_filled_bins(
     pkl_path="data/analysis/selected_neurons_first_200s/crosscorrs_edge_mean_True_ultra-fine.pkl",  # find a way to automatically get this path
-    filtered_pairs_path="selected_neurons_first_200s\\fill_bin_good_pairs.txt",
+    filtered_pairs_path="",
     out_dir="selected_neurons_first_200s",  # for debugging purposes
     harshness=0.10,  # at most 10% of bins can be empty
     power_threshold=-10,  # bins with value < e^-10 are considered empty
@@ -56,12 +56,15 @@ def check_correlation_filled_bins(
     bad_pairs = []
     good_pairs = []
 
-    allowed_pairs = set()
-    with open(filtered_pairs_path, "r") as f:
-        for line in f:
-            parts = line.strip().split()
-            if len(parts) == 2:
-                allowed_pairs.add((parts[0], parts[1]))
+    if filtered_pairs_path:
+        allowed_pairs = set()
+        with open(filtered_pairs_path, "r") as f:
+            for line in f:
+                parts = line.strip().split()
+                if len(parts) == 2:
+                    allowed_pairs.add((parts[0], parts[1]))
+    else:
+        allowed_pairs = set(crosscorrs.keys())
 
     for (pre, post), value in crosscorrs.items():
 
