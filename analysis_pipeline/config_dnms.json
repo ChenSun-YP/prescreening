@@ -18,8 +18,7 @@
       "raster_bin_size": 100
     },
     "cc_configs": [
-      [10, 100, "semiFine"],
-      [2, 50, "Ultra-fine"]
+      [10, 100, "semiFine"]
     ]
 }
 
