@@ -324,10 +324,10 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 dataset,
                 f"crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl",
             )
-            # out_dir = os.path.join(
-            #     os.path.splitext(os.path.basename(pkl_path))[0], "FilterFiles"
-            # )
-            out_dir = os.path.join("FilterFiles")
+            out_dir = os.path.join(
+                "FilterFiles", os.path.splitext(os.path.basename(pkl_path))[0]
+            )
+            # out_dir = os.path.join("FilterFiles")
             print("out_dir", out_dir)
             check_correlation_filled_bins(
                 pkl_path=abbr_pkl_path,  # find a way to automatically get this path
