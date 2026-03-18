@@ -138,7 +138,7 @@ def filter_pairs_using_correlation_filled_bins(
         return loaded
 
     bad_pairs = load_pairs(bad_pairs_path)
-    print(f"Loaded {len(bad_pairs)} bad pairs from {bad_pairs_path}")
+    # print(f"Loaded {len(bad_pairs)} bad pairs from {bad_pairs_path}")
     # print("bad_pairs", bad_pairs)
 
     filtered_pairs = [pair for pair in pairs if pair not in bad_pairs]
@@ -164,10 +164,21 @@ def check_firing_rate(
     bad_pairs = []
     good_pairs = []
 
+    if filtered_pairs_path:
+        allowed_pairs = set()
+        with open(filtered_pairs_path, "r") as f:
+            for line in f:
+                parts = line.strip().split()
+                if len(parts) == 2:
+                    allowed_pairs.add((parts[0], parts[1]))
+    else:
+        allowed_pairs = set(crosscorrs.keys())
+
     for (pre, post), value in crosscorrs.items():
         # value is a tuple:
         # (lags, corr, mean, std, scores, total_score)
-
+        if (pre, post) not in allowed_pairs:
+            continue
         # print(f"Checking firing rate for pair: {pre}, {post}")
 
         mean_rate = value[2]  # mean firing rate of pre neuron
@@ -310,10 +321,21 @@ def check_correlations_unimodal(
     bad_pairs = []
     good_pairs = []
 
+    if filtered_pairs_path:
+        allowed_pairs = set()
+        with open(filtered_pairs_path, "r") as f:
+            for line in f:
+                parts = line.strip().split()
+                if len(parts) == 2:
+                    allowed_pairs.add((parts[0], parts[1]))
+    else:
+        allowed_pairs = set(crosscorrs.keys())
+
     for (pre, post), value in crosscorrs.items():
         # value is a tuple:
         # (lags, corr, mean, std, scores, total_score)
-
+        if (pre, post) not in allowed_pairs:
+            continue
         # print(f"Filtering pair: {pre}, {post}")
 
         counts = value[1]
@@ -473,10 +495,21 @@ def check_stdev_around_mode(
     bad_pairs = []
     good_pairs = []
 
+    if filtered_pairs_path:
+        allowed_pairs = set()
+        with open(filtered_pairs_path, "r") as f:
+            for line in f:
+                parts = line.strip().split()
+                if len(parts) == 2:
+                    allowed_pairs.add((parts[0], parts[1]))
+    else:
+        allowed_pairs = set(crosscorrs.keys())
+
     for (pre, post), value in crosscorrs.items():
         # value is a tuple:
         # (lags, corr, mean, std, scores, total_score)
-
+        if (pre, post) not in allowed_pairs:
+            continue
         # print(f"Filtering pair: {pre}, {post}")
 
         lags = value[0]

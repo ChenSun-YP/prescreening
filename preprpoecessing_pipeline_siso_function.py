@@ -243,18 +243,18 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         n_after = len(filtered_neurons)
 
         # **Stage 3: (Optional) Generate various figures**
-        if PLOT_ALL:
-            plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
-            plot_spike_raster(
-                filtered_neurons, save_dir, SAMPLE_RATE, bin_size=RASTER_BIN_SIZE
-            )
-            plot_neuron_correlation_matrices(
-                filtered_neurons,
-                save_dir,
-                SAMPLE_RATE,
-                edge_mean=edge_mean,
-                configs=CONFIGS,
-            )
+        # if PLOT_ALL:
+            # plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
+            # plot_spike_raster(
+            #     filtered_neurons, save_dir, SAMPLE_RATE, bin_size=RASTER_BIN_SIZE
+            # )
+            # plot_neuron_correlation_matrices(
+            #     filtered_neurons,
+            #     save_dir,
+            #     SAMPLE_RATE,
+            #     edge_mean=edge_mean,
+            #     configs=CONFIGS,
+            # )
 
         file_results = {
             "file": pkl_path,
@@ -324,13 +324,14 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 dataset,
                 f"crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl",
             )
-            out_dir = os.path.join(
-                os.path.splitext(os.path.basename(pkl_path))[0], "FilterFiles"
-            )
+            # out_dir = os.path.join(
+            #     os.path.splitext(os.path.basename(pkl_path))[0], "FilterFiles"
+            # )
+            out_dir = os.path.join("FilterFiles")
+            print("out_dir", out_dir)
             check_correlation_filled_bins(
                 pkl_path=abbr_pkl_path,  # find a way to automatically get this path
                 out_dir=out_dir,
-                
                 harshness=0.10,  # at most 10% of bins can be empty
                 power_threshold=-10,  # bins with value < e^-10 are considered empty
             )
@@ -399,6 +400,8 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 filtered_pairs,
                 bad_pairs_path=bad_mode_stdev_pairs_path,
             )
+
+            print("final filtered_pairs", filtered_pairs)
 
             top_bump = sorted(
                 [(pair, np.max(crosscorrs[pair][5])) for pair in filtered_pairs],
