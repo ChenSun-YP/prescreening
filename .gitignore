@@ -23,5 +23,5 @@ openpkl.py
 corr_trimmed_*.txt
 raw_corr/
 log/
-data/**/*.pkl
-data/Jan2010-Nonstationarity_Learning/
+data/
+FilterFiles/
