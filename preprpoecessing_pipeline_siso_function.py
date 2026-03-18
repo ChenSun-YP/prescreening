@@ -244,17 +244,17 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
         # **Stage 3: (Optional) Generate various figures**
         # if PLOT_ALL:
-            # plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
-            # plot_spike_raster(
-            #     filtered_neurons, save_dir, SAMPLE_RATE, bin_size=RASTER_BIN_SIZE
-            # )
-            # plot_neuron_correlation_matrices(
-            #     filtered_neurons,
-            #     save_dir,
-            #     SAMPLE_RATE,
-            #     edge_mean=edge_mean,
-            #     configs=CONFIGS,
-            # )
+        # plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
+        # plot_spike_raster(
+        #     filtered_neurons, save_dir, SAMPLE_RATE, bin_size=RASTER_BIN_SIZE
+        # )
+        # plot_neuron_correlation_matrices(
+        #     filtered_neurons,
+        #     save_dir,
+        #     SAMPLE_RATE,
+        #     edge_mean=edge_mean,
+        #     configs=CONFIGS,
+        # )
 
         file_results = {
             "file": pkl_path,
