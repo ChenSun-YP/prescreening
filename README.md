@@ -29,8 +29,8 @@ Example (`analysis_pipeline/config_dnms.json`):
 ```json
 {
   "paths": {
-    "file_dir": "DNMS_data/",
-    "analysis_dir": "DNMS_data/analysis",
+    "file_dir": "data/",
+    "analysis_dir": "data/analysis",
     "pkl_file": "*200s.pkl"
   },
   "processing": {
@@ -123,14 +123,6 @@ chmod +x stage2_stationary_fit_exp_data.sh
 - `VENV_PATH`: Change to your virtual environment path
 - `#SBATCH --account`: dsong945
 - `#SBATCH --partition`: choose from `main,debug,gpu,epyc-64`
-
-
-<!--
-add filters here at very end
-
-access csv or pkl files to do so
-
->
 
 
 <!-- ### Output Structure
