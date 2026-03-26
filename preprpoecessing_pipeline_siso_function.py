@@ -185,8 +185,11 @@ def run_preprocessing_pipeline(config_input, verbose=True):
     config = load_config(config_input)
 
     # Extract parameters
-    FILE_DIR = config["paths"]["file_dir"]
-    ANALYSIS_DIR = os.path.join(FILE_DIR, config["paths"]["analysis_dir"])
+    FILE_DIR = config["paths"]["file_dir"].rstrip("/")
+    # _output_subdir = os.path.basename(FILE_DIR)
+    _output_subdir = os.path.join(*os.path.normpath(FILE_DIR).split(os.sep)[-2:])
+    ANALYSIS_DIR = os.path.join(config["paths"]["analysis_dir"], _output_subdir)
+    print("analysis dir", ANALYSIS_DIR)
     PKL_FILE_PATTERN = config["paths"][
         "pkl_file"
     ]  # Now a wildcard pattern, e.g., "*.pkl"
@@ -228,6 +231,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         save_dir = os.path.join(
             ANALYSIS_DIR, os.path.splitext(os.path.basename(pkl_path))[0]
         )
+        print("save_dir", save_dir)
         os.makedirs(save_dir, exist_ok=True)
 
         # **Stage 1: Load the spiketrain data from the .pkl file**
