@@ -173,15 +173,18 @@ def run_preprocessing_pipeline(config_input, verbose=True):
     # Extract parameters
     FILE_DIR = config['paths']['file_dir'].rstrip("/")
     # Use basename of file_dir so each job (e.g. .../1150_5_sec) writes to analysis_dir/1150_5_sec
-    _output_subdir = os.path.basename(FILE_DIR)
-    ANALYSIS_DIR = os.path.join(config['paths']['analysis_dir'], _output_subdir)
-    PKL_FILE_PATTERN = config['paths']['pkl_file']  # Now a wildcard pattern, e.g., "*.pkl"
-    SAMPLE_RATE = float(config['processing']['sample_rate'])
-    MIN_SPIKES = int(config['processing']['min_spikes'])
-    N_TOP = int(config['processing']['n_top'])
-    PLOT_ALL = config['plotting']['plot_all']  # JSON handles boolean directly
-    RASTER_BIN_SIZE = int(config['plotting']['raster_bin_size'])
-    CONFIGS = config['cc_configs']  # Load configs from JSON
+    # _output_subdir = os.path.basename(FILE_DIR)
+    _output_subdir = os.path.join(*os.path.normpath(FILE_DIR).split(os.sep)[-2:])
+    ANALYSIS_DIR = os.path.join(config["paths"]["analysis_dir"], _output_subdir)
+    PKL_FILE_PATTERN = config["paths"][
+        "pkl_file"
+    ]  # Now a wildcard pattern, e.g., "*.pkl"
+    SAMPLE_RATE = float(config["processing"]["sample_rate"])
+    MIN_SPIKES = int(config["processing"]["min_spikes"])
+    N_TOP = int(config["processing"]["n_top"])
+    PLOT_ALL = config["plotting"]["plot_all"]  # JSON handles boolean directly
+    RASTER_BIN_SIZE = int(config["plotting"]["raster_bin_size"])
+    CONFIGS = config["cc_configs"]  # Load configs from JSON
     edge_mean = True
     RECOMPUTE = config["processing"]["recompute_cc"]
 
