@@ -67,30 +67,36 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
         rec_info: dict with 'tend' (total recording duration) and 'last_trial_end' (last TRIAL end time)
                   for nested format; both None for simple format.
     """
-    with open(pkl_path, 'rb') as f:
+    with open(pkl_path, "rb") as f:
         data = pickle.load(f)
 
-    rec_info = {'tend': None, 'last_trial_end': None}
+    rec_info = {"tend": None, "last_trial_end": None}
 
     # Nested format: {'neurons': [{'name': ..., 'timestamps': [...]}, ...], 'tend': ..., 'intervals': ...}
-    if isinstance(data, dict) and 'neurons' in data:
-        neurons_list = data['neurons']
+    if isinstance(data, dict) and "neurons" in data:
+        neurons_list = data["neurons"]
         if not isinstance(neurons_list, (list, tuple)):
-            raise ValueError("Expected 'neurons' to be a list of dicts with 'name' and 'timestamps'")
+            raise ValueError(
+                "Expected 'neurons' to be a list of dicts with 'name' and 'timestamps'"
+            )
         neurons = {}
         for item in neurons_list:
-            if isinstance(item, dict) and 'name' in item and 'timestamps' in item:
-                name = item['name']
-                ts = np.asarray(item['timestamps'], dtype=float)
+            if isinstance(item, dict) and "name" in item and "timestamps" in item:
+                name = item["name"]
+                ts = np.asarray(item["timestamps"], dtype=float)
                 neurons[name] = ts
             else:
-                raise ValueError(f"Each entry in 'neurons' must have 'name' and 'timestamps'; got keys: {item.keys() if isinstance(item, dict) else type(item)}")
-        if 'tend' in data:
-            rec_info['tend'] = float(data['tend'])
-        if 'events' in data:
-            trials = data['events'][-1] if  data['events'][-1]['name'] == 'TRIAL' else None
+                raise ValueError(
+                    f"Each entry in 'neurons' must have 'name' and 'timestamps'; got keys: {item.keys() if isinstance(item, dict) else type(item)}"
+                )
+        if "tend" in data:
+            rec_info["tend"] = float(data["tend"])
+        if "events" in data:
+            trials = (
+                data["events"][-1] if data["events"][-1]["name"] == "TRIAL" else None
+            )
             if trials is not None:
-                rec_info['last_trial_end'] = trials['timestamps'][-1]
+                rec_info["last_trial_end"] = trials["timestamps"][-1]
 
     else:
         # Simple format: dict of neuron_id -> spike array
@@ -119,6 +125,7 @@ def filter_neurons(neurons, min_spikes):
     """
     return {k: v for k, v in neurons.items() if len(v) >= min_spikes}
 
+
 # Function to compute cross-correlations for all neuron pairs
 # def compute_all_crosscorrs(neurons, bin_size, max_lag, sample_rate):
 #     """Compute normalized cross-correlograms and z-scores for all neuron pairs."""
@@ -131,7 +138,7 @@ def filter_neurons(neurons, min_spikes):
 #         num_bins = int(np.ceil(global_max_time / bin_size)) + 1
 #         neuron_spike_trains[neuron_id] = np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0] > 0
 #         firing_rate[neuron_id] = np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000) if global_max_time > 0 else 0
-    
+
 #     crosscorrs = {}
 #     neuron_ids = list(neurons.keys())
 #     for i, pre in enumerate(neuron_ids):
@@ -154,6 +161,7 @@ def filter_neurons(neurons, min_spikes):
 #             }
 #     return crosscorrs, firing_rate
 
+
 # runs the full pipeline:
 # 1. load config; 2. load .pkl; 3. filter neurons; 4. compute cross-correlations; 5. rank pairs; 6. save results
 def run_preprocessing_pipeline(config_input, verbose=True):
@@ -171,7 +179,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
     config = load_config(config_input)
 
     # Extract parameters
-    FILE_DIR = config['paths']['file_dir'].rstrip("/")
+    FILE_DIR = config["paths"]["file_dir"].rstrip("/")
     # Use basename of file_dir so each job (e.g. .../1150_5_sec) writes to analysis_dir/1150_5_sec
     # _output_subdir = os.path.basename(FILE_DIR)
     _output_subdir = os.path.join(*os.path.normpath(FILE_DIR).split(os.sep)[-2:])
@@ -230,7 +238,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         n_before = len(neurons_full)
 
         # Cutoff for CC, AC, and silence: use last TRIAL end, else recording tend
-        cutoff = rec_info.get('last_trial_end') or rec_info.get('tend')
+        cutoff = rec_info.get("last_trial_end") or rec_info.get("tend")
         if cutoff is not None:
             neurons = {k: v[v < cutoff] for k, v in neurons_full.items()}
         else:
@@ -238,9 +246,13 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
         if verbose:
             print(f"  Total recording duration (tend): {rec_info['tend']}")
-            print(f"  Last TRIAL end (cutoff for CC/AC/silence): {rec_info['last_trial_end']}")
+            print(
+                f"  Last TRIAL end (cutoff for CC/AC/silence): {rec_info['last_trial_end']}"
+            )
             if cutoff is not None:
-                print(f"  Using spikes with t < {cutoff} for cross-correlation, autocorrelation, and silence-period analysis.")
+                print(
+                    f"  Using spikes with t < {cutoff} for cross-correlation, autocorrelation, and silence-period analysis."
+                )
 
         # **Stage 2: Filter neurons for spike count**
         filtered_neurons = filter_neurons(neurons, MIN_SPIKES)
@@ -250,26 +262,42 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         if PLOT_ALL:
             plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
             # Raster: same cut data as all other analysis; dashed line at last trial end
-            plot_spike_raster(filtered_neurons, save_dir, SAMPLE_RATE, bin_size=RASTER_BIN_SIZE, cutoff_time=rec_info.get('last_trial_end'))
-            plot_neuron_correlation_matrices(filtered_neurons, save_dir, SAMPLE_RATE,edge_mean=edge_mean,configs=CONFIGS)
+            plot_spike_raster(
+                filtered_neurons,
+                save_dir,
+                SAMPLE_RATE,
+                bin_size=RASTER_BIN_SIZE,
+                cutoff_time=rec_info.get("last_trial_end"),
+            )
+            plot_neuron_correlation_matrices(
+                filtered_neurons,
+                save_dir,
+                SAMPLE_RATE,
+                edge_mean=edge_mean,
+                configs=CONFIGS,
+            )
 
         file_results = {
-            'file': pkl_path,
-            'n_neurons_before': n_before,
-            'n_neurons_after': n_after,
-            'configurations': []
+            "file": pkl_path,
+            "n_neurons_before": n_before,
+            "n_neurons_after": n_after,
+            "configurations": [],
         }
 
         # Write recording/trial info to summary once
-        summary_path = os.path.join(save_dir, 'summary.txt')
-        with open(summary_path, 'w') as f:
-            f.write(f'Dataset: {os.path.basename(pkl_path)}\n')
+        summary_path = os.path.join(save_dir, "summary.txt")
+        with open(summary_path, "w") as f:
+            f.write(f"Dataset: {os.path.basename(pkl_path)}\n")
             f.write(f'Total recording duration (tend): {rec_info["tend"]}\n')
             f.write(f'Last TRIAL end: {rec_info["last_trial_end"]}\n')
-            if rec_info['last_trial_end'] is not None or rec_info['tend'] is not None:
-                f.write('All analysis (CC, AC, silence-period, raster) use only spikes with t < last TRIAL end (cutoff).\n')
-                f.write('Spike raster plot shows data up to cutoff with a dashed vertical line at last TRIAL end.\n')
-            f.write('-' * 50 + '\n')
+            if rec_info["last_trial_end"] is not None or rec_info["tend"] is not None:
+                f.write(
+                    "All analysis (CC, AC, silence-period, raster) use only spikes with t < last TRIAL end (cutoff).\n"
+                )
+                f.write(
+                    "Spike raster plot shows data up to cutoff with a dashed vertical line at last TRIAL end.\n"
+                )
+            f.write("-" * 50 + "\n")
 
         for item in CONFIGS:
             bin_size = item[0]
@@ -587,16 +615,16 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             # Save rankings to CSV
             csv_path = os.path.join(save_dir, f"pair_rankings_{resolution.lower()}.csv")
             df_ranks.to_csv(csv_path, index=False)
-            
+
             # Append per-resolution summary
-            with open(summary_path, 'a') as f:
-                f.write(f'Bin size: {bin_size}ms\n')
-                f.write(f'Max lag: {max_lag}ms\n')
-                f.write(f'Resolution: {resolution}\n')
-                f.write(f'Number of neurons before filtering: {n_before}\n')
-                f.write(f'Number of neurons after filtering: {n_after}\n')
-                f.write(f'Number of pairs: {len(pairs)}\n')
-                f.write('Top pairs by total bump score:\n')
+            with open(summary_path, "a") as f:
+                f.write(f"Bin size: {bin_size}ms\n")
+                f.write(f"Max lag: {max_lag}ms\n")
+                f.write(f"Resolution: {resolution}\n")
+                f.write(f"Number of neurons before filtering: {n_before}\n")
+                f.write(f"Number of neurons after filtering: {n_after}\n")
+                f.write(f"Number of pairs: {len(pairs)}\n")
+                f.write("Top pairs by total bump score:\n")
                 for pair, bump_score in top_bump_pairs:
                     f.write(f"Pair {pair}: total_bump_score={bump_score:.2f}\n")
                 f.write("Bottom pairs by total bump score:\n")
@@ -668,14 +696,20 @@ def main():
         if os.path.exists(default):
             config_paths = [default]
         else:
-            parser.error("No config provided and default config_dnms.json not found. Use --config.")
+            parser.error(
+                "No config provided and default config_dnms.json not found. Use --config."
+            )
         print(f"Using default config file: {config_paths[0]}")
     else:
         # Resolve relative paths
         resolved = []
         for p in config_paths:
             if not os.path.isabs(p):
-                p = os.path.join(os.getcwd(), p) if not p.startswith("analysis_pipeline") else os.path.join(base_dir, p)
+                p = (
+                    os.path.join(os.getcwd(), p)
+                    if not p.startswith("analysis_pipeline")
+                    else os.path.join(base_dir, p)
+                )
             if not os.path.exists(p):
                 p_alt = os.path.join(base_dir, p)
                 p = p_alt if os.path.exists(p_alt) else p
