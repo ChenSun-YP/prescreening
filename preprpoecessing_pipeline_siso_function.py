@@ -35,7 +35,6 @@ from utils.plot_all_plots_for_siso_cc import (
     plot_spike_raster,
     plot_neuron_correlation_matrices,
     compute_correlogram_normalized,
-    compute_correlogram_normalized,
 )
 
 """
@@ -109,14 +108,8 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
             raise ValueError(
                 "Expected 'neurons' to be a list of dicts with 'name' and 'timestamps'"
             )
-            raise ValueError(
-                "Expected 'neurons' to be a list of dicts with 'name' and 'timestamps'"
-            )
         neurons = {}
         for item in neurons_list:
-            if isinstance(item, dict) and "name" in item and "timestamps" in item:
-                name = item["name"]
-                ts = np.asarray(item["timestamps"], dtype=float)
             if isinstance(item, dict) and "name" in item and "timestamps" in item:
                 name = item["name"]
                 ts = np.asarray(item["timestamps"], dtype=float)
@@ -515,7 +508,6 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 [(pair, np.max(crosscorrs[pair][5])) for pair in filtered_pairs],
                 key=lambda x: x[1],
                 reverse=True,
-                reverse=True,
             )[:N_TOP]
             bottom_bump = sorted(
                 [(pair, np.min(crosscorrs[pair][5])) for pair in filtered_pairs],
@@ -674,9 +666,6 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             top_bump_pairs = sorted(bump_score_pairs, key=lambda x: x[1], reverse=True)[
                 :N_TOP
             ]
-            top_bump_pairs = sorted(bump_score_pairs, key=lambda x: x[1], reverse=True)[
-                :N_TOP
-            ]
             bottom_bump_pairs = sorted(bump_score_pairs, key=lambda x: x[1])[:N_TOP]
 
             # Create DataFrame for all pairs with their bump scores
@@ -690,18 +679,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             df_ranks = df_ranks.sort_values("BumpScore", ascending=False)
             df_ranks["Rank"] = range(1, len(df_ranks) + 1)
 
-            df_ranks = pd.DataFrame(
-                {
-                    "Neuron1": [pair[0] for pair, _ in bump_score_pairs],
-                    "Neuron2": [pair[1] for pair, _ in bump_score_pairs],
-                    "BumpScore": [score for _, score in bump_score_pairs],
-                }
-            )
-            df_ranks = df_ranks.sort_values("BumpScore", ascending=False)
-            df_ranks["Rank"] = range(1, len(df_ranks) + 1)
-
             # Save rankings to CSV
-            csv_path = os.path.join(save_dir, f"pair_rankings_{resolution.lower()}.csv")
             csv_path = os.path.join(save_dir, f"pair_rankings_{resolution.lower()}.csv")
             df_ranks.to_csv(csv_path, index=False)
 
@@ -716,20 +694,12 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 f.write(f"Number of neurons after filtering: {n_after}\n")
                 f.write(f"Number of pairs: {len(pairs)}\n")
                 f.write("Top pairs by total bump score:\n")
-            with open(summary_path, "a") as f:
-                f.write(f"Bin size: {bin_size}ms\n")
-                f.write(f"Max lag: {max_lag}ms\n")
-                f.write(f"Resolution: {resolution}\n")
-                f.write(f"Number of neurons before filtering: {n_before}\n")
-                f.write(f"Number of neurons after filtering: {n_after}\n")
-                f.write(f"Number of pairs: {len(pairs)}\n")
-                f.write("Top pairs by total bump score:\n")
                 for pair, bump_score in top_bump_pairs:
                     f.write(f"Pair {pair}: total_bump_score={bump_score:.2f}\n")
-                    f.write("Bottom pairs by total bump score:\n")
+                    f.write("top pairs by total bump score:\n")
                 for pair, bump_score in bottom_bump_pairs:
                     f.write(f"Pair {pair}: total_bump_score={bump_score:.2f}\n")
-                    f.write(f"Pair {pair}: total_bump_score={bump_score:.2f}\n")
+                    f.write("bottom pairs by total bump score:\n")
                 if PLOT_ALL:
                     f.write(
                         f"Additional plots (silent periods, raster, autocorrelations, etc.) saved in: {save_dir}\n"
@@ -797,9 +767,6 @@ def main():
         if os.path.exists(default):
             config_paths = [default]
         else:
-            parser.error(
-                "No config provided and default config_dnms.json not found. Use --config."
-            )
             parser.error(
                 "No config provided and default config_dnms.json not found. Use --config."
             )
