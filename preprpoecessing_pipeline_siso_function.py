@@ -199,9 +199,9 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
     # Extract parameters
     FILE_DIR = config["paths"]["file_dir"].rstrip("/")
-    # _output_subdir = os.path.basename(FILE_DIR)
-    _output_subdir = os.path.join(*os.path.normpath(FILE_DIR).split(os.sep)[-2:])
-    ANALYSIS_DIR = os.path.join(config["paths"]["analysis_dir"], _output_subdir)
+    _output_subdir = os.path.basename(FILE_DIR)
+    # _output_subdir = os.path.join(*os.path.normpath(FILE_DIR).split(os.sep)[-2:])
+    ANALYSIS_DIR = os.path.join(FILE_DIR, config["paths"]["analysis_dir"])
     print("analysis dir", ANALYSIS_DIR)
     PKL_FILE_PATTERN = config["paths"][
         "pkl_file"
