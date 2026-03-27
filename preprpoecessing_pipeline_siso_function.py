@@ -35,6 +35,7 @@ from utils.plot_all_plots_for_siso_cc import (
     plot_spike_raster,
     plot_neuron_correlation_matrices,
     compute_correlogram_normalized,
+    compute_correlogram_normalized,
 )
 
 """
@@ -47,8 +48,10 @@ def load_config(config_input):
     """
     Load configuration from either a file path or a dictionary.
 
+
     Args:
         config_input: Either a path to JSON config file or a config dictionary
+
 
     Returns:
         dict: Configuration dictionary
@@ -106,8 +109,14 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
             raise ValueError(
                 "Expected 'neurons' to be a list of dicts with 'name' and 'timestamps'"
             )
+            raise ValueError(
+                "Expected 'neurons' to be a list of dicts with 'name' and 'timestamps'"
+            )
         neurons = {}
         for item in neurons_list:
+            if isinstance(item, dict) and "name" in item and "timestamps" in item:
+                name = item["name"]
+                ts = np.asarray(item["timestamps"], dtype=float)
             if isinstance(item, dict) and "name" in item and "timestamps" in item:
                 name = item["name"]
                 ts = np.asarray(item["timestamps"], dtype=float)
@@ -183,13 +192,52 @@ def filter_neurons(neurons, min_spikes):
 
 # runs the full pipeline:
 # 1. load config; 2. load .pkl; 3. filter neurons; 4. compute cross-correlations; 5. rank pairs; 6. save results
+
+# Function to compute cross-correlations for all neuron pairs
+# def compute_all_crosscorrs(neurons, bin_size, max_lag, sample_rate):
+#     """Compute normalized cross-correlograms and z-scores for all neuron pairs."""
+#     neuron_spike_trains, global_max_time, firing_rate = {}, 0, {}
+#     for neuron_id, spike_times in neurons.items():
+#         # Convert spike times to milliseconds
+#         spike_times = np.array(spike_times) / sample_rate * 1000
+#         spike_indices = np.round(spike_times).astype(int)
+#         global_max_time = max(global_max_time, int(np.max(spike_indices)) if len(spike_indices) > 0 else 0)
+#         num_bins = int(np.ceil(global_max_time / bin_size)) + 1
+#         neuron_spike_trains[neuron_id] = np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[0] > 0
+#         firing_rate[neuron_id] = np.sum(neuron_spike_trains[neuron_id]) / (global_max_time / 1000) if global_max_time > 0 else 0
+
+#     crosscorrs = {}
+#     neuron_ids = list(neurons.keys())
+#     for i, pre in enumerate(neuron_ids):
+#         for post in neuron_ids[i+1:]:
+#             lags, corr_normalized, mean_normalized, std_normalized, z_scores, total_bump_score = compute_correlogram_normalized(
+#                 neuron_spike_trains[pre].astype(float),
+#                 neuron_spike_trains[post].astype(float),
+#                 max_lag,
+#                 bin_size,
+#                 'cross',
+#                 firing_rate[pre],
+#                 firing_rate[post],
+#                 global_max_time
+#             )
+#             crosscorrs[(pre, post)] = {
+#                 'lags': lags,
+#                 'corr_normalized': corr_normalized,
+#                 'z_scores': z_scores,
+#                 'total_bump_score': total_bump_score
+#             }
+#     return crosscorrs, firing_rate
+
+
 def run_preprocessing_pipeline(config_input, verbose=True):
     """
     Run the preprocessing pipeline with given configuration.
 
+
     Args:
         config_input: Either path to JSON config file or config dictionary
         verbose: Whether to print progress messages
+
 
     Returns:
         dict: Results summary with processed data paths and statistics
@@ -199,6 +247,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
     # Extract parameters
     FILE_DIR = config["paths"]["file_dir"].rstrip("/")
+    # Use basename of file_dir so each job (e.g. .../1150_5_sec) writes to analysis_dir/1150_5_sec
     _output_subdir = os.path.basename(FILE_DIR)
     # _output_subdir = os.path.join(*os.path.normpath(FILE_DIR).split(os.sep)[-2:])
     ANALYSIS_DIR = os.path.join(FILE_DIR, config["paths"]["analysis_dir"])
@@ -348,7 +397,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                     SAMPLE_RATE,
                     edge_mean=edge_mean,
                     configs=config_single,
-                    make_plots=False,
+                    make_plots=True,
                 )
 
             crosscorrs = pickle.load(
@@ -465,6 +514,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             top_bump = sorted(
                 [(pair, np.max(crosscorrs[pair][5])) for pair in filtered_pairs],
                 key=lambda x: x[1],
+                reverse=True,
                 reverse=True,
             )[:N_TOP]
             bottom_bump = sorted(
@@ -624,6 +674,9 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             top_bump_pairs = sorted(bump_score_pairs, key=lambda x: x[1], reverse=True)[
                 :N_TOP
             ]
+            top_bump_pairs = sorted(bump_score_pairs, key=lambda x: x[1], reverse=True)[
+                :N_TOP
+            ]
             bottom_bump_pairs = sorted(bump_score_pairs, key=lambda x: x[1])[:N_TOP]
 
             # Create DataFrame for all pairs with their bump scores
@@ -637,7 +690,18 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             df_ranks = df_ranks.sort_values("BumpScore", ascending=False)
             df_ranks["Rank"] = range(1, len(df_ranks) + 1)
 
+            df_ranks = pd.DataFrame(
+                {
+                    "Neuron1": [pair[0] for pair, _ in bump_score_pairs],
+                    "Neuron2": [pair[1] for pair, _ in bump_score_pairs],
+                    "BumpScore": [score for _, score in bump_score_pairs],
+                }
+            )
+            df_ranks = df_ranks.sort_values("BumpScore", ascending=False)
+            df_ranks["Rank"] = range(1, len(df_ranks) + 1)
+
             # Save rankings to CSV
+            csv_path = os.path.join(save_dir, f"pair_rankings_{resolution.lower()}.csv")
             csv_path = os.path.join(save_dir, f"pair_rankings_{resolution.lower()}.csv")
             df_ranks.to_csv(csv_path, index=False)
 
@@ -652,10 +716,19 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 f.write(f"Number of neurons after filtering: {n_after}\n")
                 f.write(f"Number of pairs: {len(pairs)}\n")
                 f.write("Top pairs by total bump score:\n")
+            with open(summary_path, "a") as f:
+                f.write(f"Bin size: {bin_size}ms\n")
+                f.write(f"Max lag: {max_lag}ms\n")
+                f.write(f"Resolution: {resolution}\n")
+                f.write(f"Number of neurons before filtering: {n_before}\n")
+                f.write(f"Number of neurons after filtering: {n_after}\n")
+                f.write(f"Number of pairs: {len(pairs)}\n")
+                f.write("Top pairs by total bump score:\n")
                 for pair, bump_score in top_bump_pairs:
                     f.write(f"Pair {pair}: total_bump_score={bump_score:.2f}\n")
-                f.write("Bottom pairs by total bump score:\n")
+                    f.write("Bottom pairs by total bump score:\n")
                 for pair, bump_score in bottom_bump_pairs:
+                    f.write(f"Pair {pair}: total_bump_score={bump_score:.2f}\n")
                     f.write(f"Pair {pair}: total_bump_score={bump_score:.2f}\n")
                 if PLOT_ALL:
                     f.write(
@@ -724,6 +797,9 @@ def main():
         if os.path.exists(default):
             config_paths = [default]
         else:
+            parser.error(
+                "No config provided and default config_dnms.json not found. Use --config."
+            )
             parser.error(
                 "No config provided and default config_dnms.json not found. Use --config."
             )

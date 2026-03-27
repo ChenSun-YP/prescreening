@@ -949,6 +949,13 @@ def plot_neuron_correlation_matrices(neurons, save_dir, sample_rate=1, edge_mean
             print(f'Saved {resolution} resolution matrix at {filedir}')
             plt.show()
             plt.close()
+            
+            # make the pkl files for the crosscorrs and autocorrs
+            with open(os.path.join(save_dir, f'crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl'), 'wb') as f:
+                pickle.dump(crosscorrs, f)
+            with open(os.path.join(save_dir, f'autocorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl'), 'wb') as f:
+                pickle.dump(autocorrs, f)
+            print(f'Saved {resolution} resolution crosscorrs and autocorrs at {save_dir}')
 
 
     return configs
