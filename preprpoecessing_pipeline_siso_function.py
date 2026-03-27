@@ -173,7 +173,12 @@ def filter_neurons(neurons, min_spikes):
     Note: Pipeline frame says 'less than MIN_SPIKES', but this is likely a typo;
     assuming 'at least MIN_SPIKES' as is standard.
     """
-    return {k: v for k, v in neurons.items() if len(v) >= min_spikes}
+    filtered = {k: v for k, v in neurons.items() if len(v) >= min_spikes}
+
+    if not filtered:
+        print(f"Warning: No neurons passed the filter (min_spikes={min_spikes})")
+
+    return filtered
 
 
 # runs the full pipeline:
