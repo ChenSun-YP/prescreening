@@ -124,24 +124,24 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
             )
             if trials is not None:
                 rec_info["last_trial_end"] = trials["timestamps"][-1]
-    # elif isinstance(data, dict) and all(isinstance(v, tuple) for v in data.values()):
-    #     print("elif moment")
-    #     neurons = {}
-    #     for k, v in data.items():
-    #         # extract largest 1D numeric array inside tuple
-    #         candidates = [
-    #             np.asarray(elt)
-    #             for elt in v
-    #             if isinstance(elt, (list, np.ndarray)) and np.asarray(elt).ndim == 1
-    #         ]
-    #         if candidates:
-    #             chosen = max(candidates, key=lambda x: x.size)
-    #             neurons[k] = chosen.astype(float)
-    #             print(
-    #                 f"Extracted neuron {k} with {chosen.size} spikes from tuple of length {len(v)}"
-    #             )
-    #         else:
-    #             raise ValueError(f"No 1D numeric array found in tuple for key {k}")
+    elif isinstance(data, dict) and all(isinstance(v, tuple) for v in data.values()):
+        print("elif moment")
+        neurons = {}
+        for k, v in data.items():
+            # extract largest 1D numeric array inside tuple
+            candidates = [
+                np.asarray(elt)
+                for elt in v
+                if isinstance(elt, (list, np.ndarray)) and np.asarray(elt).ndim == 1
+            ]
+            if candidates:
+                chosen = max(candidates, key=lambda x: x.size)
+                neurons[k] = chosen.astype(float)
+                print(
+                    f"Extracted neuron {k} with {chosen.size} spikes from tuple of length {len(v)}"
+                )
+            else:
+                raise ValueError(f"No 1D numeric array found in tuple for key {k}")
 
     else:
         print("else moment")
