@@ -244,6 +244,7 @@ def check_histogram_unimodal(
     preNeuron=0,
     postNeuron=0,
     alpha=0.05,
+    # corr_ms=[],
 ):
     """
     Hartigan's Dip Test for Unimodality
