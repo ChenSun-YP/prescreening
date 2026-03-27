@@ -7,7 +7,7 @@
     },
     "processing": {
       "sample_rate": 1,
-      "min_spikes": 100,
+      "min_spikes": 0,
       "bin_size": 20,
       "max_lag": 250,
       "n_top": 200,
