@@ -282,7 +282,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         n_after = len(filtered_neurons)
 
         # **Stage 3: (Optional) Generate various figures**
-        if PLOT_ALL:
+        if PLOT_ALL and filtered_neurons:
             plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
             # Raster: same cut data as all other analysis; dashed line at last trial end
             plot_spike_raster(
