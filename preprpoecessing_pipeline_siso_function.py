@@ -322,6 +322,11 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         # **Stage 2: Filter neurons for spike count**
         filtered_neurons = filter_neurons(neurons, MIN_SPIKES)
         n_after = len(filtered_neurons)
+        if not filtered_neurons:
+            print(
+                f"Warning: No neurons with at least {MIN_SPIKES} spikes after filtering for {os.path.basename(pkl_path)}. Skipping this file."
+            )
+            continue
 
         # **Stage 3: (Optional) Generate various figures**
         if PLOT_ALL and filtered_neurons:
