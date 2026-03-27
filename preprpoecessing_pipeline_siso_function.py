@@ -5,9 +5,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 import sys
-import os
+import arbparse
 import glob
 import pandas as pd
+
+# Basic: line-buffered stdout/stderr so SLURM log shows output while running
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+    sys.stderr.reconfigure(line_buffering=True)
+except AttributeError:
+    pass
+
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.filters import (
@@ -116,24 +124,24 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
             )
             if trials is not None:
                 rec_info["last_trial_end"] = trials["timestamps"][-1]
-    elif isinstance(data, dict) and all(isinstance(v, tuple) for v in data.values()):
-        print("elif moment")
-        neurons = {}
-        for k, v in data.items():
-            # extract largest 1D numeric array inside tuple
-            candidates = [
-                np.asarray(elt)
-                for elt in v
-                if isinstance(elt, (list, np.ndarray)) and np.asarray(elt).ndim == 1
-            ]
-            if candidates:
-                chosen = max(candidates, key=lambda x: x.size)
-                neurons[k] = chosen.astype(float)
-                print(
-                    f"Extracted neuron {k} with {chosen.size} spikes from tuple of length {len(v)}"
-                )
-            else:
-                raise ValueError(f"No 1D numeric array found in tuple for key {k}")
+    # elif isinstance(data, dict) and all(isinstance(v, tuple) for v in data.values()):
+    #     print("elif moment")
+    #     neurons = {}
+    #     for k, v in data.items():
+    #         # extract largest 1D numeric array inside tuple
+    #         candidates = [
+    #             np.asarray(elt)
+    #             for elt in v
+    #             if isinstance(elt, (list, np.ndarray)) and np.asarray(elt).ndim == 1
+    #         ]
+    #         if candidates:
+    #             chosen = max(candidates, key=lambda x: x.size)
+    #             neurons[k] = chosen.astype(float)
+    #             print(
+    #                 f"Extracted neuron {k} with {chosen.size} spikes from tuple of length {len(v)}"
+    #             )
+    #         else:
+    #             raise ValueError(f"No 1D numeric array found in tuple for key {k}")
 
     else:
         print("else moment")
@@ -146,7 +154,7 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
         print("No neuron data found — skipping this file.")
         neurons = {}
     elif neurons:
-        first_key = next(iter(neurons))
+        first_key = next(iter(neurons.keys()))
 
         arr = np.asarray(neurons[first_key])
         if arr.size > 100 and np.sum(arr == 0) > 100:
@@ -228,37 +236,64 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         if verbose:
             print(f"Processing {os.path.basename(pkl_path)}...")
 
-        save_dir = os.path.join(
-            ANALYSIS_DIR, os.path.splitext(os.path.basename(pkl_path))[0]
-        )
+        # Path: analysis_dir/file_dir/[session_stem/]pkl_file_stem (session = pkl's parent rel to file_dir)
+        pkl_dir = os.path.dirname(pkl_path)
+        pkl_stem = os.path.splitext(os.path.basename(pkl_path))[0]
+        try:
+            session_part = os.path.relpath(pkl_dir, FILE_DIR)
+        except ValueError:
+            session_part = ""
+        if session_part in (".", ""):
+            save_dir = os.path.join(ANALYSIS_DIR, pkl_stem)
+        else:
+            save_dir = os.path.join(ANALYSIS_DIR, session_part, pkl_stem)
+
         print("save_dir", save_dir)
         os.makedirs(save_dir, exist_ok=True)
 
         # **Stage 1: Load the spiketrain data from the .pkl file**
-        neurons, rec_info = load_neurons(pkl_path)
-        if neurons is None or len(neurons) == 0:
-            if verbose:
-                print(f"Skipping {pkl_path} due to no Neurons")
-            continue
-        n_before = len(neurons)
+        neurons_full, rec_info = load_neurons(pkl_path)
+        n_before = len(neurons_full)
+
+        # Cutoff for CC, AC, and silence: use last TRIAL end, else recording tend
+        cutoff = rec_info.get("last_trial_end") or rec_info.get("tend")
+        if cutoff is not None:
+            neurons = {k: v[v < cutoff] for k, v in neurons_full.items()}
+        else:
+            neurons = neurons_full
+
+        if verbose:
+            print(f"  Total recording duration (tend): {rec_info['tend']}")
+            print(
+                f"  Last TRIAL end (cutoff for CC/AC/silence): {rec_info['last_trial_end']}"
+            )
+            if cutoff is not None:
+                print(
+                    f"  Using spikes with t < {cutoff} for cross-correlation, autocorrelation, and silence-period analysis."
+                )
 
         # **Stage 2: Filter neurons for spike count**
         filtered_neurons = filter_neurons(neurons, MIN_SPIKES)
         n_after = len(filtered_neurons)
 
         # **Stage 3: (Optional) Generate various figures**
-        # if PLOT_ALL:
-        # plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
-        # plot_spike_raster(
-        #     filtered_neurons, save_dir, SAMPLE_RATE, bin_size=RASTER_BIN_SIZE
-        # )
-        # plot_neuron_correlation_matrices(
-        #     filtered_neurons,
-        #     save_dir,
-        #     SAMPLE_RATE,
-        #     edge_mean=edge_mean,
-        #     configs=CONFIGS,
-        # )
+        if PLOT_ALL:
+            plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
+            # Raster: same cut data as all other analysis; dashed line at last trial end
+            plot_spike_raster(
+                filtered_neurons,
+                save_dir,
+                SAMPLE_RATE,
+                bin_size=RASTER_BIN_SIZE,
+                cutoff_time=rec_info.get("last_trial_end"),
+            )
+            plot_neuron_correlation_matrices(
+                filtered_neurons,
+                save_dir,
+                SAMPLE_RATE,
+                edge_mean=edge_mean,
+                configs=CONFIGS,
+            )
 
         file_results = {
             "file": pkl_path,
@@ -266,6 +301,21 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             "n_neurons_after": n_after,
             "configurations": [],
         }
+
+        # Write recording/trial info to summary once
+        summary_path = os.path.join(save_dir, "summary.txt")
+        with open(summary_path, "w") as f:
+            f.write(f"Dataset: {os.path.basename(pkl_path)}\n")
+            f.write(f'Total recording duration (tend): {rec_info["tend"]}\n')
+            f.write(f'Last TRIAL end: {rec_info["last_trial_end"]}\n')
+            if rec_info["last_trial_end"] is not None or rec_info["tend"] is not None:
+                f.write(
+                    "All analysis (CC, AC, silence-period, raster) use only spikes with t < last TRIAL end (cutoff).\n"
+                )
+                f.write(
+                    "Spike raster plot shows data up to cutoff with a dashed vertical line at last TRIAL end.\n"
+                )
+            f.write("-" * 50 + "\n")
 
         for item in CONFIGS:
             bin_size = item[0]
@@ -588,8 +638,8 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
             # Write summary text file
             mode = "a" if os.path.exists(summary_path) else "w"
-            with open(summary_path, mode) as f:
-                f.write(f"Dataset: {os.path.basename(pkl_path)}\n")
+            # Append per-resolution summary
+            with open(summary_path, "a") as f:
                 f.write(f"Bin size: {bin_size}ms\n")
                 f.write(f"Max lag: {max_lag}ms\n")
                 f.write(f"Resolution: {resolution}\n")
@@ -650,15 +700,53 @@ def main():
     config_path = None
     base_dir = os.path.dirname(os.path.abspath(__file__))
     print(base_dir)
-    for config_file in default_configs:
-        full_path = os.path.join(base_dir, config_file)
-        if os.path.exists(full_path):
-            config_path = full_path
-            break
+    parser = argparse.ArgumentParser(
+        description="Run preprocessing pipeline with one or more config files."
+    )
+    parser.add_argument(
+        "--config",
+        nargs="+",
+        default=None,
+        help="One or more config JSON paths.",
+    )
+    args = parser.parse_args()
 
-    print(f"Using config file: {config_path}")
+    config_paths = list(args.config) if args.config else []
+
+    if not config_paths:
+        # Backward compatibility: default config
+        default = os.path.join(base_dir, "analysis_pipeline", "config_dnms.json")
+        if os.path.exists(default):
+            config_paths = [default]
+        else:
+            parser.error(
+                "No config provided and default config_dnms.json not found. Use --config."
+            )
+        print(f"Using default config file: {config_paths[0]}")
+    else:
+        # Resolve relative paths
+        resolved = []
+        for p in config_paths:
+            if not os.path.isabs(p):
+                p = (
+                    os.path.join(os.getcwd(), p)
+                    if not p.startswith("analysis_pipeline")
+                    else os.path.join(base_dir, p)
+                )
+            if not os.path.exists(p):
+                p_alt = os.path.join(base_dir, p)
+                p = p_alt if os.path.exists(p_alt) else p
+            resolved.append(p)
+        config_paths = resolved
+
+    for i, config_path in enumerate(config_paths):
+        if len(config_paths) > 1:
+            print(f"[{i+1}/{len(config_paths)}] Using config: {config_path}")
+        else:
+            print(f"Using config file: {config_path}")
     results = run_preprocessing_pipeline(config_path)
-    print(f"Processing complete. Processed {len(results['processed_files'])} files.")
+    print(f"Config done. Processed {len(results['processed_files'])} files.")
+    print("All configs complete.")
 
 
 if __name__ == "__main__":
