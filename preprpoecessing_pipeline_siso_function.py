@@ -337,7 +337,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 save_dir,
                 SAMPLE_RATE,
                 bin_size=RASTER_BIN_SIZE,
-                cutoff_time=rec_info.get("last_trial_end"),
+                # cutoff_time=rec_info.get("last_trial_end"),
             )
             plot_neuron_correlation_matrices(
                 filtered_neurons,
