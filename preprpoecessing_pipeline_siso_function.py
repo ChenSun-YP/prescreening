@@ -417,7 +417,8 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             pkl_path = pkl_path.replace("\\", "/")
 
             # Extract dataset name
-            dataset = os.path.splitext(os.path.basename(pkl_path))[0]
+            # dataset = os.path.splitext(os.path.basename(pkl_path))[0]
+            dataset = os.path.basename(os.path.dirname(pkl_path))
 
             # Build new path
             abbr_pkl_path = os.path.join(
