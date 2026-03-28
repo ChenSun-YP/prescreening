@@ -244,7 +244,8 @@ def check_histogram_unimodal(
     preNeuron=0,
     postNeuron=0,
     alpha=0.05,
-    # corr_ms=[],
+    bins=[],
+    corr_ms=[],
 ):
     """
     Hartigan's Dip Test for Unimodality
@@ -255,17 +256,18 @@ def check_histogram_unimodal(
 
     # print(f"Checking unimodality for pair: {preNeuron}, {postNeuron}")
 
-    filename = f"corr_trimmed_folder/corr_trimmed_{preNeuron}_{postNeuron}.txt"
-    if not os.path.exists(filename):
-        raise FileNotFoundError(f"Correlogram file not found: {filename}")
+    if len(corr_ms) == 0:
+        filename = f"corr_trimmed_folder/corr_trimmed_{preNeuron}_{postNeuron}.txt"
+        if not os.path.exists(filename):
+            raise FileNotFoundError(f"Correlogram file not found: {filename}")
 
-    # Load per-ms coincidence counts
-    corr_ms = np.loadtxt(filename)
+        # Load per-ms coincidence counts
+        corr_ms = np.loadtxt(filename)
 
     # Construct lag axis
-    n = len(corr_ms)
+    n = bins if len(bins) > 0 else len(corr_ms)
 
-    if n == 0:
+    if len(n) == 0:
         print(
             f"{preNeuron}, {postNeuron} — Empty correlogram, skipping unimodality test"
         )
@@ -273,12 +275,27 @@ def check_histogram_unimodal(
 
     # Infer lag axis from length
     # Example: n=17 → lags = [-8, ..., 0, ..., +8]
-    half = n // 2
-    lags_ms = np.arange(-half, half + 1)
+    # half = n // 2
+    # lags_ms = np.arange(-half, half + 1)
+    lags_ms = n
 
-    if len(lags_ms) != n:
+    print(
+        f"{preNeuron}, {postNeuron} — Correlogram length: {len(n)}, Lag axis: {lags_ms}"
+    )
+
+    if len(corr_ms) + 1 == len(lags_ms):
+        arr = n
+
+        # step size (assumes uniform spacing)
+        step = arr[1] - arr[0]
+
+        # create new array shifted by half-step, excluding endpoints
+        lags_ms = np.arange(arr[0] + step / 2, arr[-1], step)
+
+        print(lags_ms)
+    else:
         print(
-            f"{preNeuron}, {postNeuron} — Correlogram length {n} does not match expected lag axis length {len(lags_ms)}, skipping unimodality test"
+            f"{preNeuron}, {postNeuron} — Correlogram length {len(corr_ms)} does not match expected lag axis length {len()}, skipping unimodality test"
         )
         raise ValueError("Correlogram length must be odd and centered at zero lag")
 
@@ -339,6 +356,7 @@ def check_correlations_unimodal(
             continue
         # print(f"Filtering pair: {pre}, {post}")
 
+        bins = value[0]
         counts = value[1]
 
         if counts is None or len(counts) == 0:
@@ -348,6 +366,8 @@ def check_correlations_unimodal(
             preNeuron=pre,
             postNeuron=post,
             alpha=prominence_fraction,
+            bins=bins,
+            corr_ms=counts,
         )
 
         if unimodality is False:

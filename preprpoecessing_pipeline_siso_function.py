@@ -269,7 +269,15 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
     # Set up directories
     os.makedirs(ANALYSIS_DIR, exist_ok=True)
-    pkl_files = glob.glob(os.path.join(FILE_DIR, PKL_FILE_PATTERN), recursive=True)
+
+    pkl_files = glob.glob(
+        os.path.join(FILE_DIR, "**", PKL_FILE_PATTERN), recursive=True
+    )
+
+    # # filter out paths containing "analysis" as a folder
+    # pkl_files = [
+    #     f for f in pkl_files if "analysis" not in os.path.normpath(f).split(os.sep)
+    # ]
 
     if verbose:
         print("pkl_files include:\n  ", pkl_files)
@@ -288,12 +296,21 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         pkl_stem = os.path.splitext(os.path.basename(pkl_path))[0]
         try:
             session_part = os.path.relpath(pkl_dir, FILE_DIR)
+            print("session_part", session_part)
         except ValueError:
             session_part = ""
         if session_part in (".", ""):
             save_dir = os.path.join(ANALYSIS_DIR, pkl_stem)
+            print("save_dir if")
         else:
-            save_dir = os.path.join(ANALYSIS_DIR, session_part, pkl_stem)
+            # just for eichenbaum,  because we dont have raw data & everything is already in analysis dir, so we want to save directly in analysis_dir/pkl_stem instead of analysis_dir/session_part/pkl_stem
+            save_dir = os.path.join(ANALYSIS_DIR, os.path.basename(session_part))
+
+            # save_dir = os.path.join(
+            #     ANALYSIS_DIR, session_part, pkl_stem
+            # )
+
+            print("save_dir else")
 
         print("save_dir", save_dir)
         os.makedirs(save_dir, exist_ok=True)
@@ -308,6 +325,8 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             neurons = {k: v[v < cutoff] for k, v in neurons_full.items()}
         else:
             neurons = neurons_full
+
+        print("neurons keys after cutoff", list(neurons.keys())[:5])
 
         if verbose:
             print(f"  Total recording duration (tend): {rec_info['tend']}")
@@ -355,48 +374,48 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         }
 
         # Write recording/trial info to summary once
-        summary_path = os.path.join(save_dir, "summary.txt")
-        with open(summary_path, "w") as f:
-            f.write(f"Dataset: {os.path.basename(pkl_path)}\n")
-            f.write(f'Total recording duration (tend): {rec_info["tend"]}\n')
-            f.write(f'Last TRIAL end: {rec_info["last_trial_end"]}\n')
-            if rec_info["last_trial_end"] is not None or rec_info["tend"] is not None:
-                f.write(
-                    "All analysis (CC, AC, silence-period, raster) use only spikes with t < last TRIAL end (cutoff).\n"
-                )
-                f.write(
-                    "Spike raster plot shows data up to cutoff with a dashed vertical line at last TRIAL end.\n"
-                )
-            f.write("-" * 50 + "\n")
+        # summary_path = os.path.join(save_dir, "summary.txt")
+        # with open(summary_path, "w") as f:
+        #     f.write(f"Dataset: {os.path.basename(pkl_path)}\n")
+        #     f.write(f'Total recording duration (tend): {rec_info["tend"]}\n')
+        #     f.write(f'Last TRIAL end: {rec_info["last_trial_end"]}\n')
+        #     if rec_info["last_trial_end"] is not None or rec_info["tend"] is not None:
+        #         f.write(
+        #             "All analysis (CC, AC, silence-period, raster) use only spikes with t < last TRIAL end (cutoff).\n"
+        #         )
+        #         f.write(
+        #             "Spike raster plot shows data up to cutoff with a dashed vertical line at last TRIAL end.\n"
+        #         )
+        #     f.write("-" * 50 + "\n")
 
         for item in CONFIGS:
             bin_size = item[0]
             max_lag = item[1]
             resolution = item[2]
 
-            if verbose:
-                print(f"crosscorrs for {resolution}")
+            # if verbose:
+            #     print(f"crosscorrs for {resolution}")
 
-            if (
-                not os.path.exists(
-                    os.path.join(
-                        save_dir,
-                        f"crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl",
-                    )
-                )
-                or RECOMPUTE
-            ):
-                config_single = [item]
-                if verbose:
-                    print(f"Computing crosscorrs for {config_single}")
-                plot_neuron_correlation_matrices(
-                    filtered_neurons,
-                    save_dir,
-                    SAMPLE_RATE,
-                    edge_mean=edge_mean,
-                    configs=config_single,
-                    make_plots=True,
-                )
+            # if (
+            #     not os.path.exists(
+            #         os.path.join(
+            #             save_dir,
+            #             f"crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl",
+            #         )
+            #     )
+            #     or RECOMPUTE
+            # ):
+            #     config_single = [item]
+            #     if verbose:
+            #         print(f"Computing crosscorrs for {config_single}")
+            #     plot_neuron_correlation_matrices(
+            #         filtered_neurons,
+            #         save_dir,
+            #         SAMPLE_RATE,
+            #         edge_mean=edge_mean,
+            #         configs=config_single,
+            #         make_plots=True,
+            #     )
 
             crosscorrs = pickle.load(
                 open(
@@ -408,13 +427,16 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 )
             )
 
-            # Identify top N positive and negative correlation pairs
-            neuron_ids = list(filtered_neurons.keys())
-            pairs = [
-                (pre, post)
-                for i, pre in enumerate(neuron_ids)
-                for post in neuron_ids[i + 1 :]
-            ]
+            # # Identify top N positive and negative correlation pairs
+            # neuron_ids = list(filtered_neurons.keys())
+            # pairs = [
+            #     (pre, post)
+            #     for i, pre in enumerate(neuron_ids)
+            #     for post in neuron_ids[i + 1 :]
+            # ]
+
+            pairs = list(crosscorrs.keys())
+            print("pairs", pairs)
 
             # **Stage 4: Filter out the obviously bad pairs using "histogram base-filled"; bump score thresholds; unimodality test
             print("pkl_path", pkl_path)
@@ -422,13 +444,12 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             pkl_path = pkl_path.replace("\\", "/")
 
             # Extract dataset name
-            # dataset = os.path.splitext(os.path.basename(pkl_path))[0]
-            dataset = os.path.basename(os.path.dirname(pkl_path))
+            dataset = os.path.splitext(os.path.basename(pkl_path))[0]
+            # dataset = os.path.basename(os.path.dirname(pkl_path))
 
             # Build new path
             abbr_pkl_path = os.path.join(
-                ANALYSIS_DIR,
-                dataset,
+                save_dir,
                 f"crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl",
             )
             out_dir = os.path.join(
@@ -508,15 +529,25 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 bad_pairs_path=bad_mode_stdev_pairs_path,
             )
 
-            print("final filtered_pairs", filtered_pairs)
+            # print("final filtered_pairs", filtered_pairs)
 
+            print("top bump")
+            print("pkl_path:", abbr_pkl_path)
             top_bump = sorted(
-                [(pair, np.max(crosscorrs[pair][5])) for pair in filtered_pairs],
+                [
+                    (pair, np.max(crosscorrs[pair][5]))
+                    for pair in filtered_pairs
+                    if pair in crosscorrs
+                ],
                 key=lambda x: x[1],
                 reverse=True,
             )[:N_TOP]
             bottom_bump = sorted(
-                [(pair, np.min(crosscorrs[pair][5])) for pair in filtered_pairs],
+                [
+                    (pair, np.min(crosscorrs[pair][5]))
+                    for pair in filtered_pairs
+                    if pair in crosscorrs
+                ],
                 key=lambda x: x[1],
             )[:N_TOP]
 
