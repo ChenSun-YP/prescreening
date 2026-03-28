@@ -149,7 +149,8 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
         print("else moment")
         # Simple format: dict of neuron_id -> spike array
         neurons = {k: np.asarray(v, dtype=float) for k, v in data.items()}
-        print("Loaded neurons in simple format with keys:", list(neurons.keys())[:5])
+        # print("Loaded neurons in simple format with keys:", list(neurons.keys())[:5])
+        # print("Loaded neurons in simple format with keys:", list(neurons.keys())[:5])
 
     # Detect binary spike train (many zeros) and convert to spike indices
     if not neurons:
@@ -312,7 +313,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
             print("save_dir else")
 
-        print("save_dir", save_dir)
+        print("save_dir", save_dir[:5])
         os.makedirs(save_dir, exist_ok=True)
 
         # **Stage 1: Load the spiketrain data from the .pkl file**
@@ -453,7 +454,9 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 f"crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl",
             )
             out_dir = os.path.join(
-                "FilterFiles", os.path.splitext(os.path.basename(pkl_path))[0]
+                "FilterFiles",
+                os.path.basename(os.path.dirname(pkl_path)),
+                os.path.splitext(os.path.basename(pkl_path))[0],
             )
             # out_dir = os.path.join("FilterFiles")
             print("out_dir", out_dir)
