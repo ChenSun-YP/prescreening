@@ -326,7 +326,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         else:
             neurons = neurons_full
 
-        print("neurons keys after cutoff", list(neurons.keys())[:5])
+        # print("neurons keys after cutoff", list(neurons.keys())[:5])
 
         if verbose:
             print(f"  Total recording duration (tend): {rec_info['tend']}")
@@ -436,7 +436,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             # ]
 
             pairs = list(crosscorrs.keys())
-            print("pairs", pairs)
+            # print("pairs", pairs)
 
             # **Stage 4: Filter out the obviously bad pairs using "histogram base-filled"; bump score thresholds; unimodality test
             print("pkl_path", pkl_path)
@@ -531,8 +531,6 @@ def run_preprocessing_pipeline(config_input, verbose=True):
 
             # print("final filtered_pairs", filtered_pairs)
 
-            print("top bump")
-            print("pkl_path:", abbr_pkl_path)
             top_bump = sorted(
                 [
                     (pair, np.max(crosscorrs[pair][5]))
@@ -784,7 +782,7 @@ def main():
     # Try to find an existing config file
     config_path = None
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    print(base_dir)
+    print("base_dir:", base_dir)
     parser = argparse.ArgumentParser(
         description="Run preprocessing pipeline with one or more config files."
     )

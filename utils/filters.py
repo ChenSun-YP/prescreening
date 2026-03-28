@@ -279,9 +279,9 @@ def check_histogram_unimodal(
     # lags_ms = np.arange(-half, half + 1)
     lags_ms = n
 
-    print(
-        f"{preNeuron}, {postNeuron} — Correlogram length: {len(n)}, Lag axis: {lags_ms}"
-    )
+    # print(
+    #     f"{preNeuron}, {postNeuron} — Correlogram length: {len(n)}, Lag axis: {lags_ms}"
+    # )
 
     if len(corr_ms) + 1 == len(lags_ms):
         arr = n
@@ -292,7 +292,7 @@ def check_histogram_unimodal(
         # create new array shifted by half-step, excluding endpoints
         lags_ms = np.arange(arr[0] + step / 2, arr[-1], step)
 
-        print(lags_ms)
+        # print(lags_ms)
     else:
         print(
             f"{preNeuron}, {postNeuron} — Correlogram length {len(corr_ms)} does not match expected lag axis length {len()}, skipping unimodality test"
