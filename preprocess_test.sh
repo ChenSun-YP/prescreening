@@ -15,5 +15,7 @@ conda activate plasticityvenv
 
 python -u preprpoecessing_pipeline_siso_function.py
 
+python -u make_tsv.py
+
 
 conda deactivate

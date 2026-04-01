@@ -7,42 +7,45 @@ OUT_TSV = Path("output.tsv")
 rows = []
 
 for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
-    # Find the folder name right after "Eichenbaum"
     parts = txt_path.parts
+
+    # Only keep files inside a "semiFine" directory
+    if "semiFine" not in parts:
+        continue
+
+    # Extract AJF016_CDEF1 (folder right after "Eichenbaum")
     try:
         i = parts.index("Eichenbaum")
-        folder_name = parts[i + 1]  # e.g. AJF016_CDEF1
+        folder_name = parts[i + 1]
     except (ValueError, IndexError):
         continue
 
-    # Column 2: replace "_" with "/"
+    # Column 2
     col2 = folder_name.replace("_", "/")
 
-    # Column 3: ../chensun/identify_stdp/data/Eichenbaum/AJF016/CDEF1/AJF016_CDEF1.pkl
+    # Column 3 + 4
     if "_" not in folder_name:
         continue
     part1, part2 = folder_name.split("_", 1)
-    col3 = f"../chensun/identify_stdp/data/Eichenbaum/{part1}/{part2}/{folder_name}.pkl"
 
-    # Column 4: ../BenR/prescreening/data/Eichenbaum/analysis/AJF016_CDEF1
+    col3 = f"../chensun/identify_stdp/data/Eichenbaum/{part1}/{part2}/{folder_name}.pkl"
     col4 = f"../BenR/prescreening/data/Eichenbaum/analysis/{folder_name}"
 
+    # Read file
     with txt_path.open("r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line:
                 continue
 
-            # Input lines look like: T18a<TAB>T22a
             try:
                 a, b = line.split()
             except ValueError:
                 continue
 
-            # Column 1: T18a:T22a
             col1 = f"{a}:{b}"
 
-            # print it out
+            # print each pair
             print(col1)
 
             rows.append([col1, col2, col3, col4])
