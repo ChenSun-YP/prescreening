@@ -19,6 +19,7 @@
     },
     "cc_configs": [
       [40, 500, "Medium"],
+      [10, 100, "semiFine"],
       [20, 250, "Fine"]
     ]
 }
