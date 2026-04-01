@@ -1,2 +1,0 @@
-n074_R_CA1_wire_3_cell_2	n001_L_CA3_wire_1_cell_1
-n074_R_CA1_wire_3_cell_2	n061_L_CA1_wire_8_cell_1
