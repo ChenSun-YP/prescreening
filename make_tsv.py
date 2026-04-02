@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import csv
 
@@ -7,6 +8,12 @@ OUT_TSV = Path("output.tsv")
 rows = []
 
 print(f"Searching for files in {BASE_DIR}...")
+
+files = os.listdir(BASE_DIR)
+
+for file in files:
+    print(file)
+
 print(
     f"BASE_DIR.rglob('mode_stdev_good_pairs.txt'): {list(BASE_DIR.rglob('mode_stdev_good_pairs.txt'))}"
 )
