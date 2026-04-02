@@ -8,6 +8,7 @@ rows = []
 
 for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
     parts = txt_path.parts
+    print(f"Processing {txt_path} with parts: {parts}")
 
     # Only keep files inside a "semiFine" directory
     if "semiFine" not in parts:
@@ -17,11 +18,13 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
     try:
         i = parts.index("Eichenbaum")
         folder_name = parts[i + 1]
+        print(f"Extracted folder name: {folder_name}")
     except (ValueError, IndexError):
         continue
 
     # Column 2
     col2 = folder_name.replace("_", "/")
+    print(f"Constructed col2: {col2}")
 
     # Column 3 + 4
     if "_" not in folder_name:

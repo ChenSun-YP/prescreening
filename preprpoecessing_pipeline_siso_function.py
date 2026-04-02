@@ -87,22 +87,22 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
 
     rec_info = {"tend": None, "last_trial_end": None}
 
-    print("top-level type:", type(data))
-    if isinstance(data, dict):
-        for k, v in data.items():
-            print("KEY:", repr(k), "   type:", type(v))
-            # If it's list/tuple, print len and types of first few entries
-            if isinstance(v, (list, tuple)):
-                print("  list length:", len(v))
-                for i, elt in enumerate(v[:5]):
-                    print("   >", i, type(elt), getattr(elt, "shape", None), end="\n")
-            # If it's a dict, print its keys
-            if isinstance(v, dict):
-                print("  dict keys:", list(v.keys()))
+    # print("top-level type:", type(data))
+    # if isinstance(data, dict):
+    #     for k, v in data.items():
+    #         print("KEY:", repr(k), "   type:", type(v))
+    #         # If it's list/tuple, print len and types of first few entries
+    #         if isinstance(v, (list, tuple)):
+    #             print("  list length:", len(v))
+    #             for i, elt in enumerate(v[:5]):
+    #                 print("   >", i, type(elt), getattr(elt, "shape", None), end="\n")
+    #         # If it's a dict, print its keys
+    #         if isinstance(v, dict):
+    #             print("  dict keys:", list(v.keys()))
 
     # Nested format: {'neurons': [{'name': ..., 'timestamps': [...]}, ...], 'tend': ..., 'intervals': ...}
     if isinstance(data, dict) and "neurons" in data:
-        print("if moment")
+        # print("if moment")
         neurons_list = data["neurons"]
         if not isinstance(neurons_list, (list, tuple)):
             raise ValueError(
@@ -127,7 +127,7 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
             if trials is not None:
                 rec_info["last_trial_end"] = trials["timestamps"][-1]
     elif isinstance(data, dict) and all(isinstance(v, tuple) for v in data.values()):
-        print("elif moment")
+        # print("elif moment")
         neurons = {}
         for k, v in data.items():
             # extract largest 1D numeric array inside tuple
@@ -146,7 +146,7 @@ def load_neurons(pkl_path, length_of_spiketrain=None):
                 raise ValueError(f"No 1D numeric array found in tuple for key {k}")
 
     else:
-        print("else moment")
+        # print("else moment")
         # Simple format: dict of neuron_id -> spike array
         neurons = {k: np.asarray(v, dtype=float) for k, v in data.items()}
         # print("Loaded neurons in simple format with keys:", list(neurons.keys())[:5])
