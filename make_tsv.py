@@ -68,6 +68,7 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
 
             rows.append([col1, col2, col3, col4])
 
+print(len(rows), "total rows found.")
 
 # --- Randomly select 20 pairs with a fixed seed ---
 SEED = 20260401
