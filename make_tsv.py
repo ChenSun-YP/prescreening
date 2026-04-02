@@ -44,8 +44,10 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
         continue
     part1, part2 = folder_name.split("_", 1)
 
-    col3 = f"../chensun/identify_stdp/data/Eichenbaum/{part1}/{part2}/{folder_name}.pkl"
-    col4 = f"../BenR/prescreening/data/Eichenbaum/analysis/{folder_name}"
+    col3 = f"/project2/dsong_945/chensun/identify_stdp/data/Eichenbaum/{part1}/{part2}/{folder_name}.pkl"
+    col4 = (
+        f"/project2/dsong_945/BenR/prescreening/data/Eichenbaum/analysis/{folder_name}"
+    )
 
     # Read file
     with txt_path.open("r", encoding="utf-8") as f:
