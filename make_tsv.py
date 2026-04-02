@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 import csv
 
-BASE_DIR = Path("/FilterFiles/Eichenbaum")
+BASE_DIR = Path("FilterFiles/Eichenbaum")
 OUT_TSV = Path("output.tsv")
 
 rows = []
