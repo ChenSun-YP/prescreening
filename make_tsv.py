@@ -6,6 +6,11 @@ OUT_TSV = Path("output.tsv")
 
 rows = []
 
+print(f"Searching for files in {BASE_DIR}...")
+print(
+    f"BASE_DIR.rglob('mode_stdev_good_pairs.txt'): {list(BASE_DIR.rglob('mode_stdev_good_pairs.txt'))}"
+)
+
 for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
     parts = txt_path.parts
     print(f"Processing {txt_path} with parts: {parts}")
