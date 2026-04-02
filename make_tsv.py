@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import csv
+import random
 
 BASE_DIR = Path("FilterFiles/Eichenbaum")
 OUT_TSV = Path("output.tsv")
@@ -64,6 +65,18 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
             print(col1)
 
             rows.append([col1, col2, col3, col4])
+
+
+# --- Randomly select 20 pairs with a fixed seed ---
+SEED = 20260401
+N = 20
+
+random.seed(SEED)
+
+if len(rows) > N:
+    rows = random.sample(rows, N)  # pick 20 unique rows
+else:
+    print(f"Only {len(rows)} rows available, using all.")
 
 # Write TSV
 with OUT_TSV.open("w", newline="", encoding="utf-8") as f:
