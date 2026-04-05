@@ -4,7 +4,6 @@ import csv
 import random
 
 BASE_DIR = Path("FilterFiles/Eichenbaum")
-OUT_TSV = Path("output.tsv")
 
 rows = []
 
@@ -44,10 +43,11 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
         continue
     part1, part2 = folder_name.split("_", 1)
 
-    col3 = f"/project2/dsong_945/chensun/identify_stdp/data/Eichenbaum/{part1}/{part2}/{folder_name}.pkl"
-    col4 = (
-        f"/project2/dsong_945/BenR/prescreening/data/Eichenbaum/analysis/{folder_name}"
-    )
+    col3 = f"data/eichenbaum2016/{part1}/{part2}/{folder_name}.pkl"
+
+    neuron_name = folder_name.split("_", 1)[1]
+    print(f"Extracted neuron name: {neuron_name}")
+    col4 = f"data/eichenbaum2016/single_pair_analysis/{folder_name}/{neuron_name}"
 
     # Read file
     with txt_path.open("r", encoding="utf-8") as f:
@@ -70,11 +70,15 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
 
 print(len(rows), "total rows found.")
 
-# --- Randomly select 20 pairs with a fixed seed ---
-SEED = 20260401
+# --- Randomly select 20 pairs with a fixed seed (Im just using the date) ---
+# SEED = 20260401
+SEED = 20260404
 N = 20
 
+OUT_TSV = Path(f"eichenbaum_20_pair_{SEED}.tsv")
+
 random.seed(SEED)
+
 
 if len(rows) > N:
     rows = random.sample(rows, N)  # pick 20 unique rows

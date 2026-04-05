@@ -1,8 +1,6 @@
 import pickle
 
-file_path = (
-    r"data\Eichenbaum\analysis\AJF016_CDEF1\autocorrs_edge_mean_True_semifine.pkl"
-)
+file_path = r"data\AJF016_CD1.pkl"
 
 # "data/analysis/selected_neurons_first_200s/autocorrs_edge_mean_True_ultra-fine.pkl"
 # "data/selected_neurons_first_200s.pkl"
