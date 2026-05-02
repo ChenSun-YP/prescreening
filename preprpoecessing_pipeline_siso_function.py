@@ -349,23 +349,23 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             continue
 
         # **Stage 3: (Optional) Generate various figures**
-        # if PLOT_ALL and filtered_neurons:
-        #     plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
-        #     # Raster: same cut data as all other analysis; dashed line at last trial end
-        #     plot_spike_raster(
-        #         filtered_neurons,
-        #         save_dir,
-        #         SAMPLE_RATE,
-        #         bin_size=RASTER_BIN_SIZE,
-        #         # cutoff_time=rec_info.get("last_trial_end"),
-        #     )
-        #     plot_neuron_correlation_matrices(
-        #         filtered_neurons,
-        #         save_dir,
-        #         SAMPLE_RATE,
-        #         edge_mean=edge_mean,
-        #         configs=CONFIGS,
-        #     )
+        if PLOT_ALL and filtered_neurons:
+            plot_all_neurons_silent_periods(filtered_neurons, save_dir, SAMPLE_RATE)
+            # Raster: same cut data as all other analysis; dashed line at last trial end
+            plot_spike_raster(
+                filtered_neurons,
+                save_dir,
+                SAMPLE_RATE,
+                bin_size=RASTER_BIN_SIZE,
+                # cutoff_time=rec_info.get("last_trial_end"),
+            )
+            plot_neuron_correlation_matrices(
+                filtered_neurons,
+                save_dir,
+                SAMPLE_RATE,
+                edge_mean=edge_mean,
+                configs=CONFIGS,
+            )
 
         file_results = {
             "file": pkl_path,
@@ -394,29 +394,29 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             max_lag = item[1]
             resolution = item[2]
 
-            # if verbose:
-            #     print(f"crosscorrs for {resolution}")
+            if verbose:
+                print(f"crosscorrs for {resolution}")
 
-            # if (
-            #     not os.path.exists(
-            #         os.path.join(
-            #             save_dir,
-            #             f"crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl",
-            #         )
-            #     )
-            #     or RECOMPUTE
-            # ):
-            #     config_single = [item]
-            #     if verbose:
-            #         print(f"Computing crosscorrs for {config_single}")
-            #     plot_neuron_correlation_matrices(
-            #         filtered_neurons,
-            #         save_dir,
-            #         SAMPLE_RATE,
-            #         edge_mean=edge_mean,
-            #         configs=config_single,
-            #         make_plots=True,
-            #     )
+            if (
+                not os.path.exists(
+                    os.path.join(
+                        save_dir,
+                        f"crosscorrs_edge_mean_{edge_mean}_{resolution.lower()}.pkl",
+                    )
+                )
+                or RECOMPUTE
+            ):
+                config_single = [item]
+                if verbose:
+                    print(f"Computing crosscorrs for {config_single}")
+                plot_neuron_correlation_matrices(
+                    filtered_neurons,
+                    save_dir,
+                    SAMPLE_RATE,
+                    edge_mean=edge_mean,
+                    configs=config_single,
+                    make_plots=True,
+                )
 
             crosscorrs = pickle.load(
                 open(

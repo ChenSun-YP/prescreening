@@ -3,7 +3,7 @@ from pathlib import Path
 import csv
 import random
 
-BASE_DIR = Path("FilterFiles/Eichenbaum")
+BASE_DIR = Path("Jan2010-Nonstationarity_Learning/Nonstationarity_Learning")
 
 rows = []
 
@@ -28,7 +28,7 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
 
     # Extract AJF016_CDEF1 (folder right after "Eichenbaum")
     try:
-        i = parts.index("Eichenbaum")
+        i = parts.index("Jan2010-Nonstationarity_Learning")
         folder_name = parts[i + 1]
         print(f"Extracted folder name: {folder_name}")
     except (ValueError, IndexError):
@@ -43,11 +43,11 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
         continue
     part1, part2 = folder_name.split("_", 1)
 
-    col3 = f"data/eichenbaum2016/{part1}/{part2}/{folder_name}.pkl"
+    col3 = f"data/Jan2010-Nonstationarity_Learning/Rodent_WFU_DNMS/{part1}/{part2}/{folder_name}.pkl"
 
     neuron_name = folder_name.split("_", 1)[1]
     print(f"Extracted neuron name: {neuron_name}")
-    col4 = f"data/eichenbaum2016/single_pair_analysis/{folder_name}/{neuron_name}"
+    col4 = f"data/Jan2010-Nonstationarity_Learning/Rodent_WFU_DNMS/single_pair_analysis/{folder_name}/{neuron_name}"
 
     # Read file
     with txt_path.open("r", encoding="utf-8") as f:
@@ -75,7 +75,7 @@ print(len(rows), "total rows found.")
 SEED = 20260404
 N = 20
 
-OUT_TSV = Path(f"eichenbaum_20_pair_{SEED}.tsv")
+OUT_TSV = Path(f"Jan2010-Nonstationarity_Learning_control_20_pair_{SEED}.tsv")
 
 random.seed(SEED)
 
