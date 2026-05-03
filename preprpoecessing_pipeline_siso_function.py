@@ -276,9 +276,9 @@ def run_preprocessing_pipeline(config_input, verbose=True):
     )
 
     # # filter out paths containing "analysis" as a folder
-    # pkl_files = [
-    #     f for f in pkl_files if "analysis" not in os.path.normpath(f).split(os.sep)
-    # ]
+    pkl_files = [
+        f for f in pkl_files if "analysis" not in os.path.normpath(f).split(os.sep)
+    ]
 
     if verbose:
         print("pkl_files include:\n  ", pkl_files)
