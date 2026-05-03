@@ -1119,6 +1119,13 @@ def plot_neuron_correlation_matrices(
             )
             global_max_times[neuron_id] = global_max_time
             num_bins = global_max_time
+            
+            # catch case where neuron has no spikes or all spikes are t=0
+            if num_bins <= 0:
+                neuron_spike_trains[neuron_id] = np.array([], dtype=bool)
+                firing_rate[neuron_id] = 0.0
+                continue
+            
             neuron_spike_trains[neuron_id] = (
                 np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[
                     0
