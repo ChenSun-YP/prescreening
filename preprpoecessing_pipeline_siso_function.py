@@ -455,6 +455,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             )
             out_dir = os.path.join(
                 "FilterFiles",
+                os.path.basename(os.path.dirname(os.path.dirname(pkl_path))),
                 os.path.basename(os.path.dirname(pkl_path)),
                 resolution,
                 os.path.splitext(os.path.basename(pkl_path))[0],

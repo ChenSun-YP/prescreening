@@ -3,9 +3,13 @@ from pathlib import Path
 import csv
 import random
 
-BASE_DIR = Path("Jan2010-Nonstationarity_Learning/Nonstationarity_Learning")
+from sympy import false
+
+BASE_DIR = Path("FilterFiles/Jan2010-Nonstationarity_Learning")
 
 rows = []
+
+SAMPLE_FROM_EACH = True
 
 print(f"Searching for files in {BASE_DIR}...")
 
@@ -68,26 +72,52 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
 
             rows.append([col1, col2, col3, col4])
 
-print(len(rows), "total rows found.")
+        if SAMPLE_FROM_EACH:
 
-# --- Randomly select 20 pairs with a fixed seed (Im just using the date) ---
-# SEED = 20260401
-SEED = 20260404
-N = 20
+            print(len(rows), "total rows found.")
 
-OUT_TSV = Path(f"Jan2010-Nonstationarity_Learning_control_20_pair_{SEED}.tsv")
+            # --- Randomly select 20 pairs with a fixed seed (Im just using the date) ---
+            # SEED = 20260401
+            SEED = 20260404
+            N = 20
 
-random.seed(SEED)
+            OUT_TSV = Path(f"Control_20_pair_{SEED}.tsv")
+
+            random.seed(SEED)
+
+            if len(rows) > N:
+                rows = random.sample(rows, N)  # pick 20 unique rows
+            else:
+                print(f"Only {len(rows)} rows available, using all.")
+
+            # Write TSV
+            with OUT_TSV.open("w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f, delimiter="\t")
+                writer.writerows(rows)
+
+            print(f"Wrote {len(rows)} rows to {OUT_TSV}")
 
 
-if len(rows) > N:
-    rows = random.sample(rows, N)  # pick 20 unique rows
-else:
-    print(f"Only {len(rows)} rows available, using all.")
+if not SAMPLE_FROM_EACH:
+    print(len(rows), "total rows found.")
 
-# Write TSV
-with OUT_TSV.open("w", newline="", encoding="utf-8") as f:
-    writer = csv.writer(f, delimiter="\t")
-    writer.writerows(rows)
+    # --- Randomly select 20 pairs with a fixed seed (Im just using the date) ---
+    # SEED = 20260401
+    SEED = 20260404
+    N = 20
 
-print(f"Wrote {len(rows)} rows to {OUT_TSV}")
+    OUT_TSV = Path(f"Control_20_pair_{SEED}.tsv")
+
+    random.seed(SEED)
+
+    if len(rows) > N:
+        rows = random.sample(rows, N)  # pick 20 unique rows
+    else:
+        print(f"Only {len(rows)} rows available, using all.")
+
+    # Write TSV
+    with OUT_TSV.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f, delimiter="\t")
+        writer.writerows(rows)
+
+    print(f"Wrote {len(rows)} rows to {OUT_TSV}")
