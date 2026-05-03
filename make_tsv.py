@@ -3,8 +3,6 @@ from pathlib import Path
 import csv
 import random
 
-from sympy import false
-
 BASE_DIR = Path("FilterFiles/Jan2010-Nonstationarity_Learning")
 
 rows = []
