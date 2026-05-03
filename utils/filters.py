@@ -318,6 +318,9 @@ def check_histogram_unimodal(
     test_result = False
     if p_value >= alpha:
         test_result = True
+    else:
+        print("lags_ms:", lags_ms)
+        print("corr_ms:", corr_ms)
 
     return test_result, p_value
 
