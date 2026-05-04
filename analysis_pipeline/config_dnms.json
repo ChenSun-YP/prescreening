@@ -2,7 +2,7 @@
     "paths": {
       "file_dir": "data/Jan2010-Nonstationarity_Learning",
       "analysis_dir": "analysis",
-      "pkl_file": "**/**.pkl", 
+      "pkl_file": "**/**cutoff_5.pkl", 
       "rank_dir": "data/single_pairs_analysis"
     },
     "processing": {
