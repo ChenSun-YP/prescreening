@@ -3,15 +3,16 @@ import os
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-from requests import post
-from scipy.signal import fftconvolve
+
+# from requests import post
+# from scipy.signal import fftconvolve
 import scipy.signal
 from scipy.stats import norm
 import textwrap
 from scipy.signal import find_peaks
 
 # from diptest import diptest
-from scipy.signal import correlate
+# from scipy.signal import correlate
 from diptest import diptest
 
 # Configuration
