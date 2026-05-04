@@ -275,7 +275,7 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         os.path.join(FILE_DIR, "**", PKL_FILE_PATTERN), recursive=True
     )
 
-    # # filter out paths containing "analysis" as a folder
+    # filter out paths containing "analysis" as a folder
     pkl_files = [
         f for f in pkl_files if "analysis" not in os.path.normpath(f).split(os.sep)
     ]
@@ -304,12 +304,10 @@ def run_preprocessing_pipeline(config_input, verbose=True):
             save_dir = os.path.join(ANALYSIS_DIR, pkl_stem)
             print("save_dir if")
         else:
-            # just for eichenbaum,  because we dont have raw data & everything is already in analysis dir, so we want to save directly in analysis_dir/pkl_stem instead of analysis_dir/session_part/pkl_stem
-            save_dir = os.path.join(ANALYSIS_DIR, os.path.basename(session_part))
+            # # just for eichenbaum,  because we dont have raw data & everything is already in analysis dir, so we want to save directly in analysis_dir/pkl_stem instead of analysis_dir/session_part/pkl_stem
+            # save_dir = os.path.join(ANALYSIS_DIR, os.path.basename(session_part))
 
-            # save_dir = os.path.join(
-            #     ANALYSIS_DIR, session_part, pkl_stem
-            # )
+            save_dir = os.path.join(ANALYSIS_DIR, session_part, pkl_stem)
 
             print("save_dir else")
 
@@ -375,19 +373,19 @@ def run_preprocessing_pipeline(config_input, verbose=True):
         }
 
         # Write recording/trial info to summary once
-        # summary_path = os.path.join(save_dir, "summary.txt")
-        # with open(summary_path, "w") as f:
-        #     f.write(f"Dataset: {os.path.basename(pkl_path)}\n")
-        #     f.write(f'Total recording duration (tend): {rec_info["tend"]}\n')
-        #     f.write(f'Last TRIAL end: {rec_info["last_trial_end"]}\n')
-        #     if rec_info["last_trial_end"] is not None or rec_info["tend"] is not None:
-        #         f.write(
-        #             "All analysis (CC, AC, silence-period, raster) use only spikes with t < last TRIAL end (cutoff).\n"
-        #         )
-        #         f.write(
-        #             "Spike raster plot shows data up to cutoff with a dashed vertical line at last TRIAL end.\n"
-        #         )
-        #     f.write("-" * 50 + "\n")
+        summary_path = os.path.join(save_dir, "summary.txt")
+        with open(summary_path, "w") as f:
+            f.write(f"Dataset: {os.path.basename(pkl_path)}\n")
+            f.write(f'Total recording duration (tend): {rec_info["tend"]}\n')
+            f.write(f'Last TRIAL end: {rec_info["last_trial_end"]}\n')
+            if rec_info["last_trial_end"] is not None or rec_info["tend"] is not None:
+                f.write(
+                    "All analysis (CC, AC, silence-period, raster) use only spikes with t < last TRIAL end (cutoff).\n"
+                )
+                f.write(
+                    "Spike raster plot shows data up to cutoff with a dashed vertical line at last TRIAL end.\n"
+                )
+            f.write("-" * 50 + "\n")
 
         for item in CONFIGS:
             bin_size = item[0]
@@ -428,13 +426,13 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 )
             )
 
-            # # Identify top N positive and negative correlation pairs
-            # neuron_ids = list(filtered_neurons.keys())
-            # pairs = [
-            #     (pre, post)
-            #     for i, pre in enumerate(neuron_ids)
-            #     for post in neuron_ids[i + 1 :]
-            # ]
+            # Identify top N positive and negative correlation pairs
+            neuron_ids = list(filtered_neurons.keys())
+            pairs = [
+                (pre, post)
+                for i, pre in enumerate(neuron_ids)
+                for post in neuron_ids[i + 1 :]
+            ]
 
             pairs = list(crosscorrs.keys())
             # print("pairs", pairs)

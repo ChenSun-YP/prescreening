@@ -2,12 +2,12 @@
     "paths": {
       "file_dir": "data/Jan2010-Nonstationarity_Learning",
       "analysis_dir": "analysis",
-      "pkl_file": "**/*_contam_*.pkl", 
+      "pkl_file": "**/**.pkl", 
       "rank_dir": "data/single_pairs_analysis"
     },
     "processing": {
       "sample_rate": 1,
-      "min_spikes": 100,
+      "min_spikes": 0,
       "bin_size": 20,
       "max_lag": 250,
       "n_top": 200,
