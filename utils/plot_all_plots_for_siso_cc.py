@@ -1105,15 +1105,6 @@ def plot_neuron_correlation_matrices(
         ]
     neuron_ids = list(neurons.keys())
 
-    removed_neurons = [n for n in neuron_ids if neuron_spike_trains[n].size == 0]
-    if removed_neurons:
-        print(f"Removed {len(removed_neurons)} neurons:")
-        for n in removed_neurons:
-            print(f"  - {n}")
-
-    # Filter out neurons with no spikes to avoid issues in correlation computation
-    neuron_ids = [n for n in neuron_ids if neuron_spike_trains[n].size > 0]
-
     for bin_size, max_lag, resolution in configs:
         neuron_spike_trains, global_max_time, firing_rate, global_max_times = (
             {},
@@ -1131,6 +1122,11 @@ def plot_neuron_correlation_matrices(
             global_max_times[neuron_id] = global_max_time
             num_bins = global_max_time
 
+            if num_bins <= 0:
+                neuron_spike_trains[neuron_id] = np.array([], dtype=bool)
+                firing_rate[neuron_id] = 0.0
+                continue
+
             neuron_spike_trains[neuron_id] = (
                 np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[
                     0
@@ -1140,6 +1136,14 @@ def plot_neuron_correlation_matrices(
             firing_rate[neuron_id] = (
                 np.sum(neuron_spike_trains[neuron_id]) / global_max_time
             )
+
+        removed_neurons = [n for n in neuron_ids if neuron_spike_trains[n].size == 0]
+        if removed_neurons:
+            print(f"Removed {len(removed_neurons)} neurons:")
+            for n in removed_neurons:
+                print(f"  - {n}")
+
+        neuron_ids = [n for n in neuron_ids if neuron_spike_trains[n].size > 0]
 
         # autocorrs = {n: compute_correlogram_normalized(neuron_spike_trains[n].astype(float), neuron_spike_trains[n].astype(float), max_lag, bin_size, 'auto')
         #             for n in neuron_ids}
