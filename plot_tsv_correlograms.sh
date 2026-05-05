@@ -12,6 +12,6 @@ source /apps/conda/miniforge3/24.11.3/etc/profile.d/conda.sh
 
 conda activate plasticityvenv
 
-python -u plot_tsv_correlograms.py /project2/dsong_945/BenR/prescreening/Control_1089_20_pair_20260504.tsv --out /project2/dsong_945/BenR/prescreening/Control_1089_20_pair_20260504.png
+python -u plot_tsv_correlograms.py /project2/dsong_945/BenR/prescreening/Control_20_pair_20260404.tsv --out /project2/dsong_945/BenR/prescreening/Control_20_pair_20260404.png
 
 conda deactivate
