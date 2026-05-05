@@ -43,16 +43,14 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
     print(f"Constructed col2: {col2}")
 
     # Column 3 + 4
-    if "_" not in folder_name:
-        print("Skipping because folder name does not contain '_'.")
-        continue
-    part1, part2 = folder_name.split("_", 1)
-
-    col3 = f"data/Jan2010-Nonstationarity_Learning/Rodent_WFU_DNMS/{part1}/{part2}/{folder_name}.pkl"
-
-    neuron_name = folder_name.split("_", 1)[1]
+    neuron_name = parts[4]
     print(f"Extracted neuron name: {neuron_name}")
-    col4 = f"data/Jan2010-Nonstationarity_Learning/Rodent_WFU_DNMS/single_pair_analysis/{folder_name}/{neuron_name}"
+    col3 = (
+        f"data/Jan2010-Nonstationarity_Learning/Rodent_WFU_DNMS/1089/{neuron_name}.pkl"
+    )
+
+    print(f"Extracted neuron name: {neuron_name}")
+    col4 = f"data/Jan2010-Nonstationarity_Learning/Rodent_WFU_DNMS/single_pair_analysis/1089/{neuron_name}"
 
     # Read file
     with txt_path.open("r", encoding="utf-8") as f:
