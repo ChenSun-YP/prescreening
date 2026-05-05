@@ -31,7 +31,7 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
 
     # Extract AJF016_CDEF1 (folder right after "Eichenbaum")
     try:
-        i = parts.index("Jan2010-Nonstationarity_Learning")
+        i = parts.index("Jan2010-Nonstationarity_Learning_DUPLICATE")
         folder_name = parts[i + 1]
         print(f"Extracted folder name: {folder_name}")
     except (ValueError, IndexError):
