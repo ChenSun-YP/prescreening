@@ -12,6 +12,6 @@ source /apps/conda/miniforge3/24.11.3/etc/profile.d/conda.sh
 
 conda activate plasticityvenv
 
-python -u plot_all_pass_filter.py --out /project2/dsong_945/BenR/prescreening/1029_good_pairs_ccg.png
+python -u plot_good_pairs.py --base /project2/dsong_945/BenR/prescreening/data/Jan2010-Nonstationarity_Learning --out /project2/dsong_945/BenR/prescreening/1029_good_pairs_ccg.png
 
 conda deactivate
