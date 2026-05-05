@@ -1,6 +1,6 @@
 import pickle
 
-file_path = r"data\1150b032merge-clean_cutoff_5hz_contam_2.pkl"
+file_path = r"data\crosscorrs_edge_mean_True_semifine (1).pkl"
 
 # "data/analysis/selected_neurons_first_200s/autocorrs_edge_mean_True_ultra-fine.pkl"
 # "data/selected_neurons_first_200s.pkl"
