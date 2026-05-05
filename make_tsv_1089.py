@@ -7,7 +7,7 @@ BASE_DIR = Path("FilterFiles/Jan2010-Nonstationarity_Learning_DUPLICATE/1089")
 
 rows = []
 
-SAMPLE_FROM_EACH = True
+SAMPLE_FROM_EACH = False
 
 print(f"Searching for files in {BASE_DIR}...")
 
@@ -26,6 +26,7 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
 
     # Only keep files inside a "semiFine" directory
     if "semiFine" not in parts:
+        print("Skipping because 'semiFine' not in path parts.")
         continue
 
     # Extract AJF016_CDEF1 (folder right after "Eichenbaum")
@@ -34,6 +35,7 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
         folder_name = parts[i + 1]
         print(f"Extracted folder name: {folder_name}")
     except (ValueError, IndexError):
+        print("Skipping because folder name extraction failed.")
         continue
 
     # Column 2
@@ -42,6 +44,7 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
 
     # Column 3 + 4
     if "_" not in folder_name:
+        print("Skipping because folder name does not contain '_'.")
         continue
     part1, part2 = folder_name.split("_", 1)
 
@@ -76,7 +79,7 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
 
             # --- Randomly select 20 pairs with a fixed seed (Im just using the date) ---
             # SEED = 20260401
-            SEED = 20260404
+            SEED = 20260504
             N = 20
 
             OUT_TSV = Path(f"Control_1089_20_pair_{SEED}.tsv")
@@ -101,10 +104,10 @@ if not SAMPLE_FROM_EACH:
 
     # --- Randomly select 20 pairs with a fixed seed (Im just using the date) ---
     # SEED = 20260401
-    SEED = 20260404
+    SEED = 20260504
     N = 20
 
-    OUT_TSV = Path(f"Control_20_pair_{SEED}.tsv")
+    OUT_TSV = Path(f"Control_1089_20_pair_{SEED}.tsv")
 
     random.seed(SEED)
 
