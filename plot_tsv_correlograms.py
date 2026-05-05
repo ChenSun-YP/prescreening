@@ -101,10 +101,12 @@ def lookup_pair(data: dict, neuronA: str, neuronB: str):
 
 
 def extract_ccg(value):
-    """
-    Pull (lags_or_None, counts_1d_array) from the dict value.
-    Handles: ndarray, list, dict with ccg/counts/lags keys, or attribute objects.
-    """
+    # tuple: (lags, ccg, mean, std, significance, threshold)
+    if isinstance(value, tuple):
+        lags = np.asarray(value[0])
+        counts = np.asarray(value[1])
+        return lags, counts
+
     if isinstance(value, (np.ndarray, list)):
         arr = np.asarray(value).squeeze()
         if arr.ndim == 1:
