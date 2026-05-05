@@ -23,6 +23,7 @@ import sys
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -34,11 +35,12 @@ DEFAULT_BASE = (
 )
 CCG_FILENAME = "crosscorrs_edge_mean_True_semifine.pkl"
 
-DEFAULT_OUT  = "crosscorrelograms.png"
+DEFAULT_OUT = "crosscorrelograms.png"
 GRID_ROWS, GRID_COLS = 4, 5
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────
+
 
 def ccg_pkl_path(base: str, session_id: str, spike_pkl_col: str) -> Path:
     """
@@ -51,7 +53,7 @@ def ccg_pkl_path(base: str, session_id: str, spike_pkl_col: str) -> Path:
     Result:
         <base>/analysis/<session_id>/<stem>/crosscorrs_edge_mean_True_semifine.pkl
     """
-    stem = Path(spike_pkl_col).stem          # '1089u196merge-clean_cutoff_5'
+    stem = Path(spike_pkl_col).stem  # '1089u196merge-clean_cutoff_5'
     return Path(base) / "analysis" / session_id / stem / CCG_FILENAME
 
 
@@ -69,15 +71,19 @@ def parse_tsv(path: str) -> list:
                 continue
             pair_str = cols[0]
             if ":" not in pair_str:
-                print(f"  [warn] line {lineno}: no ':' in pair field '{pair_str}' - skipping")
+                print(
+                    f"  [warn] line {lineno}: no ':' in pair field '{pair_str}' - skipping"
+                )
                 continue
             a, b = pair_str.split(":", 1)
-            rows.append({
-                "neuronA":    a.strip(),
-                "neuronB":    b.strip(),
-                "session_id": cols[1].strip(),
-                "spike_pkl":  cols[2].strip(),
-            })
+            rows.append(
+                {
+                    "neuronA": a.strip(),
+                    "neuronB": b.strip(),
+                    "session_id": cols[1].strip(),
+                    "spike_pkl": cols[2].strip(),
+                }
+            )
     return rows
 
 
@@ -127,6 +133,7 @@ def extract_ccg(value):
 
 # ── plotting ──────────────────────────────────────────────────────────────────
 
+
 def plot_grid(rows: list, base: str, out_path: str):
     if not rows:
         sys.exit("No pairs parsed from the input file.")
@@ -141,10 +148,13 @@ def plot_grid(rows: list, base: str, out_path: str):
 
     n = min(len(rows), GRID_ROWS * GRID_COLS)
     if len(rows) > GRID_ROWS * GRID_COLS:
-        print(f"[warn] {len(rows)} pairs but grid holds {GRID_ROWS*GRID_COLS}; extras ignored.")
+        print(
+            f"[warn] {len(rows)} pairs but grid holds {GRID_ROWS*GRID_COLS}; extras ignored."
+        )
 
     fig, axes = plt.subplots(
-        GRID_ROWS, GRID_COLS,
+        GRID_ROWS,
+        GRID_COLS,
         figsize=(GRID_COLS * 3.2, GRID_ROWS * 2.6),
         constrained_layout=True,
     )
@@ -154,10 +164,10 @@ def plot_grid(rows: list, base: str, out_path: str):
         r, c = divmod(idx, GRID_COLS)
         ax = axes[r][c]
 
-        neuronA    = row["neuronA"]
-        neuronB    = row["neuronB"]
+        neuronA = row["neuronA"]
+        neuronB = row["neuronB"]
         session_id = row["session_id"]
-        spike_pkl  = row["spike_pkl"]
+        spike_pkl = row["spike_pkl"]
 
         def short(name):
             parts = name.split("_")
@@ -166,42 +176,84 @@ def plot_grid(rows: list, base: str, out_path: str):
         base_title = f"#{idx+1}\n{short(neuronA)} :\n{short(neuronB)}"
 
         pkl_path = ccg_pkl_path(base, session_id, spike_pkl)
-        stem     = pkl_path.parent.name          # e.g. 1089u196merge-clean_cutoff_5
+        stem = pkl_path.parent.name  # e.g. 1089u196merge-clean_cutoff_5
 
         if not pkl_path.exists():
-            ax.text(0.5, 0.5, f"PKL not found:\n.../{stem}/\n{CCG_FILENAME}",
-                    ha="center", va="center", transform=ax.transAxes,
-                    color="red", fontsize=6.5, wrap=True)
+            ax.text(
+                0.5,
+                0.5,
+                f"PKL not found:\n.../{stem}/\n{CCG_FILENAME}",
+                ha="center",
+                va="center",
+                transform=ax.transAxes,
+                color="red",
+                fontsize=6.5,
+                wrap=True,
+            )
             ax.set_title(base_title, fontsize=6.5, color="red")
-            ax.set_xticks([]); ax.set_yticks([])
+            ax.set_xticks([])
+            ax.set_yticks([])
             continue
 
         try:
             data = get_data(pkl_path)
+
+            # DEBUG - remove after
+            first_key = next(iter(data))
+            print(f"DEBUG sample key: {first_key}")
+            print(f"DEBUG sample value type: {type(data[first_key])}")
+            print(f"DEBUG sample value: {data[first_key]}")
+
         except Exception as exc:
-            ax.text(0.5, 0.5, f"Load error:\n{exc}", ha="center", va="center",
-                    transform=ax.transAxes, color="orange", fontsize=6.5)
+            ax.text(
+                0.5,
+                0.5,
+                f"Load error:\n{exc}",
+                ha="center",
+                va="center",
+                transform=ax.transAxes,
+                color="orange",
+                fontsize=6.5,
+            )
             ax.set_title(base_title, fontsize=6.5)
-            ax.set_xticks([]); ax.set_yticks([])
+            ax.set_xticks([])
+            ax.set_yticks([])
             continue
 
         key, value, flipped = lookup_pair(data, neuronA, neuronB)
 
         if key is None:
-            ax.text(0.5, 0.5, "Pair not found\nin PKL",
-                    ha="center", va="center", transform=ax.transAxes,
-                    color="red", fontsize=8)
+            ax.text(
+                0.5,
+                0.5,
+                "Pair not found\nin PKL",
+                ha="center",
+                va="center",
+                transform=ax.transAxes,
+                color="red",
+                fontsize=8,
+            )
             ax.set_title(base_title, fontsize=6.5, color="red")
-            ax.set_xticks([]); ax.set_yticks([])
+            ax.set_xticks([])
+            ax.set_yticks([])
             continue
 
         try:
             lags, counts = extract_ccg(value)
         except ValueError as exc:
-            ax.text(0.5, 0.5, f"Parse error:\n{exc}", ha="center", va="center",
-                    transform=ax.transAxes, color="orange", fontsize=6.5)
+            ax.text(
+                0.5,
+                0.5,
+                f"Parse error:\n{exc}",
+                ha="center",
+                va="center",
+                transform=ax.transAxes,
+                color="orange",
+                fontsize=6.5,
+            )
             ax.set_title(base_title, fontsize=6.5)
-            ax.set_xticks([]); ax.set_yticks([])
+            ax.set_xticks([])
+            ax.set_yticks([])
             continue
 
         if flipped:
@@ -209,8 +261,8 @@ def plot_grid(rows: list, base: str, out_path: str):
             if lags is not None:
                 lags = -lags[::-1]
 
-        x   = lags if lags is not None else np.arange(len(counts))
-        bw  = (x[1] - x[0]) if len(x) > 1 else 1
+        x = lags if lags is not None else np.arange(len(counts))
+        bw = (x[1] - x[0]) if len(x) > 1 else 1
         ax.bar(x, counts, width=bw, color="steelblue", edgecolor="none", alpha=0.85)
         ax.set_xlim(x[0] - bw / 2, x[-1] + bw / 2)
         ax.axvline(0, color="red", linewidth=0.8, linestyle="--")
@@ -233,6 +285,7 @@ def plot_grid(rows: list, base: str, out_path: str):
 
 # ── main ──────────────────────────────────────────────────────────────────────
 
+
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__,
@@ -240,11 +293,13 @@ def main():
     )
     parser.add_argument("pairs_file", help="Tab-separated TSV of neuron pairs")
     parser.add_argument(
-        "--base", default=DEFAULT_BASE,
+        "--base",
+        default=DEFAULT_BASE,
         help=f"Root data directory (default: {DEFAULT_BASE})",
     )
     parser.add_argument(
-        "--out", default=DEFAULT_OUT,
+        "--out",
+        default=DEFAULT_OUT,
         help=f"Output PNG filename (default: {DEFAULT_OUT})",
     )
     args = parser.parse_args()
