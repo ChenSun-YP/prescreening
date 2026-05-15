@@ -780,7 +780,7 @@ def main():
 
     print("Starting preprocessing pipeline...")
 
-    default_configs = ["analysis_pipeline/config_dnms_1089.json"]
+    default_configs = ["analysis_pipeline/config_dnms_buzaki.json"]
 
     # Try to find an existing config file
     config_path = None
@@ -801,12 +801,12 @@ def main():
 
     if not config_paths:
         # Backward compatibility: default config
-        default = os.path.join(base_dir, "analysis_pipeline", "config_dnms_1089.json")
+        default = os.path.join(base_dir, "analysis_pipeline", "config_dnms_buzaki.json")
         if os.path.exists(default):
             config_paths = [default]
         else:
             parser.error(
-                "No config provided and default config_dnms_1089.json not found. Use --config."
+                "No config provided and default config_dnms_buzaki.json not found. Use --config."
             )
         print(f"Using default config file: {config_paths[0]}")
     else:

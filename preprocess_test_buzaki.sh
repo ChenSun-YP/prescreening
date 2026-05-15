@@ -13,9 +13,9 @@ source /apps/conda/miniforge3/24.11.3/etc/profile.d/conda.sh
 
 conda activate plasticityvenv
 
-python -u preprpoecessing_pipeline_siso_function_1089.py
+python -u preprpoecessing_pipeline_siso_function_buzaki.py
 
-python -u make_tsv_1089.py
+python -u make_tsv_buzaki.py
 
 
 conda deactivate

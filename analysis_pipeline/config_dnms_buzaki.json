@@ -1,8 +1,8 @@
 {
     "paths": {
-      "file_dir": "data/Jan2010-Nonstationarity_Learning_DUPLICATE",
+      "file_dir": "data/buzaki",
       "analysis_dir": "analysis",
-      "pkl_file": "**/**cutoff_5.pkl", 
+      "pkl_file": "**/ham25_35-37_amp_neurons.pkl", 
       "rank_dir": "data/single_pairs_analysis"
     },
     "processing": {
