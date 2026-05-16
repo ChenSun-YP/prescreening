@@ -3,7 +3,7 @@ from pathlib import Path
 import csv
 import random
 
-BASE_DIR = Path("FilterFiles/buzaki/ham25_35-37_amp_neurons")
+BASE_DIR = Path("FilterFiles/buzaki/ham25_35-37_amp")
 
 rows = []
 
