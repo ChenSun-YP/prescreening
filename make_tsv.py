@@ -3,7 +3,10 @@ from pathlib import Path
 import csv
 import random
 
-BASE_DIR = Path("FilterFiles/sz_dataset_kilosorted/2025_05_15hippocampus")
+BASE_DIR = Path(
+    "FilterFiles/sz_dataset_kilosorted/2025_05_15hippocampus"
+)  # CHANGE HERE: keep the FilterFiles directory, but change the rest to match the "file_dir" & "pkl_file" in config_dnms.json but remove the .pkl at the end
+# if this errors out, look for the FilterFiles directory & change the path accordingly
 
 rows = []
 
@@ -30,7 +33,9 @@ for txt_path in BASE_DIR.rglob("mode_stdev_good_pairs.txt"):
 
     # Extract AJF016_CDEF1 (folder right after "Eichenbaum")
     try:
-        i = parts.index("sz_dataset_kilosorted")
+        i = parts.index(
+            "sz_dataset_kilosorted"
+        )  # CHANGE HERE: should be same as "file_dir" from the config_dnms.json
         folder_name = parts[i + 1]
         print(f"Extracted folder name: {folder_name}")
     except (ValueError, IndexError):

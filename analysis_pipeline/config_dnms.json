@@ -1,8 +1,8 @@
 {
     "paths": {
-      "file_dir": "data/sz_dataset_kilosorted",
+      "file_dir": "data/sz_dataset_kilosorted", // CHANGE HERE: move the .pkl files into the data/ folder & change this to the directory containing the .pkl files
       "analysis_dir": "analysis",
-      "pkl_file": "**/kilosort4_5hz_clean.pkl", 
+      "pkl_file": "**/kilosort4_5hz_clean.pkl", // CHANGE HERE: change only the file name to the one you want to analyze 
       "rank_dir": "data/single_pairs_analysis"
     },
     "processing": {
