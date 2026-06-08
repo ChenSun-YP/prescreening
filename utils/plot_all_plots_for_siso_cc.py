@@ -3,14 +3,16 @@ import os
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import fftconvolve
+
+# from requests import post
+# from scipy.signal import fftconvolve
 import scipy.signal
 from scipy.stats import norm
 import textwrap
 from scipy.signal import find_peaks
 
 # from diptest import diptest
-from scipy.signal import correlate
+# from scipy.signal import correlate
 from diptest import diptest
 
 # Configuration
@@ -1119,6 +1121,12 @@ def plot_neuron_correlation_matrices(
             )
             global_max_times[neuron_id] = global_max_time
             num_bins = global_max_time
+
+            if num_bins <= 0:
+                neuron_spike_trains[neuron_id] = np.array([], dtype=bool)
+                firing_rate[neuron_id] = 0.0
+                continue
+
             neuron_spike_trains[neuron_id] = (
                 np.histogram(spike_indices, bins=num_bins, range=(0, global_max_time))[
                     0
@@ -1128,6 +1136,14 @@ def plot_neuron_correlation_matrices(
             firing_rate[neuron_id] = (
                 np.sum(neuron_spike_trains[neuron_id]) / global_max_time
             )
+
+        removed_neurons = [n for n in neuron_ids if neuron_spike_trains[n].size == 0]
+        if removed_neurons:
+            print(f"Removed {len(removed_neurons)} neurons:")
+            for n in removed_neurons:
+                print(f"  - {n}")
+
+        neuron_ids = [n for n in neuron_ids if neuron_spike_trains[n].size > 0]
 
         # autocorrs = {n: compute_correlogram_normalized(neuron_spike_trains[n].astype(float), neuron_spike_trains[n].astype(float), max_lag, bin_size, 'auto')
         #             for n in neuron_ids}

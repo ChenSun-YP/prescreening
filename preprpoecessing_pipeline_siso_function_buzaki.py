@@ -517,8 +517,8 @@ def run_preprocessing_pipeline(config_input, verbose=True):
                 pkl_path=abbr_pkl_path,  # find a way to automatically get this path,
                 out_dir=out_dir,  # for debugging purposes
                 filtered_pairs_path=good_unimodal_pairs_path,  # only check stdev around mode for pairs that passed the previous filter
-                stdev_upper_threshold=50,  # milliseconds; was 30
-                stdev_lower_threshold=30,  # milliseconds; was 20
+                stdev_upper_threshold=56,  # milliseconds; was 50
+                stdev_lower_threshold=50,  # milliseconds; was 30
             )
             bad_mode_stdev_pairs_path = os.path.join(
                 out_dir, "mode_stdev_bad_pairs.txt"
@@ -780,7 +780,7 @@ def main():
 
     print("Starting preprocessing pipeline...")
 
-    default_configs = ["analysis_pipeline/config_dnms.json"]
+    default_configs = ["analysis_pipeline/config_dnms_buzaki.json"]
 
     # Try to find an existing config file
     config_path = None
@@ -801,12 +801,12 @@ def main():
 
     if not config_paths:
         # Backward compatibility: default config
-        default = os.path.join(base_dir, "analysis_pipeline", "config_dnms.json")
+        default = os.path.join(base_dir, "analysis_pipeline", "config_dnms_buzaki.json")
         if os.path.exists(default):
             config_paths = [default]
         else:
             parser.error(
-                "No config provided and default config_dnms.json not found. Use --config."
+                "No config provided and default config_dnms_buzaki.json not found. Use --config."
             )
         print(f"Using default config file: {config_paths[0]}")
     else:
