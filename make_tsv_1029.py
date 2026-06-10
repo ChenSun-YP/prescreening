@@ -101,9 +101,9 @@ if not SAMPLE_FROM_EACH:
     # --- Randomly select 20 pairs with a fixed seed (Im just using the date) ---
     # SEED = 20260401
     SEED = 20260404
-    N = 20
+    N = 100
 
-    OUT_TSV = Path(f"Control_20_pair_{SEED}.tsv")
+    OUT_TSV = Path(f"Control_100_pair_{SEED}.tsv")
 
     random.seed(SEED)
 
