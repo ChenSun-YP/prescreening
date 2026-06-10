@@ -7,7 +7,7 @@ BASE_DIR = Path("FilterFiles/Jan2010-Nonstationarity_Learning/1029")
 
 rows = []
 
-SAMPLE_FROM_EACH = True
+SAMPLE_FROM_EACH = False
 
 print(f"Searching for files in {BASE_DIR}...")
 
